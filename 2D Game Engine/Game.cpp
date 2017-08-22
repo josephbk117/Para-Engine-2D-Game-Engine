@@ -13,7 +13,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	groundBody->CreateFixture(&groundBox, 0);
 
 	std::mt19937 randGenerator;
-	std::uniform_real_distribution<float> xPos(-10, 10);
+	std::uniform_real_distribution<float> xPos(-30, 30);
 	std::uniform_real_distribution<float> yPos(10, 30);
 
 	const int NUM_BOXES = 50;
@@ -71,7 +71,7 @@ void Game::update(void(*updateFunc)())
 		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		world->Step(1.0 / 300.0, 5, 6);
+		world->Step(1.0 / 100.0, 5, 6);
 	}
 	glfwTerminate();
 	return;
