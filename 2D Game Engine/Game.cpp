@@ -9,14 +9,14 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	groundBodyDef.position.Set(0, -80);
 	b2Body* groundBody = world->CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(50, 10);
+	groundBox.SetAsBox(80, 10);
 	groundBody->CreateFixture(&groundBox, 0);
 
 	std::mt19937 randGenerator;
-	std::uniform_real_distribution<float> xPos(-30, 30);
-	std::uniform_real_distribution<float> yPos(10, 30);
+	std::uniform_real_distribution<float> xPos(-60, 60);
+	std::uniform_real_distribution<float> yPos(10, 80);
 
-	const int NUM_BOXES = 50;
+	const int NUM_BOXES = 120;
 	for (int i = 0; i < NUM_BOXES; i++)
 	{
 		Box box;
@@ -42,7 +42,6 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << " Glew initialsed" << std::endl;
 }
 
-
 void Game::update(void(*updateFunc)())
 {
 	glMatrixMode(GL_PROJECTION);
@@ -60,7 +59,7 @@ void Game::update(void(*updateFunc)())
 			destRect.x = boxes[i].getBody()->GetPosition().x;
 			destRect.y = boxes[i].getBody()->GetPosition().y;
 			destRect.z = boxes[i].getDimensions().x;
-			destRect.w = boxes[i].getDimensions().y;
+			destRect.w = boxes[i].getDimensions().y;			
 
 			glBegin(GL_QUADS);
 			glVertex2f(destRect.x, destRect.y);
@@ -79,6 +78,13 @@ void Game::update(void(*updateFunc)())
 
 void Game::processInput(GLFWwindow * window)
 {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		world->SetGravity(b2Vec2(0, 9.81));
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		world->SetGravity(b2Vec2(0, -9.81));
 }
 
 Game::~Game()
