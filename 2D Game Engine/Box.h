@@ -1,6 +1,8 @@
 #pragma once
 #include <Box2D\Box2D.h>
 #include <GLM\glm.hpp>
+#include <GL\glew.h>
+
 class Box
 {
 public:
@@ -10,6 +12,8 @@ public:
 	b2Body* getBody();
 	b2Fixture* getFixture();
 	const glm::vec2& getDimensions();
+	void draw();
+	
 private:
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;

@@ -55,18 +55,7 @@ void Game::update(void(*updateFunc)())
 		//updateFunc();
 		for (int i = 0; i < boxes.size(); i++)
 		{
-			glm::vec4 destRect;
-			destRect.x = boxes[i].getBody()->GetPosition().x;
-			destRect.y = boxes[i].getBody()->GetPosition().y;
-			destRect.z = boxes[i].getDimensions().x;
-			destRect.w = boxes[i].getDimensions().y;			
-
-			glBegin(GL_QUADS);
-			glVertex2f(destRect.x, destRect.y);
-			glVertex2f(destRect.x + destRect.z, destRect.y);
-			glVertex2f(destRect.x + destRect.z, destRect.y + destRect.w);
-			glVertex2f(destRect.x, destRect.y + destRect.w);
-			glEnd();
+			boxes[i].draw();
 		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();

@@ -37,6 +37,22 @@ const glm::vec2 & Box::getDimensions()
 	return dimensions;
 }
 
+void Box::draw()
+{
+	glm::vec4 destRect;
+	destRect.x = getBody()->GetPosition().x;
+	destRect.y = getBody()->GetPosition().y;
+	destRect.z = getDimensions().x;
+	destRect.w = getDimensions().y;
+
+	glBegin(GL_QUADS);
+	glVertex2f(destRect.x, destRect.y);
+	glVertex2f(destRect.x + destRect.z, destRect.y);
+	glVertex2f(destRect.x + destRect.z, destRect.y + destRect.w);
+	glVertex2f(destRect.x, destRect.y + destRect.w);
+	glEnd();
+}
+
 b2Body * Box::getBody()
 {
 	return body;

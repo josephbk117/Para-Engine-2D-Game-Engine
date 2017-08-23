@@ -10,7 +10,7 @@ void drawOnUpdate();
 
 int main(int argc, char* argv[])
 {
-	Game game(600, 400, "2D Game Engine");
+	Game game(600, 600, "2D Game Engine");
 	game.update(drawOnUpdate);
 	return 0;
 }
