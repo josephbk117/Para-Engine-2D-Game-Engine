@@ -68,7 +68,7 @@ void Game::update(void(*updateFunc)())
 			circles[i].draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		std::chrono::duration<float> frameTime = clockTime.now() - start;		
+		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count()*10.0, 5, 6);
 	}
 	glfwTerminate();
@@ -84,8 +84,13 @@ void Game::processInput(GLFWwindow * window)
 		world->SetGravity(b2Vec2(0, 9.81));
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		world->SetGravity(b2Vec2(0, -9.81));
-	/*if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		circles[3].getBody()->ApplyForce(b2Vec2(0,50), circles[3].getBody()->GetPosition(), true);*/
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+	{
+		for (int i = 0; i < circles.size(); i++)
+		{
+			circles[i].getBody()->ApplyForce(b2Vec2(0, 1500),circles[i].getBody()->GetPosition(), true);
+		}		
+	}
 }
 
 Game::~Game()
