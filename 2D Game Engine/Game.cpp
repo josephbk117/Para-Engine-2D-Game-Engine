@@ -51,26 +51,25 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 void Game::update(void(*updateFunc)())
 {
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-100, 100, -100, 100, 0.1, -10);
 	glMatrixMode(GL_MODELVIEW);
 	while (!glfwWindowShouldClose(window))
 	{
+		std::chrono::steady_clock::time_point start = clockTime.now();
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
 		//updateFunc();
 		for (int i = 0; i < boxes.size(); i++)
-		{
 			boxes[i].draw();
-		}
 		for (int i = 0; i < circles.size(); i++)
-		{
 			circles[i].draw();
-		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		world->Step(1.0 / 300.0, 5, 6);
+		std::chrono::duration<float> frameTime = clockTime.now() - start;		
+		world->Step(frameTime.count()*10.0, 5, 6);
 	}
 	glfwTerminate();
 	return;
