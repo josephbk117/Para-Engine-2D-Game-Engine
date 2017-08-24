@@ -17,4 +17,3 @@ private:
 	b2Fixture* fixture = nullptr;
 	float radius;
 };
-
