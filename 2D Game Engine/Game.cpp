@@ -14,7 +14,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 	std::mt19937 randGenerator;
 	std::uniform_real_distribution<float> xPos(-60, 60);
-	std::uniform_real_distribution<float> yPos(10, 80);
+	std::uniform_real_distribution<float> yPos(10, 120);
 
 	const int NUM_BOXES = 120;
 	for (int i = 0; i < NUM_BOXES; i++)
