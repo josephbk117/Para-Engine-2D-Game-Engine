@@ -5,6 +5,7 @@
 #include<iostream>
 #include <vector>
 #include "Box.h"
+#include "Circle.h"
 
 class Game
 {
@@ -17,5 +18,6 @@ private: GLFWwindow* window;
 		 std::unique_ptr<b2World> world;
 		 static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 		 std::vector<Box> boxes;
+		 std::vector<Circle> circles;
 };
 

@@ -16,13 +16,20 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	std::uniform_real_distribution<float> xPos(-60, 60);
 	std::uniform_real_distribution<float> yPos(10, 120);
 
-	const int NUM_BOXES = 120;
+	const int NUM_BOXES = 10, NUM_CIRCLES = 10;
 	for (int i = 0; i < NUM_BOXES; i++)
 	{
 		Box box;
 		//world.get cus of unique pointer
 		box.init(world.get(), glm::vec2(xPos(randGenerator), yPos(randGenerator)), glm::vec2(6, 6));
 		boxes.push_back(box);
+	}
+	for (int i = 0; i < NUM_CIRCLES; i++)
+	{
+		Circle circle;
+		//world.get cus of unique pointer
+		circle.init(world.get(), glm::vec2(xPos(randGenerator), yPos(randGenerator)), 4);
+		circles.push_back(circle);
 	}
 
 	glfwInit();
@@ -57,9 +64,13 @@ void Game::update(void(*updateFunc)())
 		{
 			boxes[i].draw();
 		}
+		for (int i = 0; i < circles.size(); i++)
+		{
+			circles[i].draw();
+		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		world->Step(1.0 / 100.0, 5, 6);
+		world->Step(1.0 / 300.0, 5, 6);
 	}
 	glfwTerminate();
 	return;
@@ -74,6 +85,8 @@ void Game::processInput(GLFWwindow * window)
 		world->SetGravity(b2Vec2(0, 9.81));
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		world->SetGravity(b2Vec2(0, -9.81));
+	/*if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+		circles[3].getBody()->ApplyForce(b2Vec2(0,50), circles[3].getBody()->GetPosition(), true);*/
 }
 
 Game::~Game()
