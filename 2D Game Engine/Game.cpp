@@ -87,9 +87,12 @@ void Game::processInput(GLFWwindow * window)
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
 	{
 		for (int i = 0; i < circles.size(); i++)
-		{
-			circles[i].getBody()->ApplyForce(b2Vec2(0, 1500),circles[i].getBody()->GetPosition(), true);
-		}		
+			circles[i].getBody()->ApplyForce(b2Vec2(0, 1500), circles[i].getBody()->GetPosition(), true);
+	}
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+	{
+		for (int i = 0; i < boxes.size(); i++)
+			boxes[i].getBody()->ApplyForce(b2Vec2(0, 800), boxes[i].getBody()->GetPosition(), true);
 	}
 }
 
