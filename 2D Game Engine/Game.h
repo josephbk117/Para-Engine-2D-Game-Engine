@@ -7,6 +7,7 @@
 #include <chrono>
 #include "Box.h"
 #include "Circle.h"
+#include "Sprite.h"
 
 class Game
 {

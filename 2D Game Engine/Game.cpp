@@ -56,20 +56,25 @@ void Game::update(void(*updateFunc)())
 	glLoadIdentity();
 	glOrtho(-100, 100, -100, 100, 0.1, -10);
 	glMatrixMode(GL_MODELVIEW);
+	Sprite sprite;
+	sprite.init(20, 30, 50, 50);
 	while (!glfwWindowShouldClose(window))
 	{
 		std::chrono::steady_clock::time_point start = clockTime.now();
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
 		//updateFunc();
-		for (int i = 0; i < boxes.size(); i++)
+		/*for (int i = 0; i < boxes.size(); i++)
 			boxes[i].draw();
 		for (int i = 0; i < circles.size(); i++)
 			circles[i].draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
-		world->Step(frameTime.count()*10.0, 5, 6);
+		world->Step(frameTime.count()*10.0, 5, 6);*/
+		sprite.draw();
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 	glfwTerminate();
 	return;
