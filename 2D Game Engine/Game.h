@@ -8,6 +8,7 @@
 #include "Box.h"
 #include "Circle.h"
 #include "Sprite.h"
+#include "ShaderProgram.h"
 
 class Game
 {

@@ -8,9 +8,14 @@ class ShaderProgram
 public:
 	ShaderProgram();
 	~ShaderProgram();
-	void compileShader(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
+	void compileShaders(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 	void linkShaders();
+	void addAttribute(const std::string &attributeName);
+	void use();
+	void unuse();
 private:
 	GLuint programID, vertexShaderID, fragmentShaderID;
+	void compileShader(const std::string& filePath, GLuint ID);
+	int attributeCount;
 };
 

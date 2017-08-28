@@ -57,7 +57,11 @@ void Game::update(void(*updateFunc)())
 	glOrtho(-100, 100, -100, 100, 0.1, -10);
 	glMatrixMode(GL_MODELVIEW);
 	Sprite sprite;
-	sprite.init(20, 30, 50, 50);
+	sprite.init(0, 0, 0.5, 0.5);
+	ShaderProgram shaderProgram;
+	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs","F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
+	shaderProgram.addAttribute("vertexPosition");
+	shaderProgram.linkShaders();
 	while (!glfwWindowShouldClose(window))
 	{
 		std::chrono::steady_clock::time_point start = clockTime.now();
@@ -72,7 +76,9 @@ void Game::update(void(*updateFunc)())
 		glfwPollEvents();
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count()*10.0, 5, 6);*/
+		shaderProgram.use();
 		sprite.draw();
+		shaderProgram.unuse();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
