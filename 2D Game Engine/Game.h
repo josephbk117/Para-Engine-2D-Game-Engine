@@ -9,6 +9,7 @@
 #include "Circle.h"
 #include "Sprite.h"
 #include "ShaderProgram.h"
+#include "TextureLoader.h"
 
 class Game
 {

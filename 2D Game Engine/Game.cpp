@@ -62,6 +62,7 @@ void Game::update(void(*updateFunc)())
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs","F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
+	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\asteroid.png", false);
 	while (!glfwWindowShouldClose(window))
 	{
 		std::chrono::steady_clock::time_point start = clockTime.now();
@@ -77,8 +78,12 @@ void Game::update(void(*updateFunc)())
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count()*10.0, 5, 6);*/
 		shaderProgram.use();
+		glBindTexture(GL_TEXTURE_2D, texVal1);
+		GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
+		glUniform1i(textureLocation, 0);
 		sprite.draw();
 		shaderProgram.unuse();
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

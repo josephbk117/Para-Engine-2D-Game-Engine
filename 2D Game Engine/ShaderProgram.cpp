@@ -16,6 +16,7 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::compileShaders(const std::string & vertexShaderPath, const std::string & fragmentShaderPath)
 {
+	programID = glCreateProgram();
 	vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	if (vertexShaderID == 0)
 		std::cout << "ERROR : Vertex shader creation";
@@ -28,12 +29,10 @@ void ShaderProgram::compileShaders(const std::string & vertexShaderPath, const s
 
 void ShaderProgram::linkShaders()
 {
-	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
 
 	glLinkProgram(programID);
-	//Add error checking
 	GLint isLinked = 0;
 	glGetProgramiv(programID, GL_LINK_STATUS, &isLinked);
 	if (isLinked == GL_FALSE)
@@ -79,6 +78,11 @@ void ShaderProgram::unuse()
 	{
 		glDisableVertexAttribArray(i);
 	}
+}
+
+GLint ShaderProgram::getUniformLocation(const std::string & uniformName)
+{
+	return glGetUniformLocation(programID, uniformName.c_str());
 }
 
 void ShaderProgram::compileShader(const std::string & filePath, GLuint ID)
