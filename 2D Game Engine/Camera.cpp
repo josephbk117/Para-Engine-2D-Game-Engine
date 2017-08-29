@@ -33,11 +33,13 @@ vec2 Camera::getPosition()
 
 void Camera::setScale(float newScale)
 {
+	needsUpdate = true;
 	scale = newScale;
 }
 
 float Camera::getScale()
 {
+	needsUpdate = true;
 	return scale;
 }
 
@@ -51,5 +53,7 @@ void Camera::update()
 	if (needsUpdate)
 	{
 		viewMatrix = translate(orthoMatrix, vec3(-position.x, -position.y, 0));
+		viewMatrix = glm::scale(orthoMatrix, vec3(scale, scale, 0.0f));
+		needsUpdate = false;
 	}
 }

@@ -26,38 +26,38 @@ void Sprite::init(float x, float y, float width, float height)
 	
 	float vertexData[24];
 
-	vertexData[0] = x + width;
-	vertexData[1] = y + height;
+	vertexData[0] = x + (width * 0.5f);
+	vertexData[1] = y + (height * 0.5f);
 
 	vertexData[2] = 1.0f;
 	vertexData[3] = 1.0f;
 
-	vertexData[4] = x;
-	vertexData[5] = y + height;
+	vertexData[4] = x - (width * 0.5f);
+	vertexData[5] = y + (height * 0.5f);
 
 	vertexData[6] = 0.0f;
 	vertexData[7] = 1.0f;
 
-	vertexData[8] = x;
-	vertexData[9] = y;
+	vertexData[8] = x - (width * 0.5f);
+	vertexData[9] = y - (height * 0.5f);
 
 	vertexData[10] = 0.0f;
 	vertexData[11] = 0.0f;
 
-	vertexData[12] = x;
-	vertexData[13] = y;
+	vertexData[12] = x - (width * 0.5f);
+	vertexData[13] = y - (height * 0.5f);
 
 	vertexData[14] = 0.0f;
 	vertexData[15] = 0.0f;
 
-	vertexData[16] = x + width;
-	vertexData[17] = y;
+	vertexData[16] = x + (width * 0.5f);
+	vertexData[17] = y - (height * 0.5f);
 
 	vertexData[18] = 1.0f;
 	vertexData[19] = 0;
 
-	vertexData[20] = x + width;
-	vertexData[21] = y + height;
+	vertexData[20] = x + (width * 0.5f);
+	vertexData[21] = y + (height * 0.5f);
 
 	vertexData[22] = 1.0f;
 	vertexData[23] = 1.0f;

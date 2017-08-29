@@ -53,9 +53,9 @@ void Game::update(void(*updateFunc)())
 {
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-100, 100, -100, 100, 0.1, -10);
-	glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	//glOrtho(-100, 100, -100, 100, 0.1, -10);
+	//glMatrixMode(GL_MODELVIEW);
 	Sprite sprite;
 	sprite.init(0, 0, 0.5, 0.5);
 	ShaderProgram shaderProgram;
