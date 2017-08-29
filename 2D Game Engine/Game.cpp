@@ -56,8 +56,10 @@ void Game::update(void(*updateFunc)())
 	//glLoadIdentity();
 	//glOrtho(-100, 100, -100, 100, 0.1, -10);
 	//glMatrixMode(GL_MODELVIEW);
-	Sprite sprite;
+	Sprite sprite, sprite2, sprite3;
 	sprite.init(0, 0, 0.5, 0.5);
+	sprite2.init(-0.5, 0, 0.4, 0.4);
+	sprite3.init(-0.5, 0.5, 0.3, 0.3);
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
@@ -82,6 +84,8 @@ void Game::update(void(*updateFunc)())
 		GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
 		glUniform1i(textureLocation, 0);
 		sprite.draw();
+		sprite2.draw();
+		sprite3.draw();
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glfwSwapBuffers(window);
