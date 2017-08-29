@@ -21,10 +21,9 @@ void Sprite::init(float x, float y, float width, float height)
 	this->width = width;
 	this->height = height;
 
-	if (vboID == 0)
-	{
+	if (vboID == 0)	
 		glGenBuffers(1, &vboID);
-	}
+	
 	float vertexData[24];
 
 	vertexData[0] = x + width;
@@ -73,11 +72,9 @@ void Sprite::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
-
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
 	glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(1);

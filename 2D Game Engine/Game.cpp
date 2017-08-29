@@ -59,7 +59,7 @@ void Game::update(void(*updateFunc)())
 	Sprite sprite;
 	sprite.init(0, 0, 0.5, 0.5);
 	ShaderProgram shaderProgram;
-	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs","F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
+	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\asteroid.png", false);
@@ -95,7 +95,6 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		world->SetGravity(b2Vec2(0, 9.81));
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
