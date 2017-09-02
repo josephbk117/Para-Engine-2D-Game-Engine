@@ -2,8 +2,7 @@
 #include <random>
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
-{
-	camera.init(glm::vec2(600, 600));
+{	
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81));
 	//Ground
 	b2BodyDef groundBodyDef;
@@ -52,7 +51,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 void Game::update(void(*updateFunc)())
 {
-
+	camera.init(glm::vec2(600, 600));
 	glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 	//glOrtho(-100, 100, -100, 100, 0.1, -10);
@@ -121,8 +120,13 @@ void Game::processInput(GLFWwindow * window)
 			boxes[i].getBody()->ApplyForce(b2Vec2(0, 800), boxes[i].getBody()->GetPosition(), true);
 	}
 	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-		camera.setPosition(camera.getPosition() + glm::vec2(0, 0.001f));
-
+		camera.setPosition(camera.getPosition() + glm::vec2(0, 0.1f));
+	else if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+		camera.setPosition(camera.getPosition() + glm::vec2(0, -0.1f));
+	else if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+		camera.setPosition(camera.getPosition() + glm::vec2(-0.1f, 0));
+	else if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		camera.setPosition(camera.getPosition() + glm::vec2(0.1f, 0));
 }
 
 Game::~Game()

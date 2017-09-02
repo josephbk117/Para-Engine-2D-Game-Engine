@@ -19,6 +19,7 @@ private:
 	bool needsUpdate;
 	vec2 position;
 	mat4 orthoMatrix;
+	mat4 viewMatrix;
 	float scale;
 
 };
