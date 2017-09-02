@@ -3,6 +3,7 @@
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
+	camera.init(glm::vec2(600, 600));
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81));
 	//Ground
 	b2BodyDef groundBodyDef;
@@ -57,9 +58,9 @@ void Game::update(void(*updateFunc)())
 	//glOrtho(-100, 100, -100, 100, 0.1, -10);
 	//glMatrixMode(GL_MODELVIEW);
 	Sprite sprite, sprite2, sprite3;
-	sprite.init(0, 0, 0.5, 0.5);
-	sprite2.init(-0.5, 0, 0.4, 0.4);
-	sprite3.init(-0.5, 0.5, 0.3, 0.3);
+	sprite.init(400, 250, 90, 90);
+	sprite2.init(150, 410, 40, 40);
+	sprite3.init(200, 50, 60, 60);
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
@@ -70,6 +71,7 @@ void Game::update(void(*updateFunc)())
 		std::chrono::steady_clock::time_point start = clockTime.now();
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
+		camera.update();
 		//updateFunc();
 		/*for (int i = 0; i < boxes.size(); i++)
 			boxes[i].draw();
@@ -82,6 +84,11 @@ void Game::update(void(*updateFunc)())
 		shaderProgram.use();
 		glBindTexture(GL_TEXTURE_2D, texVal1);
 		GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
+
+		GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
+		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
+		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+
 		glUniform1i(textureLocation, 0);
 		sprite.draw();
 		sprite2.draw();
@@ -113,6 +120,9 @@ void Game::processInput(GLFWwindow * window)
 		for (int i = 0; i < boxes.size(); i++)
 			boxes[i].getBody()->ApplyForce(b2Vec2(0, 800), boxes[i].getBody()->GetPosition(), true);
 	}
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		camera.setPosition(camera.getPosition() + glm::vec2(0, 0.001f));
+
 }
 
 Game::~Game()

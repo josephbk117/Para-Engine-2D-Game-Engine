@@ -18,7 +18,6 @@ private:
 	vec2 screenDimensions;
 	bool needsUpdate;
 	vec2 position;
-	mat4 viewMatrix;
 	mat4 orthoMatrix;
 	float scale;
 

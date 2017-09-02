@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "ShaderProgram.h"
 #include "TextureLoader.h"
+#include "Camera.h"
 
 class Game
 {
@@ -17,6 +18,7 @@ public:
 	Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	void update(void(*updateFunc)());
 	void processInput(GLFWwindow *window);
+	Camera camera;
 
 	~Game();
 private: GLFWwindow* window;

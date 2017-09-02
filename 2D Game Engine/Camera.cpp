@@ -4,12 +4,10 @@ Camera::Camera()
 {
 	position = vec2(0.0f, 0.0f);
 	orthoMatrix = mat4(1.0f);
-	viewMatrix = mat4(1.0f);
 	scale = 1.0f;
 	needsUpdate = true;
 	screenDimensions = vec2(500, 500);
 }
-
 
 Camera::~Camera()
 {
@@ -24,6 +22,7 @@ void Camera::init(vec2 screenDimensions)
 void Camera::setPosition(const vec2& newPosition)
 {
 	position = newPosition;
+	needsUpdate = true;
 }
 
 vec2 Camera::getPosition()
@@ -52,8 +51,8 @@ void Camera::update()
 {
 	if (needsUpdate)
 	{
-		viewMatrix = translate(orthoMatrix, vec3(-position.x, -position.y, 0));
-		viewMatrix = glm::scale(orthoMatrix, vec3(scale, scale, 0.0f));
+		orthoMatrix = translate(orthoMatrix, vec3(-position.x, -position.y, 0));
+		orthoMatrix = glm::scale(orthoMatrix, vec3(scale, scale, 0.0f));
 		needsUpdate = false;
 	}
 }
