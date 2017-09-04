@@ -58,25 +58,20 @@ void Camera::update()
 	}
 }
 
-bool Camera::isObjectInCameraView(const vec2 & position, const vec2 dimensions)
+bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2 spriteDimensions)
 {
-	vec2 scaledScreenDimensions = vec2(screenDimensions.x, screenDimensions.y) / (scale * 2.0f);
+	vec2 scaledScreenDimensions = vec2((float)screenDimensions.x, (float)screenDimensions.y) / scale;
 	//Minimum distance before collision occurs
-	const float MIN_DISTANCE_X = dimensions.x / 2.0f + scaledScreenDimensions.x / 2.0f;
-	const float MIN_DISTANCE_Y = dimensions.y / 2.0f + scaledScreenDimensions.y / 2.0f;
+	const float MIN_DISTANCE_X = (float)spriteDimensions.x + scaledScreenDimensions.x;
+	const float MIN_DISTANCE_Y = (float)spriteDimensions.y + scaledScreenDimensions.y;
 
-	//Center position of the parameters
-	vec2 centerPos = position + dimensions / 2.0f;
-	//Center position of camera
-	vec2 centerCameraPos = position;
-	//Vector from input of camera
-	vec2 distVec = centerPos - centerCameraPos;
+	vec2 distVec = spritePosition - position;
 
 	//Get depth of collision
 	float xDepth = MIN_DISTANCE_X - abs(distVec.x);
 	float yDepth = MIN_DISTANCE_Y - abs(distVec.y);
 
-	//If either depths are greater than 0 then we collided
+	//If both depths are greater than 0 then we collided
 	if (xDepth > 0 && yDepth > 0)
 		return true;
 	return false;
