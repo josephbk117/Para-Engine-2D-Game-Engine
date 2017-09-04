@@ -14,6 +14,7 @@ public:
 	float getScale();
 	mat4 getOrthoMatrix();
 	void update();
+	bool isObjectInCameraView(const vec2 & position, const vec2 dimensions);
 private:
 	vec2 screenDimensions;
 	bool needsUpdate;

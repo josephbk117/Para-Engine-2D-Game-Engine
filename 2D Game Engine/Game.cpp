@@ -2,7 +2,7 @@
 #include <random>
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
-{	
+{
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81));
 	//Ground
 	b2BodyDef groundBodyDef;
@@ -31,6 +31,8 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		circle.init(world.get(), glm::vec2(xPos(randGenerator), yPos(randGenerator)), 4);
 		circles.push_back(circle);
 	}
+	std::uniform_real_distribution<float> x1Pos(-400, 400);
+	std::uniform_real_distribution<float> y1Pos(-420, 420);
 
 	glfwInit();
 	window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
@@ -47,6 +49,11 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
+
+	for (int i = 0; i < 50; i++)
+	{
+		spriteCollection[i].init(x1Pos(randGenerator), y1Pos(randGenerator), 50, 50);
+	}
 }
 
 void Game::update(void(*updateFunc)())
@@ -56,10 +63,11 @@ void Game::update(void(*updateFunc)())
 	//glLoadIdentity();
 	//glOrtho(-100, 100, -100, 100, 0.1, -10);
 	//glMatrixMode(GL_MODELVIEW);
-	Sprite sprite, sprite2, sprite3;
+	/*Sprite sprite, sprite2, sprite3;
 	sprite.init(400, 250, 90, 90);
 	sprite2.init(150, 410, 40, 40);
-	sprite3.init(200, 50, 60, 60);
+	sprite3.init(200, 50, 60, 60);*/
+
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
@@ -89,9 +97,16 @@ void Game::update(void(*updateFunc)())
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
 		glUniform1i(textureLocation, 0);
-		sprite.draw();
-		sprite2.draw();
-		sprite3.draw();
+		int count = 0;
+		for (int i = 0; i < 50; i++)
+		{
+			if (camera.isObjectInCameraView(spriteCollection[i].getPosition(), spriteCollection[i].getDimensions()))
+			{
+				spriteCollection[i].draw();
+				count++;
+			}
+		}
+		std::cout << "Drew : " << count << std::endl;
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glfwSwapBuffers(window);

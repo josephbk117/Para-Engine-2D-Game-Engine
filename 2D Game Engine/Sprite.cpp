@@ -1,12 +1,9 @@
 #include "Sprite.h"
 
-
-
 Sprite::Sprite()
 {
 	vboID = 0;
 }
-
 
 Sprite::~Sprite()
 {
@@ -21,9 +18,9 @@ void Sprite::init(float x, float y, float width, float height)
 	this->width = width;
 	this->height = height;
 
-	if (vboID == 0)	
+	if (vboID == 0)
 		glGenBuffers(1, &vboID);
-	
+
 	float vertexData[24];
 
 	vertexData[0] = x + (width * 0.5f);
@@ -79,4 +76,14 @@ void Sprite::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
+}
+
+glm::vec2 Sprite::getPosition()
+{
+	return glm::vec2(x, y);
+}
+
+glm::vec2 Sprite::getDimensions()
+{
+	return glm::vec2(width, height);
 }

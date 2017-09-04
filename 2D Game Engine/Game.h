@@ -27,5 +27,6 @@ private: GLFWwindow* window;
 		 std::vector<Box> boxes;
 		 std::vector<Circle> circles;
 		 std::chrono::steady_clock clockTime;
+		 Sprite spriteCollection[50];
 };
 
