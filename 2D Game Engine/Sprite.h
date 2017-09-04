@@ -10,6 +10,7 @@ public:
 	void draw();
 	glm::vec2 getPosition();
 	glm::vec2 getDimensions();
+	void setPosition(glm::vec2 newPosition);
 private:
 	float x, y, width, height;
 	GLuint vboID;

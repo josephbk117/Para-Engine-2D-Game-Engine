@@ -87,3 +87,9 @@ glm::vec2 Sprite::getDimensions()
 {
 	return glm::vec2(width, height);
 }
+
+void Sprite::setPosition(glm::vec2 newPosition)
+{
+	x = newPosition.x;
+	y = newPosition.y;
+}
