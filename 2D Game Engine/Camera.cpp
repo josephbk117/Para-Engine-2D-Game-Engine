@@ -60,10 +60,10 @@ void Camera::update()
 
 bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2 spriteDimensions)
 {
-	vec2 scaledScreenDimensions = vec2((float)screenDimensions.x, (float)screenDimensions.y) / scale;
-	//Minimum distance before collision occurs
-	const float MIN_DISTANCE_X = (float)spriteDimensions.x + scaledScreenDimensions.x;
-	const float MIN_DISTANCE_Y = (float)spriteDimensions.y + scaledScreenDimensions.y;
+	vec2 scaledScreenDimensions = vec2((float)screenDimensions.x, (float)screenDimensions.y) / (float)scale;
+
+	const float MIN_DISTANCE_X = scaledScreenDimensions.x + (float)spriteDimensions.x;
+	const float MIN_DISTANCE_Y = scaledScreenDimensions.y + (float)spriteDimensions.y;
 
 	vec2 distVec = spritePosition - position;
 
