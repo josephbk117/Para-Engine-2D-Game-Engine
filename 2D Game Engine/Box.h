@@ -8,7 +8,7 @@ class Box
 public:
 	Box();
 	~Box();
-	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension);
+	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension,b2BodyType bodyType);
 	b2Body* getBody();
 	b2Fixture* getFixture();
 	const glm::vec2& getDimensions();

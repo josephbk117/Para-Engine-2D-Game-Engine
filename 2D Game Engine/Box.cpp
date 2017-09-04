@@ -8,11 +8,11 @@ Box::~Box()
 {
 }
 
-void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension)
+void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType)
 {
 	dimensions = dimension;
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
+	bodyDef.type = bodyType;
 	bodyDef.position.Set(position.x, position.y);
 	body = world->CreateBody(&bodyDef);
 
