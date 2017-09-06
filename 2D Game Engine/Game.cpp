@@ -5,14 +5,6 @@
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81));
-	//Ground
-	/*b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0, -80);
-	b2Body* groundBody = world->CreateBody(&groundBodyDef);
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(80, 10);
-	groundBody->CreateFixture(&groundBox, 0);*/
-
 	std::mt19937 randGenerator;
 
 	std::uniform_real_distribution<float> x1Pos(-400, 400);
@@ -38,16 +30,11 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 void Game::update(void(*updateFunc)())
 {
 	camera.init(glm::vec2(600, 600));
-	glMatrixMode(GL_PROJECTION);
 
-	GameObject gameObj1;
-	gameObj1.sprite.init(20, 20, 50, 50);
-	gameObj1.boxCollider.init(world.get(), glm::vec2(0, 0), glm::vec2(50, 50), b2BodyType::b2_dynamicBody);
-
+	GameObject gameObj2(world.get(), glm::vec2(0, 240), glm::vec2(50, 50), b2BodyType::b2_dynamicBody);
+	GameObject gameObj1(world.get(), glm::vec2(0, 200), glm::vec2(50, 50), b2BodyType::b2_dynamicBody);
 	//Ground
-	GameObject ground;
-	ground.boxCollider.init(world.get(), glm::vec2(0, -80), glm::vec2(80, 10), b2BodyType::b2_staticBody);
-	ground.sprite.init(0, -80, 180, 30);
+	GameObject ground(world.get(), glm::vec2(0, 120), glm::vec2(50, 50), b2BodyType::b2_staticBody);
 
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
@@ -71,37 +58,16 @@ void Game::update(void(*updateFunc)())
 		GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
-
-		/*GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
-		glm::mat4 modelMat;
-		modelMat = glm::mat4(1.0);
-		modelMat = glm::translate(modelMat, glm::vec3(gameObj1.boxCollider.getBody()->GetPosition().x,
-			gameObj1.boxCollider.getBody()->GetPosition().y, 0));
-		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));*/
-
 		glUniform1i(textureLocation, 0);
-		gameObj1.drawObject(shaderProgram);
 
-		/*modelMat = glm::mat4(1.0);
-		modelMat = glm::translate(modelMat, glm::vec3(ground.boxCollider.getBody()->GetPosition().x,
-			ground.boxCollider.getBody()->GetPosition().y, 0));
-		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));*/
+		gameObj1.drawObject(shaderProgram);
+		gameObj2.drawObject(shaderProgram);
 		ground.drawObject(shaderProgram);
 
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		/*int count = 0;
-		for (int i = 0; i < 50; i++)
-		{
-		if (camera.isObjectInCameraView(spriteCollection[i].getPosition(), spriteCollection[i].getDimensions()))
-		{
-		spriteCollection[i].draw();
-		count++;
-		}
-		}
-		std::cout << "Drew : " << count << std::endl;*/
 	}
 	glfwTerminate();
 	return;

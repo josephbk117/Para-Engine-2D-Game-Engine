@@ -9,7 +9,7 @@
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType);
 	~GameObject();
 	Sprite sprite;
 	Box boxCollider;

@@ -17,7 +17,8 @@ void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & di
 	body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(dimension.x / 2.0, dimension.y / 2.0);
+	//boxShape.SetAsBox(dimension.x / 2.0, dimension.y / 2.0);
+	boxShape.SetAsBox( 1.0, 1.0);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxShape;
@@ -44,7 +45,7 @@ void Box::draw()
 	destRect.y = getBody()->GetPosition().y;
 	destRect.z = getDimensions().x;
 	destRect.w = getDimensions().y;
-
+	glColor3f(0.6, 0.1, 1.0);
 	glBegin(GL_QUADS);
 	glVertex2f(destRect.x, destRect.y);
 	glVertex2f(destRect.x + destRect.z, destRect.y);
