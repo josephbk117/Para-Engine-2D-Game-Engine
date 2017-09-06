@@ -72,21 +72,21 @@ void Game::update(void(*updateFunc)())
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-		GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
+		/*GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
 		glm::mat4 modelMat;
 		modelMat = glm::mat4(1.0);
 		modelMat = glm::translate(modelMat, glm::vec3(gameObj1.boxCollider.getBody()->GetPosition().x,
 			gameObj1.boxCollider.getBody()->GetPosition().y, 0));
-		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));
+		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));*/
 
 		glUniform1i(textureLocation, 0);
-		gameObj1.drawObject();
+		gameObj1.drawObject(shaderProgram);
 
-		modelMat = glm::mat4(1.0);
+		/*modelMat = glm::mat4(1.0);
 		modelMat = glm::translate(modelMat, glm::vec3(ground.boxCollider.getBody()->GetPosition().x,
 			ground.boxCollider.getBody()->GetPosition().y, 0));
-		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));
-		ground.drawObject();
+		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));*/
+		ground.drawObject(shaderProgram);
 
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
