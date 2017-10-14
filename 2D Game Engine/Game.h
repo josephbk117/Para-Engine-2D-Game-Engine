@@ -11,6 +11,7 @@
 #include "ShaderProgram.h"
 #include "TextureLoader.h"
 #include "Camera.h"
+#include "GameObject.h"
 
 class Game
 {
@@ -27,6 +28,6 @@ private: GLFWwindow* window;
 		 std::vector<Box> boxes;
 		 std::vector<Circle> circles;
 		 std::chrono::steady_clock clockTime;
-		 Sprite spriteCollection[50];
+		 std::vector<GameObject*> gameObjects;
 };
 

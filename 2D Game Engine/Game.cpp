@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "GameObject.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include <random>
@@ -29,26 +28,39 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << " Glew initialsed" << std::endl;
 	// Setup ImGui binding
 	ImGui_ImplGlfwGL3_Init(window, true);
+	GameObject* tempGameObject;
+	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
+		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
+	tempGameObject->setName("Sama Baba");
+	gameObjects.push_back(tempGameObject);
+
+	tempGameObject = new GameObject(world.get(), glm::vec2(20, 300),
+		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
+	tempGameObject->setName("Loco baoco");
+	gameObjects.push_back(tempGameObject);
+
+	tempGameObject = new GameObject(world.get(), glm::vec2(-10, 250),
+		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
+	tempGameObject->setName("Gaga Googoo");
+	gameObjects.push_back(tempGameObject);
+
+	tempGameObject = new GameObject(world.get(), glm::vec2(0, 0),
+		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
+	tempGameObject->setName("Jaja Kacha");
+	gameObjects.push_back(tempGameObject);
+
 }
 ImVec4 clearColour;
 void Game::update(void(*updateFunc)())
 {
 	camera.init(glm::vec2(600, 600));
 
-	GameObject gameObj2(world.get(), glm::vec2(0, 600), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	GameObject gameObj1(world.get(), glm::vec2(0, 100), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	GameObject ground(world.get(), glm::vec2(0, 0), glm::vec2(50, 50), b2BodyType::b2_staticBody, 0);
-
-	gameObj1.setName("Mid object");
-	gameObj2.setName("Top object");
-	ground.setName("Ground");
-
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
 
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\asteroid.png", false);
+	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\frasa.png", false);
 	while (!glfwWindowShouldClose(window))
 	{
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -58,17 +70,14 @@ void Game::update(void(*updateFunc)())
 		camera.update();
 		//updateFunc();	
 
+		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			static float f = 0.0f;
-			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObj1.getName().c_str(),
-				gameObj1.getPosition().x, gameObj1.getPosition().y);
-			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObj2.getName().c_str(),
-				gameObj2.getPosition().x, gameObj2.getPosition().y);
-			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", ground.getName().c_str(),
-				ground.getPosition().x, ground.getPosition().y);
-			ImGui::ColorEdit3("clear color", (float*)&clearColour);
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObjects[i]->getName().c_str(),
+				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y);
 		}
+		ImGui::ColorEdit3("clear color", (float*)&clearColour);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
@@ -82,9 +91,10 @@ void Game::update(void(*updateFunc)())
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 
-		gameObj1.drawObject(shaderProgram);
-		gameObj2.drawObject(shaderProgram);
-		ground.drawObject(shaderProgram);
+		for (int i = 0; i < gameObjects.size(); i++)
+		{
+			gameObjects[i]->drawObject(shaderProgram);
+		}
 
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
