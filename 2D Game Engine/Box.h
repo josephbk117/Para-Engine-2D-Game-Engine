@@ -11,12 +11,10 @@ public:
 	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension,b2BodyType bodyType,float density);
 	b2Body* getBody();
 	b2Fixture* getFixture();
-	const glm::vec2& getDimensions();
-	void draw();
-	
+	const glm::vec2& getDimensions();	
 private:
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
-	glm::vec2 dimensions;
+	glm::vec2 dimension;
 };
 

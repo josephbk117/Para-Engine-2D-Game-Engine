@@ -35,10 +35,13 @@ void Game::update(void(*updateFunc)())
 {
 	camera.init(glm::vec2(600, 600));
 
-	GameObject gameObj2(world.get(), glm::vec2(0, 280), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	GameObject gameObj1(world.get(), glm::vec2(0, 200), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	//Ground
-	GameObject ground(world.get(), glm::vec2(0, 160), glm::vec2(50, 50), b2BodyType::b2_staticBody, 0);
+	GameObject gameObj2(world.get(), glm::vec2(0, 600), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
+	GameObject gameObj1(world.get(), glm::vec2(0, 100), glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
+	GameObject ground(world.get(), glm::vec2(0, 0), glm::vec2(50, 50), b2BodyType::b2_staticBody, 0);
+
+	gameObj1.setName("Mid object");
+	gameObj2.setName("Top object");
+	ground.setName("Ground");
 
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
@@ -54,15 +57,19 @@ void Game::update(void(*updateFunc)())
 		processInput(window);
 		camera.update();
 		//updateFunc();	
-		
+
 		{
 			static float f = 0.0f;
-			ImGui::Text("PLAY AROUND");
+			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObj1.getName().c_str(),
+				gameObj1.getPosition().x, gameObj1.getPosition().y);
+			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObj2.getName().c_str(),
+				gameObj2.getPosition().x, gameObj2.getPosition().y);
+			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", ground.getName().c_str(),
+				ground.getPosition().x, ground.getPosition().y);
 			ImGui::ColorEdit3("clear color", (float*)&clearColour);
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		}
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
-				
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);

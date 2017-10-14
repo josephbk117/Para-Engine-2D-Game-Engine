@@ -13,6 +13,11 @@ public:
 	~GameObject();
 	Sprite sprite;
 	Box boxCollider;
+	glm::vec2 getPosition();
+	void setName(const std::string& name);
+	std::string getName();
 	void drawObject(ShaderProgram &shader);
+private:
+	std::string name;
 };
 

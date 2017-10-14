@@ -8,17 +8,16 @@ Box::~Box()
 {
 }
 
-void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType,float density)
+void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType, float density)
 {
-	dimensions = dimension;
+	this->dimension = dimension;
 	b2BodyDef bodyDef;
 	bodyDef.type = bodyType;
 	bodyDef.position.Set(position.x, position.y);
 	body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
-	//boxShape.SetAsBox(dimension.x / 2.0, dimension.y / 2.0);
-	boxShape.SetAsBox( 2.0, 2.0);
+	boxShape.SetAsBox(dimension.x / 2.0f, dimension.y / 2.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxShape;
@@ -35,23 +34,7 @@ b2Fixture * Box::getFixture()
 
 const glm::vec2 & Box::getDimensions()
 {
-	return dimensions;
-}
-
-void Box::draw()
-{
-	glm::vec4 destRect;
-	destRect.x = getBody()->GetPosition().x;
-	destRect.y = getBody()->GetPosition().y;
-	destRect.z = getDimensions().x;
-	destRect.w = getDimensions().y;
-	glColor3f(0.6, 0.1, 1.0);
-	glBegin(GL_QUADS);
-	glVertex2f(destRect.x, destRect.y);
-	glVertex2f(destRect.x + destRect.z, destRect.y);
-	glVertex2f(destRect.x + destRect.z, destRect.y + destRect.w);
-	glVertex2f(destRect.x, destRect.y + destRect.w);
-	glEnd();
+	return dimension;
 }
 
 b2Body * Box::getBody()
