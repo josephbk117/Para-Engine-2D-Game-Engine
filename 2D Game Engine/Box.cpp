@@ -8,7 +8,7 @@ Box::~Box()
 {
 }
 
-void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType)
+void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType,float density)
 {
 	dimensions = dimension;
 	b2BodyDef bodyDef;
@@ -18,11 +18,11 @@ void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & di
 
 	b2PolygonShape boxShape;
 	//boxShape.SetAsBox(dimension.x / 2.0, dimension.y / 2.0);
-	boxShape.SetAsBox( 1.0, 1.0);
+	boxShape.SetAsBox( 2.0, 2.0);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxShape;
-	fixtureDef.density = 1.4;
+	fixtureDef.density = density;
 	fixtureDef.friction = 0.3;
 
 	fixture = body->CreateFixture(&fixtureDef);

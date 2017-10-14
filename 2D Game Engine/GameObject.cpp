@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(b2World *world,glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType)
+GameObject::GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType, float density)
 {
 	sprite.init(position.x, position.y, dimensions.x, dimensions.y);
-	boxCollider.init(world, position, dimensions, bodyType);
+	boxCollider.init(world, position, dimensions, bodyType,density);
 }
 
 
