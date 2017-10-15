@@ -17,7 +17,9 @@ public:
 	void setName(const std::string& name);
 	std::string getName();
 	void drawObject(ShaderProgram &shader);
+	void setTextureID(unsigned int textureID);
 private:
 	std::string name;
+	unsigned int textureID;
 };
 

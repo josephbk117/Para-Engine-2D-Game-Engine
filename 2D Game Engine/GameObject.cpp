@@ -35,5 +35,11 @@ void GameObject::drawObject(ShaderProgram &shaderProgram)
 	modelMat = glm::translate(modelMat, glm::vec3(this->boxCollider.getBody()->GetPosition().x,
 		this->boxCollider.getBody()->GetPosition().y, 0));
 	glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));
+	glBindTexture(GL_TEXTURE_2D, textureID);
 	sprite.draw();
+}
+
+void GameObject::setTextureID(unsigned int textureID)
+{
+	this->textureID = textureID;
 }

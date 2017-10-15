@@ -29,24 +29,34 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	// Setup ImGui binding
 	ImGui_ImplGlfwGL3_Init(window, true);
 	GameObject* tempGameObject;
+
+	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\frasa.png", false);
+	unsigned int texVal2 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\mamma.png", false);
+	
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
 	tempGameObject->setName("Sama Baba");
+	tempGameObject->setTextureID(texVal1);
 	gameObjects.push_back(tempGameObject);
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(20, 300),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
 	tempGameObject->setName("Loco baoco");
+	tempGameObject->setTextureID(texVal1);
 	gameObjects.push_back(tempGameObject);
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(-10, 250),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
 	tempGameObject->setName("Gaga Googoo");
+	tempGameObject->setTextureID(texVal1);
+
 	gameObjects.push_back(tempGameObject);
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 0),
 		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
 	tempGameObject->setName("Jaja Kacha");
+	tempGameObject->setTextureID(texVal2);
+
 	gameObjects.push_back(tempGameObject);
 
 }
@@ -60,7 +70,6 @@ void Game::update(void(*updateFunc)())
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
 
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\frasa.png", false);
 	while (!glfwWindowShouldClose(window))
 	{
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -75,7 +84,7 @@ void Game::update(void(*updateFunc)())
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObjects[i]->getName().c_str(),
 				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y);
 		}
-		ImGui::ColorEdit3("clear color", (float*)&clearColour);
+		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
@@ -83,7 +92,6 @@ void Game::update(void(*updateFunc)())
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
 		shaderProgram.use();
-		glBindTexture(GL_TEXTURE_2D, texVal1);
 		GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
 
 		GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
@@ -92,9 +100,7 @@ void Game::update(void(*updateFunc)())
 		glUniform1i(textureLocation, 0);
 
 		for (int i = 0; i < gameObjects.size(); i++)
-		{
 			gameObjects[i]->drawObject(shaderProgram);
-		}
 
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
