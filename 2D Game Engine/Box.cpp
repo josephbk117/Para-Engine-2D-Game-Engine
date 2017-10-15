@@ -22,7 +22,7 @@ void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & di
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxShape;
 	fixtureDef.density = density;
-	fixtureDef.friction = 0.3;
+	fixtureDef.friction = 0.3f;
 
 	fixture = body->CreateFixture(&fixtureDef);
 }

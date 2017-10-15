@@ -5,7 +5,7 @@
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
-	world = std::make_unique<b2World>(b2Vec2(0, -9.81));
+	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
 	std::mt19937 randGenerator;
 
 	std::uniform_real_distribution<float> x1Pos(-400, 400);
@@ -79,7 +79,7 @@ void Game::update(void(*updateFunc)())
 		camera.update();
 		//updateFunc();	
 
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObjects[i]->getName().c_str(),
 				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y);
@@ -99,7 +99,7 @@ void Game::update(void(*updateFunc)())
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < gameObjects.size(); i++)
 			gameObjects[i]->drawObject(shaderProgram);
 
 		shaderProgram.unuse();
@@ -112,7 +112,8 @@ void Game::update(void(*updateFunc)())
 	glfwTerminate();
 	return;
 }
-
+bool pressed = false;
+unsigned char* data[3 * 100 * 100];
 void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

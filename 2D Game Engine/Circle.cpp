@@ -24,8 +24,8 @@ void Circle::init(b2World * world, const glm::vec2 & position, float radius)
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &circleShape;
-	fixtureDef.density = 1.4;
-	fixtureDef.friction = 0.3;
+	fixtureDef.density = 1.4f;
+	fixtureDef.friction = 0.3f;
 
 	fixture = body->CreateFixture(&fixtureDef);
 }
@@ -44,7 +44,7 @@ void Circle::draw()
 {
 	glm::vec2 center = glm::vec2(body->GetPosition().x, body->GetPosition().y);
 	int segmentCount = 10;
-	float incVal = (2.0*(22.0 / 7.0)) / (float)segmentCount;
+	float incVal = (2.0f*(22.0f / 7.0f)) / (float)segmentCount;
 
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < segmentCount; i++)
