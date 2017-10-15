@@ -43,3 +43,8 @@ void GameObject::setTextureID(unsigned int textureID)
 {
 	this->textureID = textureID;
 }
+
+void GameObject::setObjectVelocity(float x, float y)
+{
+	boxCollider.getBody()->SetLinearVelocity(b2Vec2(x, y));
+}

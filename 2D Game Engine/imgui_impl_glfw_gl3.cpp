@@ -309,7 +309,7 @@ void    ImGui_ImplGlfwGL3_InvalidateDeviceObjects()
     }
 }
 
-bool    ImGui_ImplGlfwGL3_Init(GLFWwindow* window, bool install_callbacks)
+bool    IMGUI_INIT(GLFWwindow* window, bool install_callbacks)
 {
     g_Window = window;
 
@@ -353,7 +353,7 @@ bool    ImGui_ImplGlfwGL3_Init(GLFWwindow* window, bool install_callbacks)
     return true;
 }
 
-void ImGui_ImplGlfwGL3_Shutdown()
+void IMGUI_SHUTDOWN()
 {
     ImGui_ImplGlfwGL3_InvalidateDeviceObjects();
     ImGui::Shutdown();

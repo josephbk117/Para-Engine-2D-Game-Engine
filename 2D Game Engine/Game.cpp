@@ -27,12 +27,12 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	else
 		std::cout << " Glew initialsed" << std::endl;
 	// Setup ImGui binding
-	ImGui_ImplGlfwGL3_Init(window, true);
+	IMGUI_INIT(window, true);
 	GameObject* tempGameObject;
 
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\mamma.png", false);
-	
+
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
 	tempGameObject->setName("Sama Baba");
@@ -108,7 +108,7 @@ void Game::update(void(*updateFunc)())
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-	ImGui_ImplGlfwGL3_Shutdown();
+	IMGUI_SHUTDOWN();
 	glfwTerminate();
 	return;
 }
@@ -118,17 +118,13 @@ void Game::processInput(GLFWwindow * window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		world->SetGravity(b2Vec2(0, 9.81));
+		gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		world->SetGravity(b2Vec2(0, -9.81));
+		gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		world->SetGravity(b2Vec2(10, world->GetGravity().y));
-	}
+		gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		world->SetGravity(b2Vec2(-10, world->GetGravity().y));
-	}
+		gameObjects[0]->setObjectVelocity(50.0f, 0.0);
 	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(0, 1.0f));
 	else if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
