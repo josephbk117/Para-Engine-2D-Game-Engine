@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include <random>
+#include "stb_image_write.h"
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
@@ -113,7 +114,6 @@ void Game::update(void(*updateFunc)())
 	return;
 }
 bool pressed = false;
-unsigned char* data[3 * 100 * 100];
 void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -134,6 +134,7 @@ void Game::processInput(GLFWwindow * window)
 		camera.setPosition(camera.getPosition() + glm::vec2(-1.0f, 0));
 	else if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(1.0f, 0));
+
 }
 
 Game::~Game()
