@@ -31,8 +31,8 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	IMGUI_INIT(window, true);
 	GameObject* tempGameObject;
 
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\frasa.png", false);
-	unsigned int texVal2 = TextureLoader::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\mamma.png", false);
+	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
+	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
@@ -73,7 +73,7 @@ void Game::update(void(*updateFunc)())
 
 	while (!glfwWindowShouldClose(window))
 	{
-		ImGui_ImplGlfwGL3_NewFrame();
+		IMGUI_NEWFRAME();
 		std::chrono::steady_clock::time_point start = clockTime.now();
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);

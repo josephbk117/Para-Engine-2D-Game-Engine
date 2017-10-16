@@ -359,7 +359,7 @@ void IMGUI_SHUTDOWN()
     ImGui::Shutdown();
 }
 
-void ImGui_ImplGlfwGL3_NewFrame()
+void IMGUI_NEWFRAME()
 {
     if (!g_FontTexture)
         ImGui_ImplGlfwGL3_CreateDeviceObjects();
