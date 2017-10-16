@@ -48,3 +48,8 @@ void GameObject::setObjectVelocity(float x, float y)
 {
 	boxCollider.getBody()->SetLinearVelocity(b2Vec2(x, y));
 }
+
+void GameObject::setAngularVelocity(float value)
+{
+	boxCollider.getBody()->SetAngularVelocity(value);
+}

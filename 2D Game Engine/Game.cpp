@@ -131,13 +131,17 @@ void Game::processInput(GLFWwindow * window)
 		gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		gameObjects[0]->setObjectVelocity(50.0f, 0.0);
-	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+		gameObjects[0]->setAngularVelocity(-10.0f);
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+		gameObjects[0]->setAngularVelocity(10.0f);
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(0, 1.0f));
-	else if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(0, -1.0f));
-	else if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(-1.0f, 0));
-	else if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(1.0f, 0));
 
 }

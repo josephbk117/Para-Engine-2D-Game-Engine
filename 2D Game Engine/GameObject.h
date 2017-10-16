@@ -19,6 +19,7 @@ public:
 	void drawObject(ShaderProgram &shader);
 	void setTextureID(unsigned int textureID);
 	void setObjectVelocity(float x, float y);
+	void setAngularVelocity(float value);
 private:
 	std::string name;
 	unsigned int textureID;
