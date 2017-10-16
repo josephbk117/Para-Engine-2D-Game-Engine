@@ -59,6 +59,11 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->setTextureID(texVal2);
 
 	gameObjects.push_back(tempGameObject);
+	tempGameObject = new GameObject(world.get(), glm::vec2(150, 200),
+		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
+	tempGameObject->setTextureID(texVal2);
+
+	gameObjects.push_back(tempGameObject);
 
 }
 ImVec4 clearColour;
@@ -67,7 +72,7 @@ void Game::update(void(*updateFunc)())
 	camera.init(glm::vec2(600, 600));
 
 	ShaderProgram shaderProgram;
-	shaderProgram.compileShaders("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.vs", "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\spriteBase.fs");
+	shaderProgram.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
 

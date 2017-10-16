@@ -126,7 +126,6 @@
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="imgui.cpp" />
@@ -143,7 +142,6 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Circle.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="imconfig.h" />
