@@ -3,7 +3,7 @@
 #include "imgui_impl_glfw_gl3.h"
 #include <random>
 #include "stb_image_write.h"
-
+//Reuires screen width, screen height and title of window
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -33,6 +33,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
+	
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
@@ -67,15 +68,23 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 }
 ImVec4 clearColour;
+//Pass in a function to be run every frame
 void Game::update(void(*updateFunc)())
 {
 	camera.init(glm::vec2(600, 600));
+	camera.setPosition(glm::vec2(0, 0));
 
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
 	shaderProgram.linkShaders();
 
+	GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
+	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
+
+	Sprite bgSprite;
+	bgSprite.init(-200, -200, 800, 700);
+	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	while (!glfwWindowShouldClose(window))
 	{
 		IMGUI_NEWFRAME();
@@ -98,16 +107,15 @@ void Game::update(void(*updateFunc)())
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
 		shaderProgram.use();
-		GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
-
-		GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
+		
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
-
+		bgSprite.setTextureID(texVal3);
+		bgSprite.draw();
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 			gameObjects[i]->drawObject(shaderProgram);
-
+		
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();

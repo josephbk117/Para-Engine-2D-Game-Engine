@@ -18,7 +18,7 @@ Camera::~Camera()
 void Camera::init(vec2 screenDimensions)
 {
 	this->screenDimensions = screenDimensions;
-	orthoMatrix = ortho(0.0f, (float)screenDimensions.x, 0.0f, (float)screenDimensions.y);
+	orthoMatrix = ortho(-((float)screenDimensions.x/2.0f), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f));
 }
 
 void Camera::setPosition(const vec2& newPosition)

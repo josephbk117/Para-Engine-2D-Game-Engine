@@ -66,6 +66,7 @@ void Sprite::init(float x, float y, float width, float height)
 
 void Sprite::draw()
 {
+	glBindTexture(GL_TEXTURE_2D, textureID);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
@@ -76,6 +77,11 @@ void Sprite::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
+}
+
+void Sprite::setTextureID(unsigned int textureID)
+{
+	this->textureID = textureID;
 }
 
 glm::vec2 Sprite::getPosition()

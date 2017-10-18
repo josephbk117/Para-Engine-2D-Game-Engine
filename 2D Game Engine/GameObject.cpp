@@ -35,7 +35,7 @@ void GameObject::drawObject(ShaderProgram &shaderProgram)
 		boxCollider.getBody()->GetPosition().y, 0));
 	modelMat = glm::rotate(modelMat, boxCollider.getBody()->GetAngle(), glm::vec3(0, 0, 1.0f));
 	glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	sprite.setTextureID(textureID);
 	sprite.draw();
 }
 
