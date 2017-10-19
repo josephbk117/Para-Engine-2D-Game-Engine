@@ -18,7 +18,7 @@ glm::vec2 GameObject::getPosition()
 
 void GameObject::setPosition(float x, float y)
 {
-	boxCollider.getBody()->SetTransform(b2Vec2(x, y), 0.0f);
+	boxCollider.getBody()->SetTransform(b2Vec2(x, y), boxCollider.getBody()->GetAngle());
 }
 
 void GameObject::setName(const std::string & name)
@@ -34,12 +34,12 @@ std::string GameObject::getName()
 void GameObject::drawObject(ShaderProgram &shaderProgram)
 {
 	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
-	glm::mat4 modelMat;
-	modelMat = glm::mat4(1);
-	modelMat = glm::translate(modelMat, glm::vec3(boxCollider.getBody()->GetPosition().x,
+
+	matrixTransform = glm::mat4(1);
+	matrixTransform = glm::translate(matrixTransform, glm::vec3(boxCollider.getBody()->GetPosition().x,
 		boxCollider.getBody()->GetPosition().y, 0));
-	modelMat = glm::rotate(modelMat, boxCollider.getBody()->GetAngle(), glm::vec3(0, 0, 1.0f));
-	glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(modelMat[0][0]));
+	matrixTransform = glm::rotate(matrixTransform, boxCollider.getBody()->GetAngle(), glm::vec3(0, 0, 1.0f));
+	glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
 	sprite.setTextureID(textureID);
 	sprite.draw();
 }
@@ -64,4 +64,14 @@ void GameObject::translate(glm::vec2 translation)
 	boxCollider.getBody()->SetAwake(false);
 	setPosition(getPosition().x + translation.x, getPosition().y + translation.y);
 	boxCollider.getBody()->SetAwake(true);
+}
+
+glm::mat4 GameObject::getTransform()
+{
+	return matrixTransform;
+}
+
+float GameObject::getAxisRotation()
+{
+	return boxCollider.getBody()->GetAngle();
 }

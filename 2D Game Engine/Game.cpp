@@ -94,8 +94,8 @@ void Game::update(void(*updateFunc)())
 
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
-			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f )", gameObjects[i]->getName().c_str(),
-				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y);
+			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
+				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y, gameObjects[i]->getAxisRotation());
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

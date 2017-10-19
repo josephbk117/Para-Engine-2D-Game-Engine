@@ -6,10 +6,11 @@
 #include <Box2D\Box2D.h>
 #include "Box.h"
 #include "ShaderProgram.h"
+#include "Transform.h"
 class GameObject
 {
 public:
-	GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType,float density);
+	GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType, float density);
 	~GameObject();
 	Sprite sprite;
 	Box boxCollider;
@@ -22,8 +23,11 @@ public:
 	void setObjectVelocity(float x, float y);
 	void setAngularVelocity(float value);
 	void translate(glm::vec2 translation);
+	glm::mat4 getTransform();
+	float getAxisRotation();
 private:
 	std::string name;
 	unsigned int textureID;
+	glm::mat4 matrixTransform;
 };
 
