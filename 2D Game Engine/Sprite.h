@@ -12,9 +12,11 @@ public:
 	glm::vec2 getPosition();
 	glm::vec2 getDimensions();
 	void setPosition(glm::vec2 newPosition);
+	void setDimension(glm::vec2 newDimension);
 private:
 	float x, y, width, height;
 	GLuint vboID;
 	GLuint textureID;
+	void setUpSpriteDimensions(float width, float height);
 };
 

@@ -14,12 +14,14 @@ public:
 	Sprite sprite;
 	Box boxCollider;
 	glm::vec2 getPosition();
+	void setPosition(float x, float y);
 	void setName(const std::string& name);
 	std::string getName();
 	void drawObject(ShaderProgram &shader);
 	void setTextureID(unsigned int textureID);
 	void setObjectVelocity(float x, float y);
 	void setAngularVelocity(float value);
+	void translate(glm::vec2 translation);
 private:
 	std::string name;
 	unsigned int textureID;

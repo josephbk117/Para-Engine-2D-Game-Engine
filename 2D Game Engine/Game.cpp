@@ -33,7 +33,6 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
-	
 
 	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
@@ -65,15 +64,14 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->setTextureID(texVal2);
 
 	gameObjects.push_back(tempGameObject);
-
+	camera.init(glm::vec2(600, 600));
+	camera.setPosition(glm::vec2(0, 0));
 }
 ImVec4 clearColour;
 //Pass in a function to be run every frame
+float loll = 0;
 void Game::update(void(*updateFunc)())
 {
-	camera.init(glm::vec2(600, 600));
-	camera.setPosition(glm::vec2(0, 0));
-
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
 	shaderProgram.addAttribute("vertexPosition");
@@ -92,7 +90,7 @@ void Game::update(void(*updateFunc)())
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
 		camera.update();
-		//updateFunc();	
+		//updateFunc();
 
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
@@ -104,10 +102,13 @@ void Game::update(void(*updateFunc)())
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
+		bgSprite.setDimension(glm::vec2(600 + 50 * sin(loll), 600 + 50 * cos(loll)));
+
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
+		loll += frameTime.count() * 10;
 		shaderProgram.use();
-		
+
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
@@ -115,7 +116,7 @@ void Game::update(void(*updateFunc)())
 		bgSprite.draw();
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 			gameObjects[i]->drawObject(shaderProgram);
-		
+
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
@@ -132,13 +133,17 @@ void Game::processInput(GLFWwindow * window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
+		//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
+		gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
+		//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
+		gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
+		//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
+		gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		gameObjects[0]->setObjectVelocity(50.0f, 0.0);
+		//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
+		gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
 		gameObjects[0]->setAngularVelocity(-10.0f);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
@@ -151,7 +156,6 @@ void Game::processInput(GLFWwindow * window)
 		camera.setPosition(camera.getPosition() + glm::vec2(-1.0f, 0));
 	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(1.0f, 0));
-
 }
 
 Game::~Game()

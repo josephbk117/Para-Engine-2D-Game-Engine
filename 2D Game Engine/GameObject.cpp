@@ -16,6 +16,11 @@ glm::vec2 GameObject::getPosition()
 	return glm::vec2(boxCollider.getBody()->GetPosition().x, boxCollider.getBody()->GetPosition().y);
 }
 
+void GameObject::setPosition(float x, float y)
+{
+	boxCollider.getBody()->SetTransform(b2Vec2(x, y), 0.0f);
+}
+
 void GameObject::setName(const std::string & name)
 {
 	this->name = name;
@@ -52,4 +57,11 @@ void GameObject::setObjectVelocity(float x, float y)
 void GameObject::setAngularVelocity(float value)
 {
 	boxCollider.getBody()->SetAngularVelocity(value);
+}
+
+void GameObject::translate(glm::vec2 translation)
+{
+	boxCollider.getBody()->SetAwake(false);
+	setPosition(getPosition().x + translation.x, getPosition().y + translation.y);
+	boxCollider.getBody()->SetAwake(true);
 }

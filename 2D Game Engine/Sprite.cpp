@@ -20,7 +20,53 @@ void Sprite::init(float x, float y, float width, float height)
 
 	if (vboID == 0)
 		glGenBuffers(1, &vboID);
+	setUpSpriteDimensions(width, height);
 
+}
+
+void Sprite::draw()
+{
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, 1);
+}
+
+void Sprite::setTextureID(unsigned int textureID)
+{
+	this->textureID = textureID;
+}
+
+glm::vec2 Sprite::getPosition()
+{
+	return glm::vec2(x, y);
+}
+
+glm::vec2 Sprite::getDimensions()
+{
+	return glm::vec2(width, height);
+}
+
+void Sprite::setPosition(glm::vec2 newPosition)
+{
+	x = newPosition.x;
+	y = newPosition.y;
+}
+
+void Sprite::setDimension(glm::vec2 newDimension)
+{
+	setUpSpriteDimensions(newDimension.x, newDimension.y);
+}
+
+void Sprite::setUpSpriteDimensions(float width, float height)
+{
 	float vertexData[24];
 
 	vertexData[0] = x + (width * 0.5f);
@@ -62,40 +108,4 @@ void Sprite::init(float x, float y, float width, float height)
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void Sprite::draw()
-{
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glBindBuffer(GL_ARRAY_BUFFER, vboID);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDisableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
-}
-
-void Sprite::setTextureID(unsigned int textureID)
-{
-	this->textureID = textureID;
-}
-
-glm::vec2 Sprite::getPosition()
-{
-	return glm::vec2(x, y);
-}
-
-glm::vec2 Sprite::getDimensions()
-{
-	return glm::vec2(width, height);
-}
-
-void Sprite::setPosition(glm::vec2 newPosition)
-{
-	x = newPosition.x;
-	y = newPosition.y;
 }
