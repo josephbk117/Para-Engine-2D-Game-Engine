@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include <random>
+#include <typeinfo>
 #include "stb_image_write.h"
 //Reuires screen width, screen height and title of window
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
@@ -34,7 +35,14 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
 
-	tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
+	tempGameObject = new GameObject("Sammy", 1);
+	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 20.0f, glm::vec2(1, 1)));
+	Sprite * tempSprite = new Sprite();
+	tempSprite->init(0, 0, 200, 200);
+	tempSprite->setTextureID(texVal1);
+	tempGameObject->addComponent(tempSprite);
+
+	/*tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
 	tempGameObject->setName("Sama Baba");
 	tempGameObject->setTextureID(texVal1);
@@ -61,7 +69,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	gameObjects.push_back(tempGameObject);
 	tempGameObject = new GameObject(world.get(), glm::vec2(150, 200),
 		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
-	tempGameObject->setTextureID(texVal2);
+	tempGameObject->setTextureID(texVal2);*/
 
 	gameObjects.push_back(tempGameObject);
 	camera.init(glm::vec2(600, 600));
@@ -79,6 +87,7 @@ void Game::update(void(*updateFunc)())
 
 	GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
 	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
+	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
 
 	Sprite bgSprite;
 	bgSprite.init(-200, -200, 800, 700);
@@ -94,8 +103,9 @@ void Game::update(void(*updateFunc)())
 
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
+			Transform * temp = gameObjects[i]->getComponent<Transform>();
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
-				gameObjects[i]->getPosition().x, gameObjects[i]->getPosition().y, gameObjects[i]->getAxisRotation());
+				temp->position.x, temp->position.y, temp->rotation);
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -103,19 +113,31 @@ void Game::update(void(*updateFunc)())
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
 		bgSprite.setDimension(glm::vec2(600 + 50 * sin(loll), 600 + 50 * cos(loll)));
+		gameObjects[0]->getComponent<Transform>()->rotation = loll;
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
 		loll += frameTime.count() * 10;
 		shaderProgram.use();
 
+		glm::mat4 matrixTransform;
+
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 		bgSprite.setTextureID(texVal3);
+		matrixTransform = glm::translate(matrixTransform, glm::vec3(0, 0, 0));
+		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
 		bgSprite.draw();
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
-			gameObjects[i]->drawObject(shaderProgram);
+		{
+			matrixTransform = glm::translate(matrixTransform, glm::vec3(gameObjects[i]->getComponent<Transform>()->position.x,
+				gameObjects[i]->getComponent<Transform>()->position.y, 0));
+			matrixTransform = glm::rotate(matrixTransform, gameObjects[i]->getComponent<Transform>()->rotation, glm::vec3(0, 0, 1.0f));
+			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
+			if (gameObjects[i]->hasComponent<Sprite>())
+				gameObjects[i]->getComponent<Sprite>()->draw();
+		}
 
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -132,22 +154,22 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
-		gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
-		gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
-		gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
-		gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		gameObjects[0]->setAngularVelocity(-10.0f);
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-		gameObjects[0]->setAngularVelocity(10.0f);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS);
+	//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
+	//gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS);
+	//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
+	//gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS);
+	//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
+	//gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS);
+	//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
+	//gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
+	//gameObjects[0]->setAngularVelocity(-10.0f);
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
+	//gameObjects[0]->setAngularVelocity(10.0f);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(0, 1.0f));
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)

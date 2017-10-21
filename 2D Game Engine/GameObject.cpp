@@ -1,77 +1,23 @@
 #include "GameObject.h"
 
-GameObject::GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType, float density)
+GameObject::GameObject()
 {
-	sprite.init(0, 0, dimensions.x, dimensions.y);
-	boxCollider.init(world, position, dimensions, bodyType, density);
-	name = "NULL";
+	this->name = "";
+	this->objectID = NULL;
+}
+
+GameObject::GameObject(const std::string & name, unsigned int objectID)
+{
+	this->name = name;
+	this->objectID = objectID;
+}
+
+
+void GameObject::addComponent(Component * comp)
+{
+	components.push_back(comp);
 }
 
 GameObject::~GameObject()
 {
-}
-
-glm::vec2 GameObject::getPosition()
-{
-	return glm::vec2(boxCollider.getBody()->GetPosition().x, boxCollider.getBody()->GetPosition().y);
-}
-
-void GameObject::setPosition(float x, float y)
-{
-	boxCollider.getBody()->SetTransform(b2Vec2(x, y), boxCollider.getBody()->GetAngle());
-}
-
-void GameObject::setName(const std::string & name)
-{
-	this->name = name;
-}
-
-std::string GameObject::getName()
-{
-	return name;
-}
-
-void GameObject::drawObject(ShaderProgram &shaderProgram)
-{
-	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
-
-	matrixTransform = glm::mat4(1);
-	matrixTransform = glm::translate(matrixTransform, glm::vec3(boxCollider.getBody()->GetPosition().x,
-		boxCollider.getBody()->GetPosition().y, 0));
-	matrixTransform = glm::rotate(matrixTransform, boxCollider.getBody()->GetAngle(), glm::vec3(0, 0, 1.0f));
-	glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
-	sprite.setTextureID(textureID);
-	sprite.draw();
-}
-
-void GameObject::setTextureID(unsigned int textureID)
-{
-	this->textureID = textureID;
-}
-
-void GameObject::setObjectVelocity(float x, float y)
-{
-	boxCollider.getBody()->SetLinearVelocity(b2Vec2(x, y));
-}
-
-void GameObject::setAngularVelocity(float value)
-{
-	boxCollider.getBody()->SetAngularVelocity(value);
-}
-
-void GameObject::translate(glm::vec2 translation)
-{
-	boxCollider.getBody()->SetAwake(false);
-	setPosition(getPosition().x + translation.x, getPosition().y + translation.y);
-	boxCollider.getBody()->SetAwake(true);
-}
-
-glm::mat4 GameObject::getTransform()
-{
-	return matrixTransform;
-}
-
-float GameObject::getAxisRotation()
-{
-	return boxCollider.getBody()->GetAngle();
 }

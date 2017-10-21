@@ -1,7 +1,10 @@
 #pragma once
 #include <GLM\glm.hpp>
-struct Transform
+#include "Component.h"
+
+class Transform : public Component
 {
+public:
 	glm::vec2 position;
 	float rotation;
 	glm::vec2 scale;
@@ -17,4 +20,5 @@ struct Transform
 		rotation = 0.0f;
 		scale = glm::vec2(1.0f, 1.0f);
 	}
+	~Transform() {};
 };

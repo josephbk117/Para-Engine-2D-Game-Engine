@@ -4,30 +4,50 @@
 #include <GLM\gtc\matrix_transform.hpp>
 #include <GL\glew.h>
 #include <Box2D\Box2D.h>
+#include <vector>
 #include "Box.h"
 #include "ShaderProgram.h"
 #include "Transform.h"
+#include "Component.h"
 class GameObject
 {
 public:
-	GameObject(b2World *world, glm::vec2 position, glm::vec2 dimensions, b2BodyType bodyType, float density);
+	GameObject();
+	GameObject(const std::string& name, unsigned int objectID);
+	void setName(const std::string & name) { this->name = name; }
+	std::string getName() { return name; }
+	unsigned int getObjectID() { return objectID; }
+	template<class T>
+	T *getComponent(void);
+	void addComponent(Component *comp);
+	template<class T>
+	bool hasComponent(void);
+	Component* getAttachedComponents(unsigned int &count) { count = components.size(); return components[0]; };
 	~GameObject();
-	Sprite sprite;
-	Box boxCollider;
-	glm::vec2 getPosition();
-	void setPosition(float x, float y);
-	void setName(const std::string& name);
-	std::string getName();
-	void drawObject(ShaderProgram &shader);
-	void setTextureID(unsigned int textureID);
-	void setObjectVelocity(float x, float y);
-	void setAngularVelocity(float value);
-	void translate(glm::vec2 translation);
-	glm::mat4 getTransform();
-	float getAxisRotation();
 private:
 	std::string name;
-	unsigned int textureID;
-	glm::mat4 matrixTransform;
+	unsigned int objectID;
+	std::vector<Component *> components;
 };
 
+template<class T>
+inline T * GameObject::getComponent(void)
+{
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (typeid(*components[i]) == typeid(T))
+			return (T *)components[i];
+	}
+	return nullptr;
+}
+
+template<class T>
+inline bool GameObject::hasComponent(void)
+{
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (typeid(*components[i]) == typeid(T))
+			return true;
+	}
+	return false;
+}

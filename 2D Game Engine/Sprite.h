@@ -1,7 +1,8 @@
 #pragma once
 #include <GL\glew.h>
 #include <GLM\common.hpp>
-class Sprite
+#include "Component.h"
+class Sprite : public Component
 {
 public:
 	Sprite();
