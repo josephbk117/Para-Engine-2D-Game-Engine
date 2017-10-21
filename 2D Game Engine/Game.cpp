@@ -36,11 +36,20 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
 
 	tempGameObject = new GameObject("Sammy", 1);
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 20.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 00.0f, glm::vec2(1, 1)));
 	Sprite * tempSprite = new Sprite();
-	tempSprite->init(0, 0, 200, 200);
+	tempSprite->init(0, 0, 50, 50);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
+	gameObjects.push_back(tempGameObject);
+
+	tempGameObject = new GameObject("Lola", 2);
+	tempGameObject->addComponent(new Transform(glm::vec2(-50, -100), 0.0f, glm::vec2(1, 1)));
+	tempSprite = new Sprite();
+	tempSprite->init(0, 0, 80, 80);
+	tempSprite->setTextureID(texVal1);
+	tempGameObject->addComponent(tempSprite);
+	gameObjects.push_back(tempGameObject);
 
 	/*tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
 		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
@@ -71,7 +80,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
 	tempGameObject->setTextureID(texVal2);*/
 
-	gameObjects.push_back(tempGameObject);
+	
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
 }
@@ -131,6 +140,7 @@ void Game::update(void(*updateFunc)())
 		bgSprite.draw();
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
+			matrixTransform = glm::mat4(1.0f);
 			matrixTransform = glm::translate(matrixTransform, glm::vec3(gameObjects[i]->getComponent<Transform>()->position.x,
 				gameObjects[i]->getComponent<Transform>()->position.y, 0));
 			matrixTransform = glm::rotate(matrixTransform, gameObjects[i]->getComponent<Transform>()->rotation, glm::vec3(0, 0, 1.0f));
@@ -154,18 +164,22 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
 	//gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS);
+	gameObjects[1]->getComponent<Transform>()->position.y += 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
 	//gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS);
+	gameObjects[1]->getComponent<Transform>()->position.y -= 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
 	//gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS);
+	gameObjects[1]->getComponent<Transform>()->position.x -= 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
 	//gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
+	gameObjects[1]->getComponent<Transform>()->position.x += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
 	//gameObjects[0]->setAngularVelocity(-10.0f);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
