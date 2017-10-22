@@ -5,6 +5,7 @@
 #include <GL\glew.h>
 #include <Box2D\Box2D.h>
 #include <vector>
+#include <map>
 #include "Box.h"
 #include "ShaderProgram.h"
 #include "Transform.h"
@@ -23,12 +24,23 @@ public:
 	void addComponent(Component *comp);
 	template<class T>
 	bool hasComponent(void);
-	Component* getAttachedComponents(unsigned int &count) { count = components.size(); return components[0]; };
+	std::vector<Component *> getAttachedComponents() { return components; };
+	static GameObject* getGameObjectWithName(const std::string& name)
+	{
+		return gameObjectMap[name];
+	}
+	static GameObject* createGameObject(const std::string& name)
+	{
+		GameObject* gameObject = new GameObject(name);
+		gameObjectMap[name] = gameObject;
+		return gameObject;
+	}
 	~GameObject();
 private:
 	std::string name;
 	std::vector<Component *> components;
 	int layerOrder;
+	static std::map<std::string, GameObject*> gameObjectMap;
 };
 
 template<class T>

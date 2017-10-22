@@ -36,7 +36,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
 
-	tempGameObject = new GameObject("Sammy");
+	tempGameObject = GameObject::createGameObject("Sammy");
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 00.0f, glm::vec2(1, 1)));
 	Sprite * tempSprite = new Sprite();
 	tempSprite->init(0, 0, 50, 50);
@@ -44,7 +44,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->addComponent(tempSprite);
 	gameObjects.push_back(tempGameObject);
 
-	tempGameObject = new GameObject("Lola");
+	tempGameObject = GameObject::createGameObject("Lola");
 	tempGameObject->setLayerOrder(10);
 	tempGameObject->addComponent(new Transform(glm::vec2(-50, -100), 0.0f, glm::vec2(1, 1)));
 	tempSprite = new Sprite();
@@ -53,7 +53,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->addComponent(tempSprite);
 	gameObjects.push_back(tempGameObject);
 
-	tempGameObject = new GameObject("Babu");
+	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
 	tempSprite = new Sprite();
 	tempSprite->init(0, 0, 80, 80);
@@ -64,7 +64,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->addComponent(boxCollider);
 	gameObjects.push_back(tempGameObject);
 
-	tempGameObject = new GameObject("Gaaaandoo");
+	tempGameObject = GameObject::createGameObject("Galoo");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
 	tempSprite = new Sprite();
 	tempSprite->init(0, 0, 300, 50);
@@ -75,7 +75,14 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->addComponent(boxCollider);
 	gameObjects.push_back(tempGameObject);
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b) {return a->getLayerOrder() < b->getLayerOrder(); });
-	
+
+	std::vector<Component*> componentsAttachedToGaloo = GameObject::getGameObjectWithName("Galoo")->getAttachedComponents();
+
+	for (int i = 0; i < componentsAttachedToGaloo.size(); i++)
+	{
+		std::cout << "\nComponent at : " << i << " is" << typeid(*componentsAttachedToGaloo[i]).name();
+	}
+
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
 }
@@ -118,7 +125,7 @@ void Game::update(void(*updateFunc)())
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
 		bgSprite.setDimension(glm::vec2(600 + 50 * sin(loll), 600 + 50 * cos(loll)));
-		findGameObjectWithName("Sammy")->getComponent<Transform>()->rotation = loll;
+		GameObject::getGameObjectWithName("Sammy")->getComponent<Transform>()->rotation = loll;
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
@@ -169,13 +176,13 @@ void Game::processInput(GLFWwindow * window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		findGameObjectWithName("Lola")->getComponent<Transform>()->position.y += 1.0f;
+		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		findGameObjectWithName("Lola")->getComponent<Transform>()->position.y -= 1.0f;
+		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		findGameObjectWithName("Lola")->getComponent<Transform>()->position.x -= 1.0f;
+		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		findGameObjectWithName("Lola")->getComponent<Transform>()->position.x += 1.0f;
+		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
 	//gameObjects[0]->setAngularVelocity(-10.0f);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
@@ -188,16 +195,6 @@ void Game::processInput(GLFWwindow * window)
 		camera.setPosition(camera.getPosition() + glm::vec2(-1.0f, 0));
 	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(1.0f, 0));
-}
-
-GameObject * Game::findGameObjectWithName(const std::string & name)
-{
-	for (int i = 0; i < gameObjects.size(); i++)
-	{
-		if (gameObjects[i]->getName() == name)
-			return gameObjects[i];
-	}
-	return nullptr;
 }
 
 Game::~Game()

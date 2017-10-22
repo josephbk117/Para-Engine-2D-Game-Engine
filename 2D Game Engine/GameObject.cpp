@@ -1,5 +1,6 @@
 #include "GameObject.h"
 
+std::map<std::string, GameObject*> GameObject::gameObjectMap;
 GameObject::GameObject()
 {
 	this->name = "";
