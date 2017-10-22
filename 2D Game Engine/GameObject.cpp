@@ -3,13 +3,12 @@
 GameObject::GameObject()
 {
 	this->name = "";
-	this->objectID = NULL;
+	this->layerOrder = 0;
 }
 
-GameObject::GameObject(const std::string & name, unsigned int objectID)
+GameObject::GameObject(const std::string & name)
 {
 	this->name = name;
-	this->objectID = objectID;
 }
 
 void GameObject::addComponent(Component * comp)

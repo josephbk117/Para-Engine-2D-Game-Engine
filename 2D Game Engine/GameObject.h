@@ -13,9 +13,11 @@ class GameObject
 {
 public:
 	GameObject();
-	GameObject(const std::string& name, unsigned int objectID);
+	GameObject(const std::string& name);
 	void setName(const std::string & name) { this->name = name; }
 	std::string getName() { return name; }
+	void setLayerOrder(int order) { this->layerOrder = order; }
+	int getLayerOrder() { return layerOrder; }
 	template<class T>
 	T *getComponent(void);
 	void addComponent(Component *comp);
@@ -25,8 +27,8 @@ public:
 	~GameObject();
 private:
 	std::string name;
-	unsigned int objectID;
 	std::vector<Component *> components;
+	int layerOrder;
 };
 
 template<class T>

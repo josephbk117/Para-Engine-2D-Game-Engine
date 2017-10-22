@@ -19,6 +19,7 @@ public:
 	void update(void(*updateFunc)());
 	void processInput(GLFWwindow *window);
 	Camera camera;
+	GameObject* findGameObjectWithName(const std::string& name);
 	~Game();
 private:
 	GLFWwindow* window;
