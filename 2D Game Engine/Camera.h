@@ -15,6 +15,7 @@ public:
 	mat4 getOrthoMatrix();
 	void update();
 	bool isObjectInCameraView(const vec2 & position, const vec2 dimensions);
+	void setScreenRatio(vec2 screenDimension);
 private:
 	vec2 screenDimensions;
 	bool needsUpdate;

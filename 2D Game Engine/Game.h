@@ -24,6 +24,7 @@ private:
 	GLFWwindow* window;
 	std::unique_ptr<b2World> world;
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	static bool frameBufferSizeUpated;
 	std::chrono::steady_clock clockTime;
 	std::vector<GameObject*> gameObjects;
 };

@@ -4,16 +4,10 @@
 #include <random>
 #include <typeinfo>
 #include "stb_image_write.h"
-//Reuires screen width, screen height and title of window
-
+bool Game::frameBufferSizeUpated;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
-	std::mt19937 randGenerator;
-
-	std::uniform_real_distribution<float> x1Pos(-400, 400);
-	std::uniform_real_distribution<float> y1Pos(-420, 420);
-
 	glfwInit();
 	window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
 	if (window == NULL)
@@ -71,18 +65,13 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new Box();
-	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position, glm::vec2(300, 50), b2BodyType::b2_staticBody, 1.0f);
+	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position,
+		glm::vec2(300, 50), b2BodyType::b2_staticBody, 1.0f);
 	tempGameObject->addComponent(boxCollider);
 	gameObjects.push_back(tempGameObject);
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b) {return a->getLayerOrder() < b->getLayerOrder(); });
 
 	std::vector<Component*> componentsAttachedToGaloo = GameObject::getGameObjectWithName("Galoo")->getAttachedComponents();
-
-	for (int i = 0; i < componentsAttachedToGaloo.size(); i++)
-	{
-		std::cout << "\nComponent at : " << i << " is" << typeid(*componentsAttachedToGaloo[i]).name();
-	}
-
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
 }
@@ -106,6 +95,14 @@ void Game::update(void(*updateFunc)())
 	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	while (!glfwWindowShouldClose(window))
 	{
+		if (frameBufferSizeUpated)
+		{
+			int width, height;
+			glfwGetWindowSize(window, &width, &height);
+			std::cout << "\nUpdated to : " << width << " ," << height;
+			camera.setScreenRatio(vec2(width, height));
+			frameBufferSizeUpated = false;
+		}
 		IMGUI_NEWFRAME();
 		std::chrono::steady_clock::time_point start = clockTime.now();
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -204,4 +201,5 @@ Game::~Game()
 void Game::framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+	frameBufferSizeUpated = true;
 }
