@@ -17,7 +17,7 @@ void Sprite::init(float x, float y, float width, float height)
 	this->y = y;
 	this->width = width;
 	this->height = height;
-
+	this->drawOrder = 0;
 	if (vboID == 0)
 		glGenBuffers(1, &vboID);
 	setUpSpriteDimensions(width, height);
@@ -42,6 +42,16 @@ void Sprite::draw()
 void Sprite::setTextureID(unsigned int textureID)
 {
 	this->textureID = textureID;
+}
+
+void Sprite::setDrawOrder(int order)
+{
+	this->drawOrder = order;
+}
+
+int Sprite::getDrawOrder()
+{
+	return drawOrder;
 }
 
 glm::vec2 Sprite::getPosition()

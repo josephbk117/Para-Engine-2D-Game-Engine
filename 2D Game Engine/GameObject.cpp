@@ -12,7 +12,6 @@ GameObject::GameObject(const std::string & name, unsigned int objectID)
 	this->objectID = objectID;
 }
 
-
 void GameObject::addComponent(Component * comp)
 {
 	components.push_back(comp);

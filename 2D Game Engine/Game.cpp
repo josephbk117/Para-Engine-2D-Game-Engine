@@ -51,36 +51,28 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	tempGameObject->addComponent(tempSprite);
 	gameObjects.push_back(tempGameObject);
 
-	/*tempGameObject = new GameObject(world.get(), glm::vec2(0, 400),
-		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	tempGameObject->setName("Sama Baba");
-	tempGameObject->setTextureID(texVal1);
+	tempGameObject = new GameObject("Babu", 3);
+	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
+	tempSprite = new Sprite();
+	tempSprite->init(0, 0, 80, 80);
+	tempSprite->setTextureID(texVal1);
+	tempGameObject->addComponent(tempSprite);
+	Box* boxCollider = new Box();
+	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), b2BodyType::b2_dynamicBody, 1.0f);
+	tempGameObject->addComponent(boxCollider);
 	gameObjects.push_back(tempGameObject);
 
-	tempGameObject = new GameObject(world.get(), glm::vec2(20, 300),
-		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	tempGameObject->setName("Loco baoco");
-	tempGameObject->setTextureID(texVal1);
+	tempGameObject = new GameObject("Gaaaandoo", 4);
+	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
+	tempSprite = new Sprite();
+	tempSprite->init(0, 0, 300, 50);
+	tempSprite->setTextureID(texVal2);
+	tempGameObject->addComponent(tempSprite);
+	boxCollider = new Box();
+	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position, glm::vec2(300, 50), b2BodyType::b2_staticBody, 1.0f);
+	tempGameObject->addComponent(boxCollider);
 	gameObjects.push_back(tempGameObject);
 
-	tempGameObject = new GameObject(world.get(), glm::vec2(-10, 250),
-		glm::vec2(50, 50), b2BodyType::b2_dynamicBody, 1.0);
-	tempGameObject->setName("Gaga Googoo");
-	tempGameObject->setTextureID(texVal1);
-
-	gameObjects.push_back(tempGameObject);
-
-	tempGameObject = new GameObject(world.get(), glm::vec2(0, 0),
-		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
-	tempGameObject->setName("Jaja Kacha");
-	tempGameObject->setTextureID(texVal2);
-
-	gameObjects.push_back(tempGameObject);
-	tempGameObject = new GameObject(world.get(), glm::vec2(150, 200),
-		glm::vec2(250, 50), b2BodyType::b2_staticBody, 0);
-	tempGameObject->setTextureID(texVal2);*/
-
-	
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
 }
@@ -99,7 +91,7 @@ void Game::update(void(*updateFunc)())
 	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
 
 	Sprite bgSprite;
-	bgSprite.init(-200, -200, 800, 700);
+	bgSprite.init(0,0,800, 700);
 	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	while (!glfwWindowShouldClose(window))
 	{
@@ -141,9 +133,17 @@ void Game::update(void(*updateFunc)())
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			matrixTransform = glm::mat4(1.0f);
+			if (gameObjects[i]->hasComponent<Box>())
+			{
+				gameObjects[i]->getComponent<Transform>()->position = glm::vec2(gameObjects[i]->getComponent<Box>()->getBody()->GetPosition().x,
+					gameObjects[i]->getComponent<Box>()->getBody()->GetPosition().y);
+				gameObjects[i]->getComponent<Transform>()->rotation = gameObjects[i]->getComponent<Box>()->getBody()->GetAngle();
+			}
+
 			matrixTransform = glm::translate(matrixTransform, glm::vec3(gameObjects[i]->getComponent<Transform>()->position.x,
 				gameObjects[i]->getComponent<Transform>()->position.y, 0));
 			matrixTransform = glm::rotate(matrixTransform, gameObjects[i]->getComponent<Transform>()->rotation, glm::vec3(0, 0, 1.0f));
+
 			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
 			if (gameObjects[i]->hasComponent<Sprite>())
 				gameObjects[i]->getComponent<Sprite>()->draw();
@@ -165,21 +165,21 @@ void Game::processInput(GLFWwindow * window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
-	//gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
-	gameObjects[1]->getComponent<Transform>()->position.y += 1.0f;
+		//gameObjects[0]->setObjectVelocity(0.0f, 50.0f);
+		//gameObjects[0]->translate(glm::vec2(0.0f, 0.3f));
+		gameObjects[1]->getComponent<Transform>()->position.y += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
-	//gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
-	gameObjects[1]->getComponent<Transform>()->position.y -= 1.0f;
+		//gameObjects[0]->setObjectVelocity(0.0f, -50.0f);
+		//gameObjects[0]->translate(glm::vec2(0.0f, -0.3f));
+		gameObjects[1]->getComponent<Transform>()->position.y -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
-	//gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
-	gameObjects[1]->getComponent<Transform>()->position.x -= 1.0f;
+		//gameObjects[0]->setObjectVelocity(-50.0f, 0.0);
+		//gameObjects[0]->translate(glm::vec2(-0.3f, 0.0f));
+		gameObjects[1]->getComponent<Transform>()->position.x -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
-	//gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
-	gameObjects[1]->getComponent<Transform>()->position.x += 1.0f;
+		//gameObjects[0]->setObjectVelocity(50.0f, 0.0);
+		//gameObjects[0]->translate(glm::vec2(0.3f, 0.0f));
+		gameObjects[1]->getComponent<Transform>()->position.x += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
 	//gameObjects[0]->setAngularVelocity(-10.0f);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);

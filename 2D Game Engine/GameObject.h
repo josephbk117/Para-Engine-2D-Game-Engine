@@ -16,7 +16,6 @@ public:
 	GameObject(const std::string& name, unsigned int objectID);
 	void setName(const std::string & name) { this->name = name; }
 	std::string getName() { return name; }
-	unsigned int getObjectID() { return objectID; }
 	template<class T>
 	T *getComponent(void);
 	void addComponent(Component *comp);

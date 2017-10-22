@@ -2,8 +2,9 @@
 #include <Box2D\Box2D.h>
 #include <GLM\glm.hpp>
 #include <GL\glew.h>
+#include "Component.h"
 
-class Box
+class Box : public Component
 {
 public:
 	Box();
