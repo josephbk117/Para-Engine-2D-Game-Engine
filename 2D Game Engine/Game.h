@@ -21,6 +21,10 @@ public:
 	//void update(void(*updateFunc)());
 	void update();
 	void processInput(GLFWwindow *window);
+	b2World* getPhysicsWorld()
+	{
+		return world.get();
+	}
 	Camera camera;
 	~Game();
 private:

@@ -25,73 +25,29 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << " Glew initialsed" << std::endl;
 	// Setup ImGui binding
 	IMGUI_INIT(window, true);
-	GameObject* tempGameObject;
-
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
-	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
-
-	tempGameObject = GameObject::createGameObject("Sammy");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 00.0f, glm::vec2(1, 1)));
-	Sprite * tempSprite = new Sprite();
-	tempSprite->init(0, 0, 50, 50);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	gameObjects.push_back(tempGameObject);
-
-	tempGameObject = GameObject::createGameObject("Lola");
-	tempGameObject->setLayerOrder(10);
-	tempGameObject->addComponent(new Transform(glm::vec2(-50, -100), 0.0f, glm::vec2(1, 1)));
-	tempSprite = new Sprite();
-	tempSprite->init(0, 0, 80, 80);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	gameObjects.push_back(tempGameObject);
-
-	tempGameObject = GameObject::createGameObject("Babu");
-	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
-	tempSprite = new Sprite();
-	tempSprite->init(0, 0, 80, 80);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	Box* boxCollider = new Box();
-	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), b2BodyType::b2_dynamicBody, 1.0f);
-	tempGameObject->addComponent(boxCollider);
-	gameObjects.push_back(tempGameObject);
-
-	tempGameObject = GameObject::createGameObject("Galoo");
-	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
-	tempSprite = new Sprite();
-	tempSprite->init(0, 0, 300, 50);
-	tempSprite->setTextureID(texVal2);
-	tempGameObject->addComponent(tempSprite);
-	boxCollider = new Box();
-	boxCollider->init(world.get(), tempGameObject->getComponent<Transform>()->position,
-		glm::vec2(300, 50), b2BodyType::b2_staticBody, 1.0f);
-	tempGameObject->addComponent(boxCollider);
-	gameObjects.push_back(tempGameObject);
-	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b) {return a->getLayerOrder() < b->getLayerOrder(); });
 
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
 }
 void Game::initialize()
 {
-	std::vector<GameObject *> vec = GameObject::getAllGameObjects();
-	for (int i = 0; i < vec.size(); i++)
+	gameObjects = GameObject::getAllGameObjects();
+	for (int i = 0; i < gameObjects.size(); i++)
 	{
-		std::cout << "\nObject included : " << vec[i]->getName();
-		std::vector<Component*> componentsAttachedToObject = GameObject::getGameObjectWithName(vec[i]->getName())->getAttachedComponents();
-		std::cout << "\n\t :- components it has = ";
+		std::cout << "\nObject included : " << gameObjects[i]->getName();
+		std::vector<Component*> componentsAttachedToObject =
+			GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
+		std::cout << "\n\t:- components it has = ";
 		for (int i = 0; i < componentsAttachedToObject.size(); i++)
 		{
 			std::cout << "\n\t" << typeid(*componentsAttachedToObject[i]).name();
 			(*componentsAttachedToObject[i]).start();
 		}
 	}
+	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
+	{return a->getLayerOrder() < b->getLayerOrder(); });
 }
 ImVec4 clearColour;
-//Pass in a function to be run every frame
-float loll = 0;
 
 void Game::update()
 {
@@ -130,11 +86,9 @@ void Game::update()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
-		GameObject::getGameObjectWithName("Sammy")->getComponent<Transform>()->rotation = loll;
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		world->Step(frameTime.count() * 10, 5, 6);
-		loll += frameTime.count() * 10;
 		shaderProgram.use();
 
 		glm::mat4 matrixTransform;
@@ -142,6 +96,15 @@ void Game::update()
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
+
+		for (int i = 0; i < gameObjects.size(); i++)
+		{
+			std::vector<Component*> componentsAttachedToObject =
+				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
+			for (int i = 0; i < componentsAttachedToObject.size(); i++)
+				(*componentsAttachedToObject[i]).update();
+		}
+		
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			matrixTransform = glm::mat4(1.0f);

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Example Files">
+      <UniqueIdentifier>{2ee57a87-fdd8-4498-9dd4-91eaadd77585}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicMovement.h">
+      <Filter>Example Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
