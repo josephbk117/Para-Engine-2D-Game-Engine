@@ -4,7 +4,10 @@
 #include <random>
 #include <typeinfo>
 #include "stb_image_write.h"
+
 bool Game::frameBufferSizeUpated;
+float Game::deltaTime;
+float Game::timeSinceStartUp;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -23,7 +26,6 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
-	// Setup ImGui binding
 	IMGUI_INIT(window, true);
 
 	camera.init(glm::vec2(600, 600));
@@ -34,21 +36,15 @@ void Game::initialize()
 	gameObjects = GameObject::getAllGameObjects();
 	for (int i = 0; i < gameObjects.size(); i++)
 	{
-		std::cout << "\nObject included : " << gameObjects[i]->getName();
 		std::vector<Component*> componentsAttachedToObject =
 			GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
-		std::cout << "\n\t:- components it has = ";
 		for (int i = 0; i < componentsAttachedToObject.size(); i++)
-		{
-			std::cout << "\n\t" << typeid(*componentsAttachedToObject[i]).name();
 			(*componentsAttachedToObject[i]).start();
-		}
 	}
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
 }
 ImVec4 clearColour;
-
 void Game::update()
 {
 	ShaderProgram shaderProgram;
@@ -59,6 +55,11 @@ void Game::update()
 	GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
 	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
 	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
+
+	std::chrono::steady_clock::time_point start = clockTime.now();
+	std::chrono::steady_clock::time_point initialTime = clockTime.now();
+	deltaTime = 0.0f;
+	timeSinceStartUp = 0.0f;
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -71,7 +72,7 @@ void Game::update()
 			frameBufferSizeUpated = false;
 		}
 		IMGUI_NEWFRAME();
-		std::chrono::steady_clock::time_point start = clockTime.now();
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
 		camera.update();
@@ -88,11 +89,13 @@ void Game::update()
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
-		world->Step(frameTime.count() * 10, 5, 6);
+		deltaTime = frameTime.count() * 10.0f;
+		world->Step(deltaTime, 5, 6);
+		std::chrono::duration<float> sinceStart = clockTime.now() - initialTime;
+		timeSinceStartUp = sinceStart.count();
+
 		shaderProgram.use();
-
 		glm::mat4 matrixTransform;
-
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
@@ -104,7 +107,7 @@ void Game::update()
 			for (int i = 0; i < componentsAttachedToObject.size(); i++)
 				(*componentsAttachedToObject[i]).update();
 		}
-		
+
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			matrixTransform = glm::mat4(1.0f);
@@ -129,6 +132,8 @@ void Game::update()
 		ImGui::Render();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		start = clockTime.now();
 	}
 	IMGUI_SHUTDOWN();
 	glfwTerminate();

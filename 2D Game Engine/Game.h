@@ -16,14 +16,20 @@ class Game
 {
 public:
 	Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
-	//void initialize(std::vector<void(*)()>);
 	void initialize();
-	//void update(void(*updateFunc)());
 	void update();
 	void processInput(GLFWwindow *window);
 	b2World* getPhysicsWorld()
 	{
 		return world.get();
+	}
+	static float getDeltaTime()
+	{
+		return deltaTime;
+	}
+	static float getTimeSinceStartUp()
+	{
+		return timeSinceStartUp;
 	}
 	Camera camera;
 	~Game();
@@ -34,5 +40,8 @@ private:
 	static bool frameBufferSizeUpated;
 	std::chrono::steady_clock clockTime;
 	std::vector<GameObject*> gameObjects;
+	static float deltaTime;
+	static float timeSinceStartUp;
 };
+
 

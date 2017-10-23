@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 	GameObject* tempGameObject;
 
 	tempGameObject = GameObject::createGameObject("Sammy");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 00.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
 	Sprite * tempSprite = new Sprite();
 	tempSprite->init(0, 0, 50, 50);
 	tempSprite->setTextureID(texVal1);
