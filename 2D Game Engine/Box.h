@@ -9,10 +9,14 @@ class Box : public Component
 public:
 	Box();
 	~Box();
-	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension,b2BodyType bodyType,float density);
+	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension, b2BodyType bodyType, float density);
 	b2Body* getBody();
 	b2Fixture* getFixture();
-	const glm::vec2& getDimensions();	
+	const glm::vec2& getDimensions();
+	void start()
+	{
+		std::cout << "\n\t\tStart Of Box";
+	}
 private:
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;

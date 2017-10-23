@@ -35,6 +35,14 @@ public:
 		gameObjectMap[name] = gameObject;
 		return gameObject;
 	}
+	static std::vector<GameObject*> getAllGameObjects()
+	{
+		std::map<std::string, GameObject*>::iterator iter;
+		std::vector<GameObject*> vec;
+		for (iter = gameObjectMap.begin(); iter != gameObjectMap.end(); iter++)
+			vec.push_back(iter->second);
+		return vec;
+	}
 	~GameObject();
 private:
 	std::string name;
@@ -46,7 +54,7 @@ private:
 template<class T>
 inline T * GameObject::getComponent(void)
 {
-	for (int i = 0; i < components.size(); i++)
+	for (unsigned int i = 0; i < components.size(); i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
 			return (T *)components[i];
@@ -57,7 +65,7 @@ inline T * GameObject::getComponent(void)
 template<class T>
 inline bool GameObject::hasComponent(void)
 {
-	for (int i = 0; i < components.size(); i++)
+	for (unsigned int i = 0; i < components.size(); i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
 			return true;

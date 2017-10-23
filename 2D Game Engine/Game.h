@@ -16,7 +16,10 @@ class Game
 {
 public:
 	Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
-	void update(void(*updateFunc)());
+	//void initialize(std::vector<void(*)()>);
+	void initialize();
+	//void update(void(*updateFunc)());
+	void update();
 	void processInput(GLFWwindow *window);
 	Camera camera;
 	~Game();

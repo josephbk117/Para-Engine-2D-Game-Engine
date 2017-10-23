@@ -20,5 +20,9 @@ public:
 		rotation = 0.0f;
 		scale = glm::vec2(1.0f, 1.0f);
 	}
+	void start()
+	{
+		std::cout << "\n\t\t Start Of Transform";
+	}
 	~Transform() {};
 };

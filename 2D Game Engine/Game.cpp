@@ -71,15 +71,29 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	gameObjects.push_back(tempGameObject);
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b) {return a->getLayerOrder() < b->getLayerOrder(); });
 
-	std::vector<Component*> componentsAttachedToGaloo = GameObject::getGameObjectWithName("Galoo")->getAttachedComponents();
 	camera.init(glm::vec2(600, 600));
 	camera.setPosition(glm::vec2(0, 0));
+}
+void Game::initialize()
+{
+	std::vector<GameObject *> vec = GameObject::getAllGameObjects();
+	for (int i = 0; i < vec.size(); i++)
+	{
+		std::cout << "\nObject included : " << vec[i]->getName();
+		std::vector<Component*> componentsAttachedToObject = GameObject::getGameObjectWithName(vec[i]->getName())->getAttachedComponents();
+		std::cout << "\n\t :- components it has = ";
+		for (int i = 0; i < componentsAttachedToObject.size(); i++)
+		{
+			std::cout << "\n\t" << typeid(*componentsAttachedToObject[i]).name();
+			(*componentsAttachedToObject[i]).start();
+		}
+	}
 }
 ImVec4 clearColour;
 //Pass in a function to be run every frame
 float loll = 0;
 
-void Game::update(void(*updateFunc)())
+void Game::update()
 {
 	ShaderProgram shaderProgram;
 	shaderProgram.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
@@ -90,9 +104,6 @@ void Game::update(void(*updateFunc)())
 	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
 	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
 
-	Sprite bgSprite;
-	bgSprite.init(0, 0, 800, 700);
-	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	while (!glfwWindowShouldClose(window))
 	{
 		if (frameBufferSizeUpated)
@@ -108,7 +119,6 @@ void Game::update(void(*updateFunc)())
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
 		camera.update();
-		//updateFunc();
 
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
@@ -120,8 +130,6 @@ void Game::update(void(*updateFunc)())
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
-
-		bgSprite.setDimension(glm::vec2(600 + 50 * sin(loll), 600 + 50 * cos(loll)));
 		GameObject::getGameObjectWithName("Sammy")->getComponent<Transform>()->rotation = loll;
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
@@ -134,10 +142,6 @@ void Game::update(void(*updateFunc)())
 		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
-		bgSprite.setTextureID(texVal3);
-		matrixTransform = glm::translate(matrixTransform, glm::vec3(0, 0, 0));
-		glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
-		bgSprite.draw();
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			matrixTransform = glm::mat4(1.0f);
