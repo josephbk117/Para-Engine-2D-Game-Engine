@@ -13,10 +13,6 @@ public:
 	b2Body* getBody();
 	b2Fixture* getFixture();
 	const glm::vec2& getDimensions();
-	void start()
-	{
-		std::cout << "\n\t\tStart Of Box";
-	}
 private:
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;

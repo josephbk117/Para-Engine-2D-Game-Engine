@@ -10,10 +10,6 @@ public:
 	~Sprite();
 	void init(float x, float y, float width, float height);
 	void draw();
-	virtual void start()
-	{
-		std::cout << "\n\t\t Start Of Sprite";
-	}
 	void setTextureID(unsigned int textureID);
 	glm::vec2 getPosition();
 	glm::vec2 getDimensions();
