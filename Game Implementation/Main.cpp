@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Game.h>
 #include <GLM\glm.hpp>
-#include <Box2D\Box2D.h>
 #include "PlayerMagicController.h"
 
 int main(int argc, char* argv[])
@@ -35,7 +34,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	Box* boxCollider = new Box();
-	boxCollider->init(game.getPhysicsWorld(), tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), b2BodyType::b2_dynamicBody, 1.0f);
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), PhysicsBody::DYNAMIC, 1.0f);
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo");
@@ -45,8 +44,8 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new Box();
-	boxCollider->init(game.getPhysicsWorld(), tempGameObject->getComponent<Transform>()->position,
-		glm::vec2(300, 50), b2BodyType::b2_staticBody, 1.0f);
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+		glm::vec2(300, 50), PhysicsBody::STATIC, 1.0f);
 	tempGameObject->addComponent(boxCollider);
 
 	game.initialize();

@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "GameObject.h"
 #include "InputData.h"
+#include "Transform.h"
 class Game
 {
 public:
@@ -22,10 +23,8 @@ public:
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
 	static const glm::vec2 * getMouseCoords();
-	b2World* getPhysicsWorld()
-	{
-		return world.get();
-	}
+	static b2World* getPhysicsWorld();
+	
 	static float getDeltaTime()
 	{
 		return deltaTime;
@@ -37,12 +36,12 @@ public:
 	Camera camera;
 	~Game();
 private:
-	static GLFWwindow* window;
-	std::unique_ptr<b2World> world;
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	static bool frameBufferSizeUpated;
 	std::chrono::steady_clock clockTime;
-	std::vector<GameObject*> gameObjects;
+	std::vector<GameObject *> gameObjects;
+	static GLFWwindow* window;
+	static std::unique_ptr<b2World> world;
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	static bool frameBufferSizeUpated;	
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;

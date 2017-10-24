@@ -8,6 +8,7 @@
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
+std::unique_ptr<b2World> Game::world;
 GLFWwindow* Game::window;
 glm::vec2 Game::mouseCoord;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
@@ -184,4 +185,8 @@ const glm::vec2* Game::getMouseCoords()
 	mouseCoord.x = x;
 	mouseCoord.y = y;
 	return &mouseCoord;
+}
+b2World* Game::getPhysicsWorld()
+{
+	return world.get();
 }

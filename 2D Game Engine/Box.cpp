@@ -8,13 +8,13 @@ Box::~Box()
 {
 }
 
-void Box::init(b2World * world, const glm::vec2 & position, const glm::vec2 & dimension, b2BodyType bodyType, float density)
+void Box::init(const glm::vec2 & position, const glm::vec2 & dimension, PhysicsBody bodyType, float density)
 {
 	this->dimension = dimension;
 	b2BodyDef bodyDef;
-	bodyDef.type = bodyType;
+	bodyDef.type = (b2BodyType)bodyType;
 	bodyDef.position.Set(position.x, position.y);
-	body = world->CreateBody(&bodyDef);
+	body = Game::getPhysicsWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(dimension.x / 2.0f, dimension.y / 2.0f);

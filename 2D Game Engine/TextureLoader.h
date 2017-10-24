@@ -4,7 +4,6 @@
 #include "stb_image.h"
 class TextureLoader
 {
-public:	
+public:
 	static unsigned int loadTextureFromFile(const std::string& path, bool gamma);
 };
-

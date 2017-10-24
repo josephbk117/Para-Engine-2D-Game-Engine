@@ -3,13 +3,15 @@
 #include <GLM\glm.hpp>
 #include <GL\glew.h>
 #include "Component.h"
+#include "Game.h"
+#include "PhysicsData.h"
 
 class Box : public Component
 {
 public:
 	Box();
 	~Box();
-	void init(b2World *world, const glm::vec2 &position, const glm::vec2 &dimension, b2BodyType bodyType, float density);
+	void init(const glm::vec2 &position, const glm::vec2 &dimension, PhysicsBody bodyType, float density);
 	b2Body* getBody();
 	b2Fixture* getFixture();
 	const glm::vec2& getDimensions();
