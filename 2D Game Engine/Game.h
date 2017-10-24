@@ -20,6 +20,7 @@ public:
 	void update();
 	void processInput(GLFWwindow *window);
 	static bool isKeyPressed(Key key);
+	static bool isKeyReleased(Key key);
 	b2World* getPhysicsWorld()
 	{
 		return world.get();

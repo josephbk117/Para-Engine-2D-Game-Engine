@@ -182,3 +182,9 @@ bool Game::isKeyPressed(Key key)
 		return true;
 	return false;
 }
+bool Game::isKeyReleased(Key key)
+{
+	if (glfwGetKey(window, (int)key) == GLFW_RELEASE)
+		return true;
+	return false;
+}
