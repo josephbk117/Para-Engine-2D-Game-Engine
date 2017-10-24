@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Game.h"
+#include <Game.h>
 #include <GLM\glm.hpp>
 #include <Box2D\Box2D.h>
+#include "PlayerMagicController.h"
 
 int main(int argc, char* argv[])
 {
@@ -25,7 +26,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(0, 0, 80, 80);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
-	//tempGameObject->addComponent(new MagicMovement());
+	tempGameObject->addComponent(new PlayerMagicController());
 
 	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
