@@ -11,7 +11,7 @@
 #include "TextureLoader.h"
 #include "Camera.h"
 #include "GameObject.h"
-
+#include "InputData.h"
 class Game
 {
 public:
@@ -19,6 +19,7 @@ public:
 	void initialize();
 	void update();
 	void processInput(GLFWwindow *window);
+	static bool isKeyPressed(Key key);
 	b2World* getPhysicsWorld()
 	{
 		return world.get();
@@ -34,7 +35,7 @@ public:
 	Camera camera;
 	~Game();
 private:
-	GLFWwindow* window;
+	static GLFWwindow* window;
 	std::unique_ptr<b2World> world;
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static bool frameBufferSizeUpated;

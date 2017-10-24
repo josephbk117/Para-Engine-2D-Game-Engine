@@ -8,6 +8,7 @@
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
+GLFWwindow* Game::window;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -144,14 +145,14 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x -= 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x += 1.0f;
+		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x += 1.0f;*/
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
 	//gameObjects[0]->setAngularVelocity(-10.0f);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
@@ -174,4 +175,10 @@ void Game::framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 	frameBufferSizeUpated = true;
+}
+bool Game::isKeyPressed(Key key)
+{
+	if (glfwGetKey(window, (int)key) == GLFW_PRESS)
+		return true;
+	return false;
 }
