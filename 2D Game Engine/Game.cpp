@@ -9,6 +9,7 @@ bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
 GLFWwindow* Game::window;
+glm::vec2 Game::mouseCoord;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -145,18 +146,6 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y += 1.0f;
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.y -= 1.0f;
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x -= 1.0f;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		GameObject::getGameObjectWithName("Lola")->getComponent<Transform>()->position.x += 1.0f;*/
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS);
-	//gameObjects[0]->setAngularVelocity(-10.0f);
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
-	//gameObjects[0]->setAngularVelocity(10.0f);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		camera.setPosition(camera.getPosition() + glm::vec2(0, 1.0f));
 	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -187,4 +176,12 @@ bool Game::isKeyReleased(Key key)
 	if (glfwGetKey(window, (int)key) == GLFW_RELEASE)
 		return true;
 	return false;
+}
+const glm::vec2* Game::getMouseCoords()
+{
+	double x, y;
+	glfwGetCursorPos(window, &x, &y);
+	mouseCoord.x = x;
+	mouseCoord.y = y;
+	return &mouseCoord;
 }

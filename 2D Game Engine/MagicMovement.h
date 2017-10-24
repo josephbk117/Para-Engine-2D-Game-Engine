@@ -22,7 +22,7 @@ public:
 			activeTransform->position.x = activeTransform->position.x + (sin(rotOffset)*0.3f);
 			activeTransform->position.y = activeTransform->position.y + (cos(rotOffset)*0.3f);
 			rotOffset += deltaTime;
-		}		
+		}
 		if (Game::isKeyPressed(Key::W))
 			activeTransform->position.y += 100.0f * deltaTime;
 		if (Game::isKeyPressed(Key::S))

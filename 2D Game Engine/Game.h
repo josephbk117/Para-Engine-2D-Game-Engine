@@ -21,6 +21,7 @@ public:
 	void processInput(GLFWwindow *window);
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
+	static const glm::vec2 * getMouseCoords();
 	b2World* getPhysicsWorld()
 	{
 		return world.get();
@@ -44,6 +45,7 @@ private:
 	std::vector<GameObject*> gameObjects;
 	static float deltaTime;
 	static float timeSinceStartUp;
+	static glm::vec2 mouseCoord;
 };
 
 
