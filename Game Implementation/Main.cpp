@@ -9,11 +9,20 @@ int main(int argc, char* argv[])
 
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
+	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	GameObject* tempGameObject;
+
+	tempGameObject = GameObject::createGameObject("BG");
+	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->setLayerOrder(-10);
+	Sprite * tempSprite = new Sprite();
+	tempSprite->init(0, 0, 600, 600);
+	tempSprite->setTextureID(texVal3);
+	tempGameObject->addComponent(tempSprite);
 
 	tempGameObject = GameObject::createGameObject("Sammy");
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
-	Sprite * tempSprite = new Sprite();
+	tempSprite = new Sprite();
 	tempSprite->init(0, 0, 50, 50);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
@@ -39,6 +48,7 @@ int main(int argc, char* argv[])
 
 	tempGameObject = GameObject::createGameObject("Galoo");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(0, 0, 300, 50);
 	tempSprite->setTextureID(texVal2);
