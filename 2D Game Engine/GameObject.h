@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <map>
+class GameObject;
 #include "Component.h"
 
 class GameObject

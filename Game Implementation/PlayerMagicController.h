@@ -10,7 +10,7 @@ public:
 	~PlayerMagicController() {};
 	virtual void start()
 	{
-		activeTransform = GameObject::getGameObjectWithName("Lola")->getComponent<Transform>();
+		activeTransform = attachedGameObject->getComponent<Transform>();//GameObject::getGameObjectWithName("Lola")->getComponent<Transform>();
 		rotOffset = 0.0f;
 		shouldDoCircleMotion = true;
 	}
@@ -37,7 +37,7 @@ public:
 		if (Game::isKeyReleased(Key::Q))
 			shouldDoCircleMotion = false;
 
-		ImGui::Text("Application average %.4f ms/frame (%.2f FPS)", deltaTime, 1.0f / deltaTime);
+		//ImGui::Text("Application average %.4f ms/frame (%.2f FPS)", deltaTime, 1.0f / deltaTime);
 
 	}
 private:

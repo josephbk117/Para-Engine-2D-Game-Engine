@@ -14,6 +14,7 @@ GameObject::GameObject(const std::string & name)
 
 void GameObject::addComponent(Component * comp)
 {
+	comp->attachedGameObject = this;
 	components.push_back(comp);
 }
 

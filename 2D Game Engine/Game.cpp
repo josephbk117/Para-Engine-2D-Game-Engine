@@ -123,7 +123,12 @@ void Game::update()
 			if (gameObjects[i]->hasComponent<Sprite>())
 				gameObjects[i]->getComponent<Sprite>()->draw();
 		}
-
+		//TODO:
+		//Make all components have reference to it's attached gameObject
+		//Make transform component automatically take care of it's physics
+		//Update func of transform does the matrix stuff
+		//Sprite should have it's update as draw
+		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
