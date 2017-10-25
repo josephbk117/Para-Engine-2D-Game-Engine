@@ -10,7 +10,8 @@ public:
 	~PlayerMagicController() {};
 	virtual void start()
 	{
-		activeTransform = attachedGameObject->getComponent<Transform>();//GameObject::getGameObjectWithName("Lola")->getComponent<Transform>();
+		activeTransform = attachedGameObject->getComponent<Transform>();
+		followInYtransform = GameObject::getGameObjectWithName("Sammy")->getComponent<Transform>();
 		rotOffset = 0.0f;
 		shouldDoCircleMotion = true;
 	}
@@ -36,12 +37,14 @@ public:
 			shouldDoCircleMotion = true;
 		if (Game::isKeyReleased(Key::Q))
 			shouldDoCircleMotion = false;
+		followInYtransform->position.y = activeTransform->position.y;
 
 		//ImGui::Text("Application average %.4f ms/frame (%.2f FPS)", deltaTime, 1.0f / deltaTime);
 
 	}
 private:
 	Transform* activeTransform;
+	Transform* followInYtransform;
 	float rotOffset;
 	bool shouldDoCircleMotion;
 };

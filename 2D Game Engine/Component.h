@@ -8,5 +8,5 @@ public:
 	virtual void update() { };
 	Component() {};
 	GameObject* attachedGameObject;
-	virtual ~Component() {};	
+	virtual ~Component() {};
 };
