@@ -80,22 +80,16 @@ void Game::update()
 		processInput(window);
 		camera.update();
 
-		for (unsigned int i = 0; i < gameObjects.size(); i++)
+		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			Transform * temp = gameObjects[i]->getComponent<Transform>();
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
 				temp->position.x, temp->position.y, temp->rotation);
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
-
-		std::chrono::duration<float> frameTime = clockTime.now() - start;
-		deltaTime = frameTime.count() * 10.0f;
-		world->Step(deltaTime, 5, 6);
-		std::chrono::duration<float> sinceStart = clockTime.now() - initialTime;
-		timeSinceStartUp = sinceStart.count();
 
 		shaderProgram.use();
 		glm::mat4 matrixTransform;
@@ -135,6 +129,12 @@ void Game::update()
 		ImGui::Render();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		std::chrono::duration<float> frameTime = clockTime.now() - start;
+		deltaTime = frameTime.count();
+		world->Step(deltaTime * 5.0f, 4, 5);
+		std::chrono::duration<float> sinceStart = clockTime.now() - initialTime;
+		timeSinceStartUp = sinceStart.count();
 
 		start = clockTime.now();
 	}

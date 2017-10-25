@@ -60,5 +60,6 @@ int main(int argc, char* argv[])
 
 	game.initialize();
 	game.update();
+
 	return 0;
 }
