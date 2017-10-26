@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 std::map<std::string, GameObject*> GameObject::gameObjectMap;
+std::vector<GameObject *> GameObject::gameObjectVector;
 GameObject::GameObject()
 {
 	this->name = "";

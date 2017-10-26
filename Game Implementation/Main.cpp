@@ -4,6 +4,7 @@
 #include <fstream>
 #include "PlayerMagicController.h"
 #include "MagicObjectScaler.h"
+#include "ObjectSpawner.h"
 #include <SceneManager.h>
 
 int main(int argc, char* argv[])
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(600, 600);
 	tempSprite->setTextureID(texVal3);
 	tempGameObject->addComponent(tempSprite);
+	tempGameObject->addComponent(new ObjectSpawner);
 
 	tempGameObject = GameObject::createGameObject("Sammy");
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));

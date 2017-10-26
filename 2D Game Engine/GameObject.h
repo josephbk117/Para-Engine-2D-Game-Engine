@@ -27,15 +27,12 @@ public:
 	{
 		GameObject* gameObject = new GameObject(name);
 		gameObjectMap[name] = gameObject;
+		gameObjectVector.push_back(gameObject);
 		return gameObject;
 	}
 	static std::vector<GameObject*> getAllGameObjects()
 	{
-		std::map<std::string, GameObject*>::iterator iter;
-		std::vector<GameObject*> vec;
-		for (iter = gameObjectMap.begin(); iter != gameObjectMap.end(); iter++)
-			vec.push_back(iter->second);
-		return vec;
+		return gameObjectVector;
 	}
 	~GameObject();
 private:
@@ -43,6 +40,7 @@ private:
 	std::vector<Component *> components;
 	int layerOrder;
 	static std::map<std::string, GameObject*> gameObjectMap;
+	static std::vector<GameObject *> gameObjectVector;
 };
 
 template<class T>

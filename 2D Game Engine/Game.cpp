@@ -74,6 +74,19 @@ void Game::update()
 			camera.setScreenRatio(vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
+		if (gameObjects.size() != GameObject::getAllGameObjects().size())
+		{
+			std::cout << "\nGame object size changed- dirty";
+			GameObject* gameObjRef = GameObject::getAllGameObjects()[GameObject::getAllGameObjects().size() - 1];
+			std::cout << "\nObject added = " << gameObjRef->getName().c_str();
+			gameObjects.push_back(gameObjRef);
+			std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
+			for (int i = 0; i < componentsAttachedToObject.size(); i++)
+				(*componentsAttachedToObject[i]).start();
+			std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
+			{return a->getLayerOrder() < b->getLayerOrder(); });
+		}
+
 		IMGUI_NEWFRAME();
 
 		glClear(GL_COLOR_BUFFER_BIT);
