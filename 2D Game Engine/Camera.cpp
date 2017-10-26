@@ -27,7 +27,7 @@ void Camera::setPosition(const vec2& newPosition)
 	needsUpdate = true;
 }
 
-vec2 Camera::getPosition()
+vec2 Camera::getPosition()const
 {
 	return position;
 }
@@ -38,7 +38,7 @@ void Camera::setScale(float newScale)
 	scale = newScale;
 }
 
-float Camera::getScale()
+float Camera::getScale()const
 {
 	return scale;
 }

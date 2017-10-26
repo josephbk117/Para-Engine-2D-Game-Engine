@@ -10,9 +10,9 @@ public:
 	GameObject();
 	GameObject(const std::string& name);
 	void setName(const std::string & name) { this->name = name; }
-	std::string getName() { return name; }
+	std::string getName()const { return name; }
 	void setLayerOrder(int order) { this->layerOrder = order; }
-	int getLayerOrder() { return layerOrder; }
+	int getLayerOrder()const { return layerOrder; }
 	template<class T>
 	T *getComponent(void);
 	void addComponent(Component *comp);

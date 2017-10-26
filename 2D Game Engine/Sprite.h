@@ -11,10 +11,11 @@ public:
 	void init(float width, float height);
 	void draw();
 	void setTextureID(unsigned int textureID);
-	glm::vec2 getDimensions();
+	unsigned int getTextureID()const;
+	glm::vec2 getDimensions() const;
 	void setDimension(glm::vec2 newDimension);
 private:
-	float width, height, x, y;
+	float width, height;
 	GLuint vboID;
 	GLuint textureID;
 	void setUpSpriteDimensions(float width, float height);

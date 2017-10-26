@@ -80,7 +80,7 @@ void ShaderProgram::unuse()
 	}
 }
 
-GLint ShaderProgram::getUniformLocation(const std::string & uniformName)
+GLint ShaderProgram::getUniformLocation(const std::string & uniformName)const
 {
 	return glGetUniformLocation(programID, uniformName.c_str());
 }

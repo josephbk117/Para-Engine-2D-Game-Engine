@@ -9,9 +9,9 @@ public:
 	~Camera();
 	void init(vec2 screenDimensions);
 	void setPosition(const vec2& newPosition);
-	vec2 getPosition();
+	vec2 getPosition()const;
 	void setScale(float newScale);
-	float getScale();
+	float getScale()const;
 	mat4 getOrthoMatrix();
 	void update();
 	bool isObjectInCameraView(const vec2 & position, const vec2 dimensions);

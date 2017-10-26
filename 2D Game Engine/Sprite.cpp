@@ -13,8 +13,6 @@ Sprite::~Sprite()
 
 void Sprite::init(float width, float height)
 {
-	this->x = 0;
-	this->y = 0;
 	this->width = width;
 	this->height = height;
 	if (vboID == 0)
@@ -43,7 +41,12 @@ void Sprite::setTextureID(unsigned int textureID)
 	this->textureID = textureID;
 }
 
-glm::vec2 Sprite::getDimensions()
+unsigned int Sprite::getTextureID() const
+{
+	return textureID;
+}
+
+glm::vec2 Sprite::getDimensions() const
 {
 	return glm::vec2(width, height);
 }
@@ -57,38 +60,38 @@ void Sprite::setUpSpriteDimensions(float width, float height)
 {
 	float vertexData[24];
 
-	vertexData[0] = x + (width * 0.5f);
-	vertexData[1] = y + (height * 0.5f);
+	vertexData[0] = width * 0.5f;
+	vertexData[1] = height * 0.5f;
 
 	vertexData[2] = 1.0f;
 	vertexData[3] = 1.0f;
 
-	vertexData[4] = x - (width * 0.5f);
-	vertexData[5] = y + (height * 0.5f);
+	vertexData[4] = -width * 0.5f;
+	vertexData[5] = height * 0.5f;
 
 	vertexData[6] = 0.0f;
 	vertexData[7] = 1.0f;
 
-	vertexData[8] = x - (width * 0.5f);
-	vertexData[9] = y - (height * 0.5f);
+	vertexData[8] = -width * 0.5f;
+	vertexData[9] = -height * 0.5f;
 
 	vertexData[10] = 0.0f;
 	vertexData[11] = 0.0f;
 
-	vertexData[12] = x - (width * 0.5f);
-	vertexData[13] = y - (height * 0.5f);
+	vertexData[12] = -width * 0.5f;
+	vertexData[13] = -height * 0.5f;
 
 	vertexData[14] = 0.0f;
 	vertexData[15] = 0.0f;
 
-	vertexData[16] = x + (width * 0.5f);
-	vertexData[17] = y - (height * 0.5f);
+	vertexData[16] = width * 0.5f;
+	vertexData[17] = -height * 0.5f;
 
 	vertexData[18] = 1.0f;
 	vertexData[19] = 0;
 
-	vertexData[20] = x + (width * 0.5f);
-	vertexData[21] = y + (height * 0.5f);
+	vertexData[20] = width * 0.5f;
+	vertexData[21] = height * 0.5f;
 
 	vertexData[22] = 1.0f;
 	vertexData[23] = 1.0f;

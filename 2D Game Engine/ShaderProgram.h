@@ -13,7 +13,7 @@ public:
 	void addAttribute(const std::string& attributeName);
 	void use();
 	void unuse();
-	GLint getUniformLocation(const std::string& uniformName);
+	GLint getUniformLocation(const std::string& uniformName)const;
 private:
 	GLuint programID, vertexShaderID, fragmentShaderID;
 	void compileShader(const std::string& filePath, GLuint ID);
