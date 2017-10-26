@@ -48,9 +48,9 @@ void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::stri
 						std::to_string(ref->getDimensions().y) + " " +
 						std::to_string(1));
 				}
-				else if (typeid(Box) == typeid(*components[i]))
+				else if (typeid(BoxCollider) == typeid(*components[i]))
 				{
-					Box* ref = (Box *)(components[i]);
+					BoxCollider* ref = (BoxCollider *)(components[i]);
 					data.append(" " + std::to_string(ref->getBody()->GetPosition().x) + " " +
 						std::to_string(ref->getBody()->GetPosition().y) + " " +
 						std::to_string(ref->getDimensions().x) + " " +

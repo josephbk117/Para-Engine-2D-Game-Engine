@@ -6,11 +6,11 @@
 #include "Game.h"
 #include "PhysicsData.h"
 
-class Box : public Component
+class BoxCollider : public Component
 {
 public:
-	Box();
-	~Box();
+	BoxCollider();
+	~BoxCollider();
 	void init(const glm::vec2 &position, const glm::vec2 &dimension, PhysicsBody bodyType, float density);
 	b2Body* getBody();
 	b2Fixture* getFixture();

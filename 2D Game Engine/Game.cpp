@@ -108,16 +108,17 @@ void Game::update()
 		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			matrixTransform = glm::mat4(1.0f);
-			if (gameObjects[i]->hasComponent<Box>())
+			Transform *transformRef = gameObjects[i]->getComponent<Transform>();
+			if (gameObjects[i]->hasComponent<BoxCollider>())
 			{
-				gameObjects[i]->getComponent<Transform>()->position = glm::vec2(gameObjects[i]->getComponent<Box>()->getBody()->GetPosition().x,
-					gameObjects[i]->getComponent<Box>()->getBody()->GetPosition().y);
-				gameObjects[i]->getComponent<Transform>()->rotation = gameObjects[i]->getComponent<Box>()->getBody()->GetAngle();
+				b2Body* boxcolBody = gameObjects[i]->getComponent<BoxCollider>()->getBody();
+				transformRef->position = glm::vec2(boxcolBody->GetPosition().x, boxcolBody->GetPosition().y);
+				transformRef->rotation = boxcolBody->GetAngle();
 			}
 
-			matrixTransform = glm::translate(matrixTransform, glm::vec3(gameObjects[i]->getComponent<Transform>()->position.x,
-				gameObjects[i]->getComponent<Transform>()->position.y, 0));
-			matrixTransform = glm::rotate(matrixTransform, gameObjects[i]->getComponent<Transform>()->rotation, glm::vec3(0, 0, 1.0f));
+			matrixTransform = glm::translate(matrixTransform, glm::vec3(transformRef->position.x, transformRef->position.y, 0));
+			matrixTransform = glm::rotate(matrixTransform, transformRef->rotation, glm::vec3(0, 0, 1.0f));
+			matrixTransform = glm::scale(matrixTransform, glm::vec3(transformRef->scale.x, transformRef->scale.y, 0));
 
 			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
 			if (gameObjects[i]->hasComponent<Sprite>())

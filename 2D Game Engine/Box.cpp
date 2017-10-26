@@ -1,14 +1,14 @@
 #include "Box.h"
 
-Box::Box()
+BoxCollider::BoxCollider()
 {
 }
 
-Box::~Box()
+BoxCollider::~BoxCollider()
 {
 }
 
-void Box::init(const glm::vec2 & position, const glm::vec2 & dimension, PhysicsBody bodyType, float density)
+void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, PhysicsBody bodyType, float density)
 {
 	this->dimension = dimension;
 	b2BodyDef bodyDef;
@@ -27,17 +27,17 @@ void Box::init(const glm::vec2 & position, const glm::vec2 & dimension, PhysicsB
 	fixture = body->CreateFixture(&fixtureDef);
 }
 
-b2Fixture * Box::getFixture()
+b2Fixture * BoxCollider::getFixture()
 {
 	return fixture;
 }
 
-const glm::vec2 & Box::getDimensions()
+const glm::vec2 & BoxCollider::getDimensions()
 {
 	return dimension;
 }
 
-b2Body * Box::getBody()
+b2Body * BoxCollider::getBody()
 {
 	return body;
 }

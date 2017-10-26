@@ -3,6 +3,7 @@
 #include <GLM\glm.hpp>
 #include <fstream>
 #include "PlayerMagicController.h"
+#include "MagicObjectScaler.h"
 #include <SceneManager.h>
 
 int main(int argc, char* argv[])
@@ -29,6 +30,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(50, 50);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
+	tempGameObject->addComponent(new MagicObjectScaler);
 
 	tempGameObject = GameObject::createGameObject("Lola");
 	tempGameObject->setLayerOrder(10);
@@ -45,7 +47,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(80, 80);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
-	Box* boxCollider = new Box();
+	BoxCollider* boxCollider = new BoxCollider();
 	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), PhysicsBody::DYNAMIC, 1.0f);
 	tempGameObject->addComponent(boxCollider);
 
@@ -56,7 +58,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(300, 50);
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
-	boxCollider = new Box();
+	boxCollider = new BoxCollider();
 	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
 		glm::vec2(300, 50), PhysicsBody::STATIC, 1.0f);
 	tempGameObject->addComponent(boxCollider);
