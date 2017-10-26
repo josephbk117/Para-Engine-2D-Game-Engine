@@ -11,10 +11,10 @@ Sprite::~Sprite()
 		glDeleteBuffers(1, &vboID);
 }
 
-void Sprite::init(float x, float y, float width, float height)
+void Sprite::init(float width, float height)
 {
-	this->x = x;
-	this->y = y;
+	this->x = 0;
+	this->y = 0;
 	this->width = width;
 	this->height = height;
 	if (vboID == 0)
@@ -43,20 +43,9 @@ void Sprite::setTextureID(unsigned int textureID)
 	this->textureID = textureID;
 }
 
-glm::vec2 Sprite::getPosition()
-{
-	return glm::vec2(x, y);
-}
-
 glm::vec2 Sprite::getDimensions()
 {
 	return glm::vec2(width, height);
-}
-
-void Sprite::setPosition(glm::vec2 newPosition)
-{
-	x = newPosition.x;
-	y = newPosition.y;
 }
 
 void Sprite::setDimension(glm::vec2 newDimension)

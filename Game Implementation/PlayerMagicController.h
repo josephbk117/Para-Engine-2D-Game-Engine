@@ -39,8 +39,6 @@ public:
 			shouldDoCircleMotion = false;
 		followInYtransform->position.y = activeTransform->position.y;
 
-		//ImGui::Text("Application average %.4f ms/frame (%.2f FPS)", deltaTime, 1.0f / deltaTime);
-
 	}
 private:
 	Transform* activeTransform;

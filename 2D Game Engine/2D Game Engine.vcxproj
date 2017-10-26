@@ -132,6 +132,7 @@
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="stb_image.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="InputData.h" />
     <ClInclude Include="PhysicsData.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="stb_image.h" />
