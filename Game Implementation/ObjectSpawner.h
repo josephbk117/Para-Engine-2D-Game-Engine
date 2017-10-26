@@ -13,7 +13,7 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (timer >= 5.0f)
+		if (timer >= 0.3f)
 		{
 			GameObject* tempGameObject;
 			tempGameObject = GameObject::createGameObject("NewOne" + std::to_string(count));
@@ -24,7 +24,9 @@ public:
 			tempSprite->setTextureID(texId);
 			tempGameObject->addComponent(tempSprite);
 			BoxCollider* boxCollider = new BoxCollider();
-			boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(40, 40), PhysicsBody::DYNAMIC, 1.0f);
+			boxCollider->init(tempGameObject->getComponent<Transform>()->position, 
+				glm::vec2(40, 40), PhysicsBody::DYNAMIC, 1.0f);
+			tempGameObject->addComponent(boxCollider);
 			count++;
 			timer = 0.0f;
 		}
