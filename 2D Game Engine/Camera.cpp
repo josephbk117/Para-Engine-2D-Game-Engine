@@ -58,7 +58,7 @@ void Camera::update()
 	}
 }
 
-bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2 spriteDimensions)
+bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& spriteDimensions)const
 {
 	vec2 scaledScreenDimensions = vec2((float)screenDimensions.x, (float)screenDimensions.y) / (float)scale;
 

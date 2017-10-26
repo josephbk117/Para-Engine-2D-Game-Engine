@@ -99,15 +99,6 @@ void Game::update()
 
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			std::vector<Component*> componentsAttachedToObject =
-				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
-			for (int i = 0; i < componentsAttachedToObject.size(); i++)
-				(*componentsAttachedToObject[i]).update();
-		}
-
-		for (unsigned int i = 0; i < gameObjects.size(); i++)
-		{
-			matrixTransform = glm::mat4(1.0f);
 			Transform *transformRef = gameObjects[i]->getComponent<Transform>();
 			if (gameObjects[i]->hasComponent<BoxCollider>())
 			{
@@ -115,21 +106,21 @@ void Game::update()
 				transformRef->position = glm::vec2(boxcolBody->GetPosition().x, boxcolBody->GetPosition().y);
 				transformRef->rotation = boxcolBody->GetAngle();
 			}
+			std::vector<Component*> componentsAttachedToObject =
+				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
+			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
+				(*componentsAttachedToObject[i]).update();
 
-			matrixTransform = glm::translate(matrixTransform, glm::vec3(transformRef->position.x, transformRef->position.y, 0));
-			matrixTransform = glm::rotate(matrixTransform, transformRef->rotation, glm::vec3(0, 0, 1.0f));
-			matrixTransform = glm::scale(matrixTransform, glm::vec3(transformRef->scale.x, transformRef->scale.y, 0));
-
-			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(matrixTransform[0][0]));
+			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
 			if (gameObjects[i]->hasComponent<Sprite>())
 				gameObjects[i]->getComponent<Sprite>()->draw();
 		}
+
 		//TODO:
-		//Make all components have reference to it's attached gameObject
 		//Make transform component automatically take care of it's physics
-		//Update func of transform does the matrix stuff
-		//Sprite should have it's update as draw
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
+		//Make camera into component
+		//Attach frame buffer stuff and shader code for screen to camera
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
