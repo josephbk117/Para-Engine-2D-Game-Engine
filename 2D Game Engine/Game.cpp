@@ -35,7 +35,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 void Game::initialize()
 {
 	gameObjects = GameObject::getAllGameObjects();
-	for (int i = 0; i < gameObjects.size(); i++)
+	for (unsigned int i = 0; i < gameObjects.size(); i++)
 	{
 		std::vector<Component*> componentsAttachedToObject = gameObjects[i]->getAttachedComponents();
 		if (camera == nullptr)
@@ -43,7 +43,7 @@ void Game::initialize()
 			if (gameObjects[i]->hasComponent<Camera>())
 				camera = gameObjects[i]->getComponent<Camera>();
 		}
-		for (int i = 0; i < componentsAttachedToObject.size(); i++)
+		for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
 			(*componentsAttachedToObject[i]).start();
 	}
 	if (camera == nullptr)
@@ -119,7 +119,7 @@ void Game::update()
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			Transform *transformRef = gameObjects[i]->getComponent<Transform>();
 			if (gameObjects[i]->hasComponent<BoxCollider>())
