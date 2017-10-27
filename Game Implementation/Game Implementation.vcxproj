@@ -127,6 +127,7 @@
     <ClInclude Include="MagicObjectScaler.h" />
     <ClInclude Include="ObjectSpawner.h" />
     <ClInclude Include="PlayerMagicController.h" />
+    <ClInclude Include="SuddenJolt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

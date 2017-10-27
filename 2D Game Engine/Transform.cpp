@@ -1,5 +1,5 @@
 #include "Transform.h"
-glm::mat4 Transform::getModelMatrix()
+glm::mat4 Transform::getModelMatrix()const
 {
 	return modelMatrix;
 }
@@ -7,11 +7,11 @@ void Transform::update()
 {
 	setModelMatrix();
 }
-bool Transform::operator==(const Transform & transform)
+bool Transform::operator==(const Transform & transform)const
 {
 	return (position == transform.position && rotation == transform.rotation && scale == transform.scale);
 }
-bool Transform::operator!=(const Transform & transform)
+bool Transform::operator!=(const Transform & transform)const
 {
 	return (position != transform.position || rotation != transform.rotation || scale != transform.scale);
 }

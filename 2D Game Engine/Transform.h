@@ -23,10 +23,10 @@ public:
 		scale = glm::vec2(1.0f, 1.0f);
 		setModelMatrix();
 	}
-	glm::mat4 getModelMatrix();
+	glm::mat4 getModelMatrix()const;
 	virtual void update();
-	bool operator==(const Transform& transform);
-	bool operator!=(const Transform& transform);
+	bool operator==(const Transform& transform)const;
+	bool operator!=(const Transform& transform)const;
 	~Transform() {};
 private:
 	glm::mat4 modelMatrix;

@@ -14,6 +14,8 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 	b2BodyDef bodyDef;
 	bodyDef.type = (b2BodyType)bodyType;
 	bodyDef.position.Set(position.x, position.y);
+	bodyDef.linearDamping = 0.0f;
+	bodyDef.angularDamping = 0.0f;
 	body = Game::getPhysicsWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
@@ -21,7 +23,7 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxShape;
-	fixtureDef.density = density;
+	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 
 	fixture = body->CreateFixture(&fixtureDef);

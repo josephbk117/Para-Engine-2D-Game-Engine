@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h>
 #include <Game.h>
+#include "SuddenJolt.h"
 class ObjectSpawner : public Component
 {
 public:
@@ -29,6 +30,7 @@ public:
 				boxCollider->init(tempGameObject->getComponent<Transform>()->position,
 					glm::vec2(40, 40), PhysicsBody::DYNAMIC, 1.0f);
 				tempGameObject->addComponent(boxCollider);
+				tempGameObject->addComponent(new SuddenJolt);
 				count++;
 				timer = 0.0f;
 			}

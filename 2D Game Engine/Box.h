@@ -1,5 +1,6 @@
 #pragma once
 #include <Box2D\Box2D.h>
+#include <Box2D\Dynamics\b2Body.h>
 #include <GLM\glm.hpp>
 #include <GL\glew.h>
 #include "Component.h"

@@ -5,6 +5,7 @@
 #include "PlayerMagicController.h"
 #include "MagicObjectScaler.h"
 #include "ObjectSpawner.h"
+#include "SuddenJolt.h"
 #include <SceneManager.h>
 
 int main(int argc, char* argv[])
@@ -59,6 +60,7 @@ int main(int argc, char* argv[])
 	BoxCollider* boxCollider = new BoxCollider();
 	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), PhysicsBody::DYNAMIC, 1.0f);
 	tempGameObject->addComponent(boxCollider);
+	tempGameObject->addComponent(new SuddenJolt);
 
 	tempGameObject = GameObject::createGameObject("Galoo");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));

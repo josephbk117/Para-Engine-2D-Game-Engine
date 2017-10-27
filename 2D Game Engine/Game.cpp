@@ -142,6 +142,7 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
+		//Bring down physics scales- rendering scale should be reduced - 1m in box2d ~ 100 px
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();

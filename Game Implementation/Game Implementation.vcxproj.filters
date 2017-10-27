@@ -29,5 +29,8 @@
     <ClInclude Include="ObjectSpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SuddenJolt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
