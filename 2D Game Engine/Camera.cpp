@@ -43,11 +43,12 @@ mat4 Camera::getOrthoMatrix()const
 
 void Camera::update()
 {
-	if (transform->position.x != previousTransformData.position.x || transform->position.y != previousTransformData.position.y)
+	if (*transform != previousTransformData)
 	{
 		previousTransformData = *transform;
-		viewMatrix *= glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
-		viewMatrix = translate(orthographicMatrix, vec3(-transform->position.x, -transform->position.y, 0));
+		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
+		viewMatrix = glm::rotate(viewMatrix, transform->rotation, glm::vec3(0, 0, 1));
+		viewMatrix = glm::translate(viewMatrix, vec3(-transform->position.x, -transform->position.y, 0));
 	}
 }
 

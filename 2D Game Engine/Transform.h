@@ -25,6 +25,8 @@ public:
 	}
 	glm::mat4 getModelMatrix();
 	virtual void update();
+	bool operator==(const Transform& transform);
+	bool operator!=(const Transform& transform);
 	~Transform() {};
 private:
 	glm::mat4 modelMatrix;
