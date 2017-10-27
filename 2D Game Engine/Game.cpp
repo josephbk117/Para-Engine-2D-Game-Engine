@@ -11,6 +11,7 @@ float Game::timeSinceStartUp;
 std::unique_ptr<b2World> Game::world;
 GLFWwindow* Game::window;
 glm::vec2 Game::mouseCoord;
+
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -30,19 +31,28 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	else
 		std::cout << " Glew initialsed" << std::endl;
 	IMGUI_INIT(window, true);
-
-	camera.init(glm::vec2(600, 600));
-	camera.setPosition(glm::vec2(0, 0));
 }
 void Game::initialize()
 {
 	gameObjects = GameObject::getAllGameObjects();
 	for (int i = 0; i < gameObjects.size(); i++)
 	{
-		std::vector<Component*> componentsAttachedToObject =
-			GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
+		std::vector<Component*> componentsAttachedToObject = gameObjects[i]->getAttachedComponents();
+		if (camera == nullptr)
+		{
+			if (gameObjects[i]->hasComponent<Camera>())
+				camera = gameObjects[i]->getComponent<Camera>();
+		}
 		for (int i = 0; i < componentsAttachedToObject.size(); i++)
 			(*componentsAttachedToObject[i]).start();
+	}
+	if (camera == nullptr)
+	{
+		std::cout << "\nNo Camera Has Been Attached To An Object\nProviding Default Camera";
+		camera = new Camera();
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		camera->init(glm::vec2(width, height));
 	}
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
@@ -71,7 +81,7 @@ void Game::update()
 			int width, height;
 			glfwGetWindowSize(window, &width, &height);
 			std::cout << "\nUpdated to : " << width << " ," << height;
-			camera.setScreenRatio(vec2(width, height));
+			camera->setScreenRatio(vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
 		if (gameObjects.size() != GameObject::getAllGameObjects().size())
@@ -91,7 +101,6 @@ void Game::update()
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		processInput(window);
-		camera.update();
 
 		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
@@ -106,7 +115,7 @@ void Game::update()
 
 		shaderProgram.use();
 		glm::mat4 matrixTransform;
-		glm::mat4 cameraMatrix = camera.getOrthoMatrix();
+		glm::mat4 cameraMatrix = camera->getOrthoMatrix();
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 
@@ -132,7 +141,6 @@ void Game::update()
 		//TODO:
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
-		//Make camera into component
 		//Attach frame buffer stuff and shader code for screen to camera
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -157,14 +165,6 @@ void Game::processInput(GLFWwindow * window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		camera.setPosition(camera.getPosition() + glm::vec2(0, 1.0f));
-	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		camera.setPosition(camera.getPosition() + glm::vec2(0, -1.0f));
-	else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		camera.setPosition(camera.getPosition() + glm::vec2(-1.0f, 0));
-	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		camera.setPosition(camera.getPosition() + glm::vec2(1.0f, 0));
 }
 
 Game::~Game()

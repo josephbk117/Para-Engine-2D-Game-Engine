@@ -34,7 +34,7 @@ public:
 	{
 		return timeSinceStartUp;
 	}
-	Camera camera;
+	Camera* camera;
 	~Game();
 private:
 	std::chrono::steady_clock clockTime;

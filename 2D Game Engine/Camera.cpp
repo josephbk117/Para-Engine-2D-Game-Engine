@@ -3,8 +3,7 @@
 
 Camera::Camera()
 {
-	position = vec2(0.0f, 0.0f);
-	orthoMatrix = mat4(1.0f);
+	orthographicMatrix = mat4(1.0f);
 	viewMatrix = mat4(1.0f);
 	scale = 1.0f;
 	needsUpdate = true;
@@ -18,18 +17,12 @@ Camera::~Camera()
 void Camera::init(vec2 screenDimensions)
 {
 	this->screenDimensions = screenDimensions;
-	orthoMatrix = ortho(-((float)screenDimensions.x/2.0f), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f));
+	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f));
 }
 
-void Camera::setPosition(const vec2& newPosition)
+void Camera::start()
 {
-	position = newPosition;
-	needsUpdate = true;
-}
-
-vec2 Camera::getPosition()const
-{
-	return position;
+	transform = attachedGameObject->getComponent<Transform>();
 }
 
 void Camera::setScale(float newScale)
@@ -43,18 +36,18 @@ float Camera::getScale()const
 	return scale;
 }
 
-mat4 Camera::getOrthoMatrix()
+mat4 Camera::getOrthoMatrix()const
 {
 	return viewMatrix;
 }
 
 void Camera::update()
 {
-	if (needsUpdate)
+	if (transform->position.x != previousTransformData.position.x || transform->position.y != previousTransformData.position.y)
 	{
-		viewMatrix *= glm::scale(orthoMatrix, vec3(scale, scale, 0.0f));
-		viewMatrix = translate(orthoMatrix, vec3(-position.x, -position.y, 0));
-		needsUpdate = false;
+		previousTransformData = *transform;
+		viewMatrix *= glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
+		viewMatrix = translate(orthographicMatrix, vec3(-transform->position.x, -transform->position.y, 0));
 	}
 }
 
@@ -65,7 +58,7 @@ bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& sprit
 	const float MIN_DISTANCE_X = scaledScreenDimensions.x + (float)spriteDimensions.x;
 	const float MIN_DISTANCE_Y = scaledScreenDimensions.y + (float)spriteDimensions.y;
 
-	vec2 distVec = spritePosition - position;
+	vec2 distVec = spritePosition - transform->position;
 
 	//Get depth of collision
 	float xDepth = MIN_DISTANCE_X - abs(distVec.x);
@@ -79,6 +72,6 @@ bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& sprit
 
 void Camera::setScreenRatio(vec2 screenDimension)
 {
-	orthoMatrix = ortho(-((float)screenDimensions.x / 2.0f) * (screenDimension.x/screenDimension.y) , ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f)*(screenDimension.y / screenDimension.x));
+	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * (screenDimension.x / screenDimension.y), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f)*(screenDimension.y / screenDimension.x));
 	needsUpdate = true;
 }

@@ -16,6 +16,13 @@ int main(int argc, char* argv[])
 	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
 	GameObject* tempGameObject;
 
+	tempGameObject = GameObject::createGameObject("Camera");
+	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+	Camera* camera = new Camera;
+	camera->init(glm::vec2(500, 500));
+	tempGameObject->addComponent(camera);
+	tempGameObject->addComponent(new PlayerMagicController);
+
 	tempGameObject = GameObject::createGameObject("BG");
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(-10);
@@ -41,7 +48,7 @@ int main(int argc, char* argv[])
 	tempSprite->init(80, 80);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
-	tempGameObject->addComponent(new PlayerMagicController());
+	//tempGameObject->addComponent(new PlayerMagicController());
 
 	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));

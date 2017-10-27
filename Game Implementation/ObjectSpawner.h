@@ -33,6 +33,7 @@ public:
 				timer = 0.0f;
 			}
 		}
+		ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
 	}
 private:
 	float timer;

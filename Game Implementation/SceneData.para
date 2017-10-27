@@ -1,4 +1,8 @@
 
+^Camera 0
+:class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
+:class Camera
+:class PlayerMagicController
 ^BG -10
 :class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
 :class Sprite 600.000000 600.000000 1
@@ -10,7 +14,6 @@
 ^Lola 10
 :class Transform -50.000000 -50.000000 0.000000 1.000000 1.000000
 :class Sprite 80.000000 80.000000 1
-:class PlayerMagicController
 ^Babu 0
 :class Transform -120.000000 -120.000000 0.000000 1.000000 1.000000
 :class Sprite 80.000000 80.000000 1
