@@ -4,6 +4,7 @@
 #include <random>
 #include <typeinfo>
 #include "stb_image_write.h"
+#include <Yse\yse.hpp>
 
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
@@ -74,6 +75,11 @@ void Game::update()
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
+	YSE::sound mySound;
+	YSE::System().init();
+
+	mySound.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\PlatformerBGM_06.wav").play();
+
 	while (!glfwWindowShouldClose(window))
 	{
 		if (frameBufferSizeUpated)
@@ -84,11 +90,11 @@ void Game::update()
 			camera->setScreenRatio(vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
+		//std::cout << "\nIs sound playing : " << mySound.isPlaying();
+		YSE::System().update();
 		if (gameObjects.size() != GameObject::getAllGameObjects().size())
 		{
-			std::cout << "\nGame object size changed- dirty";
 			GameObject* gameObjRef = GameObject::getAllGameObjects()[GameObject::getAllGameObjects().size() - 1];
-			std::cout << "\nObject added = " << gameObjRef->getName().c_str();
 			gameObjects.push_back(gameObjRef);
 			std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
 			for (int i = 0; i < componentsAttachedToObject.size(); i++)
@@ -157,6 +163,7 @@ void Game::update()
 
 		start = clockTime.now();
 	}
+	YSE::System().close();
 	IMGUI_SHUTDOWN();
 	glfwTerminate();
 	return;
