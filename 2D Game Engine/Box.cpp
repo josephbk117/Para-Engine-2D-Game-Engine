@@ -26,12 +26,38 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 
+	body->SetSleepingAllowed(false);
 	fixture = body->CreateFixture(&fixtureDef);
 }
 
 b2Fixture * BoxCollider::getFixture()
 {
 	return fixture;
+}
+
+void BoxCollider::canRotate(bool canObjectRotate)
+{
+	body->SetFixedRotation(canObjectRotate);
+}
+
+void BoxCollider::applyTorque(float strength)
+{
+	body->ApplyTorque(strength, true);
+}
+
+void BoxCollider::applyForce(glm::vec2 force)
+{
+	body->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
+}
+
+void BoxCollider::setVelocity(glm::vec2 velocity)
+{
+	body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+}
+
+void BoxCollider::setAngularVelocity(float velocity)
+{
+	body->SetAngularVelocity(velocity);
 }
 
 const glm::vec2 & BoxCollider::getDimensions()
