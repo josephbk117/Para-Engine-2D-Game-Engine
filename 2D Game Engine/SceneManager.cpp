@@ -11,24 +11,18 @@ SceneManager::SceneManager()
 
 void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::string filePath)
 {
-	//TODO : This wont work
-	/*
-	Format for serialization:
-	-GameObject_Name LayerOrder
-	:Component_Type (Transform-eg) constructor arg1 constructor arg2 ....(Special case for Sprite And Box Collider)
-	*/
 	if (filePath == "s")
 	{
 		std::cout << "\nSaving to disk";
 		std::ofstream save1;
 		save1.open("SceneData.para", std::ios::binary);
 		save1.seekp(0, std::ios::beg);
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			GameObject* gameObject = gameObjects[i];
 			std::string data = "\r\n^" + gameObject->getName() + " " + std::to_string(gameObject->getLayerOrder());
 			std::vector<Component *> components = gameObject->getAttachedComponents();
-			for (int i = 0; i < components.size(); i++)
+			for (unsigned int i = 0; i < components.size(); i++)
 			{
 				std::string type = typeid(*components[i]).name();
 				data.append("\r\n:" + type);

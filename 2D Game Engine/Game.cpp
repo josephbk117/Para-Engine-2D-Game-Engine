@@ -93,7 +93,7 @@ void Game::update()
 			GameObject* gameObjRef = GameObject::getAllGameObjects()[GameObject::getAllGameObjects().size() - 1];
 			gameObjects.push_back(gameObjRef);
 			std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
-			for (int i = 0; i < componentsAttachedToObject.size(); i++)
+			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
 				(*componentsAttachedToObject[i]).start();
 			std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
 			{return a->getLayerOrder() < b->getLayerOrder(); });
@@ -196,8 +196,8 @@ const glm::vec2* Game::getMouseCoords()
 {
 	double x, y;
 	glfwGetCursorPos(window, &x, &y);
-	mouseCoord.x = x;
-	mouseCoord.y = y;
+	mouseCoord.x = (float)x;
+	mouseCoord.y = (float)y;
 	return &mouseCoord;
 }
 b2World* Game::getPhysicsWorld()

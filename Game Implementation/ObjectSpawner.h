@@ -13,7 +13,7 @@ public:
 		texId[0] = TextureLoader::getTextureFromReference("texThree");
 		texId[1] = TextureLoader::getTextureFromReference("texTwo");
 		texId[2] = TextureLoader::getTextureFromReference("texOne");
-		sndRef.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav").play();
+		sndRef.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav");
 	}
 	virtual void update()
 	{
