@@ -9,7 +9,7 @@ public:
 	{
 		timer = 0.0f;
 		count = 0;
-		texId = GameObject::getGameObjectWithName("Babu")->getComponent<Sprite>()->getTextureID();
+		texId = TextureLoader::getTextureFromReference("texThree");
 	}
 	virtual void update()
 	{

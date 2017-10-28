@@ -49,7 +49,7 @@ void Game::initialize()
 	}
 	if (camera == nullptr)
 	{
-		std::cout << "\nNo Camera Has Been Attached To An Object\nProviding Default Camera";
+		std::cout << "\nNo Camera Has Been Attached To An Object\nProviding Default Camera\n";
 		camera = new Camera();
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
@@ -79,6 +79,8 @@ void Game::update()
 	YSE::System().init();
 
 	mySound.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\PlatformerBGM_06.wav").play();
+	mySound.set2D(true);
+	mySound.setLooping(true);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -90,7 +92,6 @@ void Game::update()
 			camera->setScreenRatio(vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
-		//std::cout << "\nIs sound playing : " << mySound.isPlaying();
 		YSE::System().update();
 		if (gameObjects.size() != GameObject::getAllGameObjects().size())
 		{

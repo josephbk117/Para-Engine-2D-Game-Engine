@@ -12,9 +12,9 @@ int main(int argc, char* argv[])
 {
 	Game game(600, 600, "2D Game Engine");
 
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", false);
-	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", false);
-	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", false);
+	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
+	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
+	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
 	GameObject* tempGameObject;
 
 	tempGameObject = GameObject::createGameObject("Camera");

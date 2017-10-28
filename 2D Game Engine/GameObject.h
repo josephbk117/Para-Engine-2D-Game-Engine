@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <map>
+#include <unordered_map>
 class GameObject;
 #include "Component.h"
 
@@ -39,7 +39,7 @@ private:
 	std::string name;
 	std::vector<Component *> components;
 	int layerOrder;
-	static std::map<std::string, GameObject*> gameObjectMap;
+	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
 };
 

@@ -1,6 +1,8 @@
 #include "TextureLoader.h"
 
-unsigned int TextureLoader::loadTextureFromFile(const std::string & path, bool gamma)
+std::unordered_map<std::string, unsigned int> TextureLoader::textureIdMap;
+
+unsigned int TextureLoader::loadTextureFromFile(const std::string & path, const std::string& referenceString, bool gamma)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -32,5 +34,11 @@ unsigned int TextureLoader::loadTextureFromFile(const std::string & path, bool g
 		std::cout << "\nTexture failed to load at path: " << path.c_str() << std::endl;
 		stbi_image_free(data);
 	}
+	textureIdMap[referenceString] = textureID;
 	return textureID;
+}
+
+unsigned int TextureLoader::getTextureFromReference(const std::string& referenceString)
+{
+	return textureIdMap[referenceString];
 }
