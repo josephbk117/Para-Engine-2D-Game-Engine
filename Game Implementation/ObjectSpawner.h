@@ -2,6 +2,7 @@
 #include <Component.h>
 #include <Game.h>
 #include "SuddenJolt.h"
+#include <AudioManager.h>
 class ObjectSpawner : public Component
 {
 public:
@@ -12,6 +13,7 @@ public:
 		texId[0] = TextureLoader::getTextureFromReference("texThree");
 		texId[1] = TextureLoader::getTextureFromReference("texTwo");
 		texId[2] = TextureLoader::getTextureFromReference("texOne");
+		sndRef.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav").play();
 	}
 	virtual void update()
 	{
@@ -35,6 +37,7 @@ public:
 				tempGameObject->addComponent(new SuddenJolt);
 				count++;
 				timer = 0.0f;
+				sndRef.play();
 			}
 		}
 		ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
@@ -43,4 +46,6 @@ private:
 	float timer;
 	int count;
 	unsigned int texId[3];
+	YSE::sound sndRef;
+	
 };

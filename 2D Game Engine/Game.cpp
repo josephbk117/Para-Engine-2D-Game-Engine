@@ -5,6 +5,7 @@
 #include <typeinfo>
 #include "stb_image_write.h"
 #include <Yse\yse.hpp>
+#include "AudioManager.h"
 
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
@@ -32,6 +33,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	else
 		std::cout << " Glew initialsed" << std::endl;
 	IMGUI_INIT(window, true);
+	YSE::System().init();
 }
 void Game::initialize()
 {
@@ -74,13 +76,6 @@ void Game::update()
 	std::chrono::steady_clock::time_point initialTime = clockTime.now();
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
-
-	YSE::sound mySound;
-	YSE::System().init();
-
-	mySound.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\PlatformerBGM_06.wav").play();
-	mySound.set2D(true);
-	mySound.setLooping(true);
 
 	while (!glfwWindowShouldClose(window))
 	{

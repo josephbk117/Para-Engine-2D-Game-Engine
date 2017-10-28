@@ -2,7 +2,6 @@
 #include <iostream>
 #include <GL\glew.h>
 #include <unordered_map>
-
 #include "stb_image.h"
 class TextureLoader
 {

@@ -7,6 +7,7 @@
 #include "ObjectSpawner.h"
 #include "SuddenJolt.h"
 #include <SceneManager.h>
+#include <AudioManager.h>
 
 int main(int argc, char* argv[])
 {
@@ -15,6 +16,8 @@ int main(int argc, char* argv[])
 	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
 	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
 	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
+
+	//AudioManager::loadAudioFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\Debug\\Test Resources\\Swoosh.wav", "snd_swoosh");
 	GameObject* tempGameObject;
 
 	tempGameObject = GameObject::createGameObject("Camera");
