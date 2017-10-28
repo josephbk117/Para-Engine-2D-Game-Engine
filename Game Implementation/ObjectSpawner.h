@@ -9,7 +9,9 @@ public:
 	{
 		timer = 0.0f;
 		count = 0;
-		texId = TextureLoader::getTextureFromReference("texThree");
+		texId[0] = TextureLoader::getTextureFromReference("texThree");
+		texId[1] = TextureLoader::getTextureFromReference("texTwo");
+		texId[2] = TextureLoader::getTextureFromReference("texOne");
 	}
 	virtual void update()
 	{
@@ -24,7 +26,7 @@ public:
 				Sprite* tempSprite;
 				tempSprite = new Sprite();
 				tempSprite->init(40, 40);
-				tempSprite->setTextureID(texId);
+				tempSprite->setTextureID(texId[count%3]);
 				tempGameObject->addComponent(tempSprite);
 				BoxCollider* boxCollider = new BoxCollider();
 				boxCollider->init(tempGameObject->getComponent<Transform>()->position,
@@ -40,5 +42,5 @@ public:
 private:
 	float timer;
 	int count;
-	unsigned int texId;
+	unsigned int texId[3];
 };
