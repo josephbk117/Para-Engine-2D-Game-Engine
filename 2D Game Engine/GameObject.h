@@ -37,10 +37,8 @@ public:
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
-		for (int i = 0; i < gameObjectVector.size(); i++)
-		{
+		for (unsigned int i = 0; i < gameObjectVector.size(); i++)
 			delete gameObjectVector[i];
-		}
 	}
 	~GameObject();
 private:

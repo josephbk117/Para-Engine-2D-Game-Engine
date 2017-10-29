@@ -45,15 +45,15 @@ void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::stri
 				else if (typeid(BoxCollider) == typeid(*components[i]))
 				{
 					BoxCollider* ref = (BoxCollider *)(components[i]);
-					data.append(" " + std::to_string(ref->getBody()->GetPosition().x) + " " +
-						std::to_string(ref->getBody()->GetPosition().y) + " " +
+					data.append(" " + std::to_string(ref->getPosition().x) + " " +
+						std::to_string(ref->getPosition().y) + " " +
 						std::to_string(ref->getDimensions().x) + " " +
 						std::to_string(ref->getDimensions().y) + " ");
-					if (ref->getBody()->GetType() == b2BodyType::b2_staticBody)
+					if (ref->getPhysicsType() == PhysicsBody::STATIC)
 						data.append("S");
-					else if (ref->getBody()->GetType() == b2BodyType::b2_kinematicBody)
+					else if (ref->getPhysicsType() == PhysicsBody::KINEMATIC)
 						data.append("K");
-					else if (ref->getBody()->GetType() == b2BodyType::b2_dynamicBody)
+					else if (ref->getPhysicsType() == PhysicsBody::DYNAMIC)
 						data.append("D");
 					data.append(" " + std::to_string(1.0f));
 				}

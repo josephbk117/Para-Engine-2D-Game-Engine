@@ -1,19 +1,13 @@
 #pragma once
+class b2World;
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
-#include <Box2D\Box2D.h>
-#include <iostream>
-#include <vector>
+#include <GLM\glm.hpp>
+#include <memory>
 #include <chrono>
-#include "Box.h"
-#include "Sprite.h"
-#include "ShaderProgram.h"
-#include "TextureLoader.h"
-#include "Camera.h"
 #include "GameObject.h"
 #include "InputData.h"
-#include "Transform.h"
-#include "AudioManager.h"
+#include "Camera.h"
 
 class Game
 {
@@ -21,12 +15,11 @@ public:
 	Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	void initialize();
 	void update();
-	void processInput(GLFWwindow *window);
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
 	static const glm::vec2 * getMouseCoords();
 	static b2World* getPhysicsWorld();
-	
+
 	static float getDeltaTime()
 	{
 		return deltaTime;
@@ -35,12 +28,7 @@ public:
 	{
 		return timeSinceStartUp;
 	}
-	static void cleanUp()
-	{
-		GameObject::removeAllGameObjectsFromMemory();
-		AudioManager::removeLoadedAudioFromMemory();
-		TextureManager::unloadTexturesFromMemory();
-	}
+	static void cleanUp();
 	Camera* camera;
 	~Game();
 private:

@@ -1,8 +1,9 @@
 #pragma once
 #include <Component.h>
 #include <Game.h>
-#include "SuddenJolt.h"
 #include <AudioManager.h>
+#include "SuddenJolt.h"
+
 class ObjectSpawner : public Component
 {
 public:
@@ -32,7 +33,7 @@ public:
 				tempGameObject->addComponent(tempSprite);
 				BoxCollider* boxCollider = new BoxCollider();
 				boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-					glm::vec2(0.7f, 0.7f), PhysicsBody::DYNAMIC, 1.0f);
+					glm::vec2(0.7f, 0.7f), PhysicsMaterial(1.0f, 0.6f, 0.3f), PhysicsBody::DYNAMIC);
 				tempGameObject->addComponent(boxCollider);
 				tempGameObject->addComponent(new SuddenJolt);
 				count++;

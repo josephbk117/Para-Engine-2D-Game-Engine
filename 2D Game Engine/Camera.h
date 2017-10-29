@@ -3,6 +3,7 @@
 #include <GLM\gtc\matrix_transform.hpp>
 #include "Component.h"
 #include "Transform.h"
+
 using namespace glm;
 class Camera : public Component
 {

@@ -1,11 +1,20 @@
+#include <iostream>
+#include <vector>
+#include <random>
+#include <typeinfo>
+#include <Yse\yse.hpp>
+#include <Box2D\Box2D.h>
 #include "Game.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
-#include <random>
-#include <typeinfo>
 #include "stb_image_write.h"
-#include <Yse\yse.hpp>
 #include "AudioManager.h"
+#include "Transform.h"
+#include "AudioManager.h"
+#include "TextureLoader.h"
+#include "ShaderProgram.h"
+#include "Box.h"
+#include "Sprite.h"
 
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
@@ -102,16 +111,16 @@ void Game::update()
 		IMGUI_NEWFRAME();
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		processInput(window);
+		//processInput(window);
 
-		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			Transform * temp = gameObjects[i]->getComponent<Transform>();
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
 				temp->position.x, temp->position.y, temp->rotation);
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
@@ -126,9 +135,9 @@ void Game::update()
 			Transform *transformRef = gameObjects[i]->getComponent<Transform>();
 			if (gameObjects[i]->hasComponent<BoxCollider>())
 			{
-				b2Body* boxcolBody = gameObjects[i]->getComponent<BoxCollider>()->getBody();
-				transformRef->position = glm::vec2(boxcolBody->GetPosition().x, boxcolBody->GetPosition().y);
-				transformRef->rotation = boxcolBody->GetAngle();
+				BoxCollider* boxcolBody = gameObjects[i]->getComponent<BoxCollider>();
+				transformRef->position = glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y);
+				transformRef->rotation = boxcolBody->getAngle();
 			}
 			std::vector<Component*> componentsAttachedToObject =
 				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
@@ -144,10 +153,10 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
-		//Add functionality to Boxcollider class
 		//Wrapper around Yse::sound
 		//Shader manager stuff
 		//gameobjects in game dynamic addition and deletion support
+		//Have to hide code dependencies, Facade Pattern
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
@@ -168,10 +177,12 @@ void Game::update()
 	return;
 }
 bool pressed = false;
-void Game::processInput(GLFWwindow * window)
+
+void Game::cleanUp()
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	GameObject::removeAllGameObjectsFromMemory();
+	AudioManager::removeLoadedAudioFromMemory();
+	TextureManager::unloadTexturesFromMemory();
 }
 
 Game::~Game()

@@ -1,5 +1,6 @@
 #pragma once
-#include <Box2D\Box2D.h>
+class b2Body;
+class b2Fixture;
 #include <GLM\glm.hpp>
 #include "Component.h"
 #include "Game.h"
@@ -10,15 +11,17 @@ class BoxCollider : public Component
 public:
 	BoxCollider();
 	~BoxCollider();
-	void init(const glm::vec2 &position, const glm::vec2 &dimension, PhysicsBody bodyType, float density);
-	b2Body* getBody();
-	b2Fixture* getFixture();
-	void canRotate(bool canObjectRotate);
+	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, PhysicsBody bodyType);
+	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial);
+	void canRotate(bool canObjectRotate)const;
 	void applyTorque(float strength);
-	void applyForce(glm::vec2 force);
-	void setVelocity(glm::vec2 velocity);
+	void applyForce(const glm::vec2& force);
+	void setVelocity(const glm::vec2& velocity);
 	void setAngularVelocity(float velocity);
-	const glm::vec2& getDimensions();
+	const glm::vec2& getDimensions()const;
+	const float getAngle()const;
+	const glm::vec2 getPosition()const;
+	const PhysicsBody getPhysicsType()const;
 private:
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
