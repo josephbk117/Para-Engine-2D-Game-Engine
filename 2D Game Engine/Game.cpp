@@ -93,7 +93,7 @@ void Game::update()
 			int width, height;
 			glfwGetWindowSize(window, &width, &height);
 			std::cout << "\nUpdated to : " << width << " ," << height;
-			camera->setScreenRatio(vec2(width, height));
+			camera->setScreenRatio(glm::vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
 		YSE::System().update();
@@ -113,14 +113,14 @@ void Game::update()
 		glClear(GL_COLOR_BUFFER_BIT);
 		//processInput(window);
 
-		for (unsigned int i = 0; i < gameObjects.size(); i++)
+		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
 		{
 			Transform * temp = gameObjects[i]->getComponent<Transform>();
 			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
 				temp->position.x, temp->position.y, temp->rotation);
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
 
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 
@@ -143,10 +143,12 @@ void Game::update()
 				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
 			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
 				(*componentsAttachedToObject[i]).update();
-
-			glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
-			if (gameObjects[i]->hasComponent<Sprite>())
-				gameObjects[i]->getComponent<Sprite>()->draw();
+			if (camera->isObjectInCameraView(transformRef->position, transformRef->scale))
+			{
+				glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
+				if (gameObjects[i]->hasComponent<Sprite>())
+					gameObjects[i]->getComponent<Sprite>()->draw();
+			}
 		}
 
 		//TODO:
