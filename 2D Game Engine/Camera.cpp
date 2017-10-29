@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include <iostream>
-
+using namespace glm;
 Camera::Camera()
 {
 	orthographicMatrix = mat4(1.0f);
