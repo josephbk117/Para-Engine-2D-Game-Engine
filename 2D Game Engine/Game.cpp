@@ -144,6 +144,10 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
+		//Add functionality to Boxcollider class
+		//Wrapper around Yse::sound
+		//Shader manager stuff
+		//gameobjects in game dynamic addition and deletion support
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
