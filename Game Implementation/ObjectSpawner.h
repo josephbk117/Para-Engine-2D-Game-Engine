@@ -24,7 +24,7 @@ public:
 			{
 				GameObject* tempGameObject;
 				tempGameObject = GameObject::createGameObject("NewOne" + std::to_string(count));
-				tempGameObject->addComponent(new Transform(glm::vec2(-3, 3 + count * 5), 0.0f, glm::vec2(1, 1)));
+				tempGameObject->addComponent(new Transform(glm::vec2(-3, 3 + count * 0.7f), 0.0f, glm::vec2(1, 1)));
 				Sprite* tempSprite;
 				tempSprite = new Sprite();
 				tempSprite->init(0.7f, 0.7f);
