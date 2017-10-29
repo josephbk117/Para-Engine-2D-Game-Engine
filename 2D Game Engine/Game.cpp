@@ -7,6 +7,7 @@
 #include <Yse\yse.hpp>
 #include "AudioManager.h"
 
+
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;

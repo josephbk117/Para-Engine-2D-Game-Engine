@@ -41,8 +41,8 @@ public:
 
 	}
 private:
-	Transform* activeTransform;
-	Transform* followInYtransform;
+	Transform* activeTransform = nullptr;
+	Transform* followInYtransform = nullptr;
 	float rotOffset;
 	bool shouldDoCircleMotion;
 };

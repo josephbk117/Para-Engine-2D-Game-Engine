@@ -15,5 +15,5 @@ public:
 	}
 
 private:
-	Transform* transform;
+	Transform* transform = nullptr;
 };

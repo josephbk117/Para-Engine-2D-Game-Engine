@@ -42,3 +42,7 @@ unsigned int TextureLoader::getTextureFromReference(const std::string& reference
 {
 	return textureIdMap[referenceString];
 }
+
+void TextureLoader::unloadTextures()
+{
+}

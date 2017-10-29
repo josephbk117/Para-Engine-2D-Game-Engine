@@ -23,5 +23,5 @@ public:
 			boxCol->applyTorque(700000.0f);
 	}
 private:
-	BoxCollider* boxCol;
+	BoxCollider* boxCol = nullptr;
 };

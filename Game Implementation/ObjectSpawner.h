@@ -13,7 +13,7 @@ public:
 		texId[0] = TextureLoader::getTextureFromReference("texThree");
 		texId[1] = TextureLoader::getTextureFromReference("texTwo");
 		texId[2] = TextureLoader::getTextureFromReference("texOne");
-		sndRef.create("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav");
+		sndRef = AudioManager::getAudioFromReference("snd_1");
 	}
 	virtual void update()
 	{
@@ -28,7 +28,7 @@ public:
 				Sprite* tempSprite;
 				tempSprite = new Sprite();
 				tempSprite->init(40, 40);
-				tempSprite->setTextureID(texId[count%3]);
+				tempSprite->setTextureID(texId[count % 3]);
 				tempGameObject->addComponent(tempSprite);
 				BoxCollider* boxCollider = new BoxCollider();
 				boxCollider->init(tempGameObject->getComponent<Transform>()->position,
@@ -37,7 +37,7 @@ public:
 				tempGameObject->addComponent(new SuddenJolt);
 				count++;
 				timer = 0.0f;
-				sndRef.play();
+				sndRef->play();
 			}
 		}
 		ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
@@ -46,6 +46,5 @@ private:
 	float timer;
 	int count;
 	unsigned int texId[3];
-	YSE::sound sndRef;
-	
+	YSE::sound* sndRef;
 };

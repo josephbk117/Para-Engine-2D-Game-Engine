@@ -3,6 +3,7 @@
 #include <unordered_map>
 class GameObject;
 #include "Component.h"
+#include <iostream>
 
 class GameObject
 {
@@ -33,6 +34,13 @@ public:
 	static std::vector<GameObject*> getAllGameObjects()
 	{
 		return gameObjectVector;
+	}
+	static void removeAllGameObjectsFromMemory()
+	{
+		for (int i = 0; i < gameObjectVector.size(); i++)
+		{
+			delete gameObjectVector[i];
+		}
 	}
 	~GameObject();
 private:

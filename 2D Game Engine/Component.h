@@ -7,6 +7,6 @@ public:
 	virtual void start() { };
 	virtual void update() { };
 	Component() {};
-	GameObject* attachedGameObject;
+	GameObject* attachedGameObject = nullptr;
 	virtual ~Component() {};
 };

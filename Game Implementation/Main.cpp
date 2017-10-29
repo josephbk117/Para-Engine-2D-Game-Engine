@@ -11,75 +11,78 @@
 
 int main(int argc, char* argv[])
 {
-	Game game(600, 600, "2D Game Engine");
+	{
+		Game game(600, 600, "2D Game Engine");
 
-	unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
-	unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
-	unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
+		unsigned int texVal1 = TextureLoader::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
+		unsigned int texVal2 = TextureLoader::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
+		unsigned int texVal3 = TextureLoader::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
 
-	//AudioManager::loadAudioFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\Debug\\Test Resources\\Swoosh.wav", "snd_swoosh");
-	GameObject* tempGameObject;
+		AudioManager::loadAudioFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav", "snd_1");
 
-	tempGameObject = GameObject::createGameObject("Camera");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
-	Camera* camera = new Camera;
-	camera->init(glm::vec2(500, 500));
-	tempGameObject->addComponent(camera);
-	tempGameObject->addComponent(new PlayerMagicController);
+		GameObject* tempGameObject;
+		tempGameObject = GameObject::createGameObject("Camera");
+		tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+		Camera* camera = new Camera;
+		camera->init(glm::vec2(500, 500));
+		tempGameObject->addComponent(camera);
+		tempGameObject->addComponent(new PlayerMagicController);
 
-	tempGameObject = GameObject::createGameObject("BG");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
-	tempGameObject->setLayerOrder(-10);
-	Sprite * tempSprite = new Sprite();
-	tempSprite->init(600, 600);
-	tempSprite->setTextureID(texVal3);
-	tempGameObject->addComponent(tempSprite);
-	tempGameObject->addComponent(new ObjectSpawner);
+		tempGameObject = GameObject::createGameObject("BG");
+		tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+		tempGameObject->setLayerOrder(-10);
+		Sprite * tempSprite = new Sprite();
+		tempSprite->init(600, 600);
+		tempSprite->setTextureID(texVal3);
+		tempGameObject->addComponent(tempSprite);
+		tempGameObject->addComponent(new ObjectSpawner);
 
-	tempGameObject = GameObject::createGameObject("Sammy");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
-	tempGameObject->setLayerOrder(50);
-	tempSprite = new Sprite();
-	tempSprite->init(50, 50);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	tempGameObject->addComponent(new MagicObjectScaler);
+		tempGameObject = GameObject::createGameObject("Sammy");
+		tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+		tempGameObject->setLayerOrder(50);
+		tempSprite = new Sprite();
+		tempSprite->init(50, 50);
+		tempSprite->setTextureID(texVal1);
+		tempGameObject->addComponent(tempSprite);
+		tempGameObject->addComponent(new MagicObjectScaler);
 
-	tempGameObject = GameObject::createGameObject("Lola");
-	tempGameObject->setLayerOrder(10);
-	tempGameObject->addComponent(new Transform(glm::vec2(-50, -100), 0.0f, glm::vec2(1, 1)));
-	tempSprite = new Sprite();
-	tempSprite->init(80, 80);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	//tempGameObject->addComponent(new PlayerMagicController());
+		tempGameObject = GameObject::createGameObject("Lola");
+		tempGameObject->setLayerOrder(10);
+		tempGameObject->addComponent(new Transform(glm::vec2(-50, -100), 0.0f, glm::vec2(1, 1)));
+		tempSprite = new Sprite();
+		tempSprite->init(80, 80);
+		tempSprite->setTextureID(texVal1);
+		tempGameObject->addComponent(tempSprite);
+		//tempGameObject->addComponent(new PlayerMagicController());
 
-	tempGameObject = GameObject::createGameObject("Babu");
-	tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
-	tempSprite = new Sprite();
-	tempSprite->init(80, 80);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), PhysicsBody::DYNAMIC, 1.0f);
-	tempGameObject->addComponent(boxCollider);
+		tempGameObject = GameObject::createGameObject("Babu");
+		tempGameObject->addComponent(new Transform(glm::vec2(-120, -100), 0.0f, glm::vec2(1, 1)));
+		tempSprite = new Sprite();
+		tempSprite->init(80, 80);
+		tempSprite->setTextureID(texVal1);
+		tempGameObject->addComponent(tempSprite);
+		BoxCollider* boxCollider = new BoxCollider();
+		boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(80, 80), PhysicsBody::DYNAMIC, 1.0f);
+		tempGameObject->addComponent(boxCollider);
 
-	tempGameObject = GameObject::createGameObject("Galoo");
-	tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
-	tempGameObject->setLayerOrder(20);
-	tempSprite = new Sprite();
-	tempSprite->init(300, 50);
-	tempSprite->setTextureID(texVal2);
-	tempGameObject->addComponent(tempSprite);
-	boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-		glm::vec2(300, 50), PhysicsBody::STATIC, 1.0f);
-	tempGameObject->addComponent(boxCollider);
+		tempGameObject = GameObject::createGameObject("Galoo");
+		tempGameObject->addComponent(new Transform(glm::vec2(-120, -250), 0.0f, glm::vec2(1, 1)));
+		tempGameObject->setLayerOrder(20);
+		tempSprite = new Sprite();
+		tempSprite->init(300, 50);
+		tempSprite->setTextureID(texVal2);
+		tempGameObject->addComponent(tempSprite);
+		boxCollider = new BoxCollider();
+		boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+			glm::vec2(300, 50), PhysicsBody::STATIC, 1.0f);
+		tempGameObject->addComponent(boxCollider);
 
-	SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
+		SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
-	game.initialize();
-	game.update();
-
+		game.initialize();
+		game.update();
+		game.cleanUp();
+	}
+	std::cin.get();
 	return 0;
 }

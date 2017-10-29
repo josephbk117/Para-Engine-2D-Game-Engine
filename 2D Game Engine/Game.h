@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "InputData.h"
 #include "Transform.h"
+#include "AudioManager.h"
 
 class Game
 {
@@ -34,6 +35,11 @@ public:
 	{
 		return timeSinceStartUp;
 	}
+	static void cleanUp()
+	{
+		GameObject::removeAllGameObjectsFromMemory();
+		AudioManager::removeLoadedAudioFromMemory();
+	}
 	Camera* camera;
 	~Game();
 private:
@@ -42,7 +48,7 @@ private:
 	static GLFWwindow* window;
 	static std::unique_ptr<b2World> world;
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	static bool frameBufferSizeUpated;	
+	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
