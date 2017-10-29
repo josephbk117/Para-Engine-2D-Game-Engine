@@ -10,9 +10,9 @@ public:
 	{
 		timer = 0.0f;
 		count = 0;
-		texId[0] = TextureLoader::getTextureFromReference("texThree");
-		texId[1] = TextureLoader::getTextureFromReference("texTwo");
-		texId[2] = TextureLoader::getTextureFromReference("texOne");
+		texId[0] = TextureManager::getTextureFromReference("texThree");
+		texId[1] = TextureManager::getTextureFromReference("texTwo");
+		texId[2] = TextureManager::getTextureFromReference("texOne");
 		sndRef = AudioManager::getAudioFromReference("snd_1");
 	}
 	virtual void update()
@@ -24,15 +24,15 @@ public:
 			{
 				GameObject* tempGameObject;
 				tempGameObject = GameObject::createGameObject("NewOne" + std::to_string(count));
-				tempGameObject->addComponent(new Transform(glm::vec2(-120, 0 + count * 40), 0.0f, glm::vec2(1, 1)));
+				tempGameObject->addComponent(new Transform(glm::vec2(-3, 3 + count * 5), 0.0f, glm::vec2(1, 1)));
 				Sprite* tempSprite;
 				tempSprite = new Sprite();
-				tempSprite->init(40, 40);
+				tempSprite->init(0.7f, 0.7f);
 				tempSprite->setTextureID(texId[count % 3]);
 				tempGameObject->addComponent(tempSprite);
 				BoxCollider* boxCollider = new BoxCollider();
 				boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-					glm::vec2(40, 40), PhysicsBody::DYNAMIC, 1.0f);
+					glm::vec2(0.7f, 0.7f), PhysicsBody::DYNAMIC, 1.0f);
 				tempGameObject->addComponent(boxCollider);
 				tempGameObject->addComponent(new SuddenJolt);
 				count++;

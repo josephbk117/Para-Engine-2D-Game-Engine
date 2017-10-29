@@ -1,8 +1,8 @@
 #include "TextureLoader.h"
 
-std::unordered_map<std::string, unsigned int> TextureLoader::textureIdMap;
+std::unordered_map<std::string, unsigned int> TextureManager::textureIdMap;
 
-unsigned int TextureLoader::loadTextureFromFile(const std::string & path, const std::string& referenceString, bool gamma)
+unsigned int TextureManager::loadTextureFromFile(const std::string & path, const std::string& referenceString, bool gamma)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -38,11 +38,12 @@ unsigned int TextureLoader::loadTextureFromFile(const std::string & path, const 
 	return textureID;
 }
 
-unsigned int TextureLoader::getTextureFromReference(const std::string& referenceString)
+unsigned int TextureManager::getTextureFromReference(const std::string& referenceString)
 {
 	return textureIdMap[referenceString];
 }
 
-void TextureLoader::unloadTextures()
+void TextureManager::unloadTexturesFromMemory()
 {
+	textureIdMap.erase(textureIdMap.begin(), textureIdMap.end());
 }

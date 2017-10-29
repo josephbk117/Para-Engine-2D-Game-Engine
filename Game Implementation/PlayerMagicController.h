@@ -23,16 +23,16 @@ public:
 		{
 			activeTransform->position.x = activeTransform->position.x + (glm::sin(rotOffset) * 0.6f);
 			activeTransform->position.y = activeTransform->position.y + (glm::cos(rotOffset) * 0.6f);
-			rotOffset += deltaTime * 8.0f;
+			rotOffset += deltaTime * 5.0f;
 		}
 		if (Game::isKeyPressed(Key::W))
-			activeTransform->position.y += 700.0f * deltaTime;
+			activeTransform->position.y += 10.0f * deltaTime;
 		if (Game::isKeyPressed(Key::S))
-			activeTransform->position.y -= 700.0f * deltaTime;
+			activeTransform->position.y -= 10.0f * deltaTime;
 		if (Game::isKeyPressed(Key::A))
-			activeTransform->position.x -= 700.0f * deltaTime;
+			activeTransform->position.x -= 10.0f * deltaTime;
 		if (Game::isKeyPressed(Key::D))
-			activeTransform->position.x += 700.0f * deltaTime;
+			activeTransform->position.x += 10.0f * deltaTime;
 		if (Game::isKeyPressed(Key::Q))
 			shouldDoCircleMotion = true;
 		if (Game::isKeyReleased(Key::Q))

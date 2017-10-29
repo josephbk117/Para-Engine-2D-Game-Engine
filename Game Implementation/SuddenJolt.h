@@ -12,15 +12,15 @@ public:
 	virtual void update()
 	{
 		if (Game::isKeyPressed(Key::U))
-			boxCol->applyForce(glm::vec2(0, 20000.0f));
+			boxCol->applyForce(glm::vec2(0, 20.0f));
 		if (Game::isKeyPressed(Key::J))
-			boxCol->applyForce(glm::vec2(0, -20000.0f));
+			boxCol->applyForce(glm::vec2(0, -20.0f));
 		if (Game::isKeyPressed(Key::H))
-			boxCol->applyForce(glm::vec2(-20000.0f, 0.0f));
+			boxCol->applyForce(glm::vec2(-20.0f, 0.0f));
 		if (Game::isKeyPressed(Key::K))
-			boxCol->applyForce(glm::vec2(20000.0f, 0.0f));
+			boxCol->applyForce(glm::vec2(20.0f, 0.0f));
 		if (Game::isKeyPressed(Key::L))
-			boxCol->applyTorque(700000.0f);
+			boxCol->applyTorque(5.0f);
 	}
 private:
 	BoxCollider* boxCol = nullptr;

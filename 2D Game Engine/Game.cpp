@@ -7,7 +7,6 @@
 #include <Yse\yse.hpp>
 #include "AudioManager.h"
 
-
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
@@ -145,7 +144,6 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
-		//Bring down physics scales- rendering scale should be reduced - 1m in box2d ~ 100 px
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
@@ -154,7 +152,7 @@ void Game::update()
 
 		std::chrono::duration<float> frameTime = clockTime.now() - start;
 		deltaTime = frameTime.count();
-		world->Step(deltaTime * 5.0f, 4, 5);
+		world->Step(deltaTime, 4, 5);
 		std::chrono::duration<float> sinceStart = clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 

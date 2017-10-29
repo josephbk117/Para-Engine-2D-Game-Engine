@@ -39,6 +39,7 @@ public:
 	{
 		GameObject::removeAllGameObjectsFromMemory();
 		AudioManager::removeLoadedAudioFromMemory();
+		TextureManager::unloadTexturesFromMemory();
 	}
 	Camera* camera;
 	~Game();
