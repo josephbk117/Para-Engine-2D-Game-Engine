@@ -20,11 +20,7 @@ public:
 		activeTransform->rotation = rotOffset;
 		float deltaTime = Game::getDeltaTime();
 		if (shouldDoCircleMotion)
-		{
-			activeTransform->position.x = activeTransform->position.x + (glm::sin(rotOffset) * 0.01f);
-			activeTransform->position.y = activeTransform->position.y + (glm::cos(rotOffset) * 0.01f);
 			rotOffset += deltaTime * 3.0f;
-		}
 		if (Game::isKeyPressed(Key::W))
 			activeTransform->position.y += 10.0f * deltaTime;
 		if (Game::isKeyPressed(Key::S))
@@ -38,7 +34,6 @@ public:
 		if (Game::isKeyReleased(Key::Q))
 			shouldDoCircleMotion = false;
 		followInYtransform->position.y = activeTransform->position.y;
-
 	}
 private:
 	Transform* activeTransform = nullptr;

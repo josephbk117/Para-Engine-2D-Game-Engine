@@ -62,7 +62,8 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(1.5f, 1.5f), physicsMaterial1, PhysicsBody::DYNAMIC);
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(1.5f, 1.5f), 
+		physicsMaterial1, PhysicsBody::DYNAMIC);
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo");

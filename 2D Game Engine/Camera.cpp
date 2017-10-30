@@ -43,8 +43,9 @@ mat4 Camera::getOrthoMatrix()const
 
 void Camera::update()
 {
-	if (*transform != previousTransformData)
+	if (*transform != previousTransformData || !hasNotBeenUpdatedYet)
 	{
+		hasNotBeenUpdatedYet = true;
 		previousTransformData = *transform;
 		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
 		viewMatrix = glm::rotate(viewMatrix, transform->rotation, glm::vec3(0, 0, 1));

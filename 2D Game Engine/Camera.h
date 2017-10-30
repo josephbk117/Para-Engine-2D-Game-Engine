@@ -25,4 +25,5 @@ private:
 	glm::mat4 orthographicMatrix;
 	glm::mat4 viewMatrix;
 	float scale;
+	bool hasNotBeenUpdatedYet = false;
 };
