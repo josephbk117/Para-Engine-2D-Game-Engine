@@ -4,6 +4,7 @@
 #include <typeinfo>
 #include <Yse\yse.hpp>
 #include <Box2D\Box2D.h>
+#include <memory>
 #include "Game.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
@@ -22,6 +23,7 @@ float Game::timeSinceStartUp;
 std::unique_ptr<b2World> Game::world;
 GLFWwindow* Game::window;
 glm::vec2 Game::mouseCoord;
+GLFWcursor* Game::cursor;
 
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
@@ -159,6 +161,8 @@ void Game::update()
 		//Shader manager stuff
 		//gameobjects in game dynamic addition and deletion support
 		//Have to hide code dependencies, Facade Pattern
+		//Give custom cursorsupport
+		//Give mouse hide and lock to window support
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
@@ -173,10 +177,25 @@ void Game::update()
 
 		start = clockTime.now();
 	}
+	//glfwDestroyCursor(cursor);
 	YSE::System().close();
 	IMGUI_SHUTDOWN();
 	glfwTerminate();
 	return;
+}
+void Game::setCursor(const std::string & cursorImagePath)
+{
+	std::vector<unsigned char>pixels;
+	int w, h;
+	TextureManager::getRawImageDataFromFile(cursorImagePath, pixels, w, h, false);
+
+	GLFWimage image;
+	image.width = w;
+	image.height = h;
+	image.pixels = &pixels[0];
+
+	cursor = glfwCreateCursor(&image, 0, 0);
+	glfwSetCursor(window, cursor);
 }
 bool pressed = false;
 
@@ -185,6 +204,7 @@ void Game::cleanUp()
 	GameObject::removeAllGameObjectsFromMemory();
 	AudioManager::removeLoadedAudioFromMemory();
 	TextureManager::unloadTexturesFromMemory();
+	glfwDestroyCursor(cursor);
 }
 
 Game::~Game()

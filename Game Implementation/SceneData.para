@@ -2,6 +2,7 @@
 ^Camera 0
 :class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
 :class Camera
+:class PlayerMagicController
 ^BG -10
 :class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
 :class Sprite 10.000000 10.000000 1

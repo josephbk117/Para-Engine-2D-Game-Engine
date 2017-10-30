@@ -15,6 +15,7 @@ public:
 	Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	void initialize();
 	void update();
+	void setCursor(const std::string & cursorImagePath);
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
 	static const glm::vec2 * getMouseCoords();
@@ -41,6 +42,7 @@ private:
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
+	static GLFWcursor* cursor;
 };
 
 

@@ -13,12 +13,12 @@
 int main(int argc, char* argv[])
 {
 	Game game(600, 600, "2D Game Engine");
-
+	game.setCursor("Test Resources\\cursor1.png");
 	unsigned int texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
 	unsigned int texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
 	unsigned int texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
 
-	AudioManager::loadAudioFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\Swoosh.wav", "snd_1");
+	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.3f);
 
 	GameObject* tempGameObject;
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(1.5f, 1.5f), 
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(1.5f, 1.5f),
 		physicsMaterial1, PhysicsBody::DYNAMIC);
 	tempGameObject->addComponent(boxCollider);
 
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
 	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-		glm::vec2(8.0f, 1.0f),physicsMaterial1,PhysicsBody::STATIC);
+		glm::vec2(8.0f, 1.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 
 	SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");

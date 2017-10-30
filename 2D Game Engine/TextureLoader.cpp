@@ -2,6 +2,16 @@
 
 std::unordered_map<std::string, unsigned int> TextureManager::textureIdMap;
 
+void TextureManager::getRawImageDataFromFile(const std::string & path, std::vector<unsigned char>& data,int &width,int &height,bool flipImage)
+{
+	int nrComponents;
+	stbi_set_flip_vertically_on_load(flipImage);
+	unsigned char* ldata = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
+	unsigned int size = width * height * nrComponents;
+	for (int i = 0; i < size; i++)
+		data.push_back(ldata[i]);
+}
+
 unsigned int TextureManager::loadTextureFromFile(const std::string & path, const std::string& referenceString, bool gamma)
 {
 	unsigned int textureID;
