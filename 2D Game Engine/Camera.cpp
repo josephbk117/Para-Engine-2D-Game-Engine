@@ -23,6 +23,7 @@ void Camera::init(vec2 screenDimensions)
 void Camera::start()
 {
 	transform = attachedGameObject->getComponent<Transform>();
+	previousTransformData.rotation = transform->rotation + 5;
 }
 
 void Camera::setScale(float newScale)
@@ -43,9 +44,8 @@ mat4 Camera::getOrthoMatrix()const
 
 void Camera::update()
 {
-	if (*transform != previousTransformData || !hasNotBeenUpdatedYet)
+	if (*transform != previousTransformData)
 	{
-		hasNotBeenUpdatedYet = true;
 		previousTransformData = *transform;
 		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
 		viewMatrix = glm::rotate(viewMatrix, transform->rotation, glm::vec3(0, 0, 1));
