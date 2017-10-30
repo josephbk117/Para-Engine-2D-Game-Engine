@@ -13,7 +13,7 @@
 int main(int argc, char* argv[])
 {
 	Game game(600, 600, "2D Game Engine");
-	game.setCursor("Test Resources\\cursor1.png");
+	game.setCursor("Test Resources\\cursor.png");
 	unsigned int texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
 	unsigned int texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
 	unsigned int texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
