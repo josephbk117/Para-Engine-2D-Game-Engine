@@ -1,3 +1,5 @@
+#include <GL\glew.h>
+#include "Game.h"
 #include <iostream>
 #include <vector>
 #include <random>
@@ -6,7 +8,6 @@
 #include <Box2D\Box2D.h>
 #include <memory>
 #include <chrono>
-#include "Game.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include "stb_image_write.h"
@@ -17,6 +18,7 @@
 #include "ShaderProgram.h"
 #include "Box.h"
 #include "Sprite.h"
+#include <GLFW\glfw3.h>
 
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;

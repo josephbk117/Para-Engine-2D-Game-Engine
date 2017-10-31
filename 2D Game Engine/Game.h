@@ -1,7 +1,5 @@
 #pragma once
 class b2World;
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
 #include <GLM\glm.hpp>
 #include <memory>
 #include "GameObject.h"
