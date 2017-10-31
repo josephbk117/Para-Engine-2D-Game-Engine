@@ -36,6 +36,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		glfwTerminate();
 	}
 	glfwMakeContextCurrent(window);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	GLenum err = glewInit();
@@ -161,8 +162,8 @@ void Game::update()
 		//Shader manager stuff
 		//gameobjects in game dynamic addition and deletion support
 		//Have to hide code dependencies, Facade Pattern
-		//Give custom cursorsupport
 		//Give mouse hide and lock to window support
+		//IMGUI maybe restriciting mouse hide and mouse lock
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
@@ -197,6 +198,20 @@ void Game::setCursor(const std::string & cursorImagePath)
 	cursor = glfwCreateCursor(&image, 0, 0);
 	glfwSetCursor(window, cursor);
 }
+void Game::hideCursor(bool hide)
+{
+	if (hide)
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	else
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+void Game::lockCursor(bool lock)
+{
+	if (lock)
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	else
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
 bool pressed = false;
 
 void Game::cleanUp()
@@ -204,7 +219,8 @@ void Game::cleanUp()
 	GameObject::removeAllGameObjectsFromMemory();
 	AudioManager::removeLoadedAudioFromMemory();
 	TextureManager::unloadTexturesFromMemory();
-	glfwDestroyCursor(cursor);
+	if (cursor != nullptr)
+		glfwDestroyCursor(cursor);
 }
 
 Game::~Game()

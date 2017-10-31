@@ -16,6 +16,8 @@ public:
 	void initialize();
 	void update();
 	void setCursor(const std::string & cursorImagePath);
+	void hideCursor(bool hide);
+	void lockCursor(bool lock);
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
 	static const glm::vec2 * getMouseCoords();

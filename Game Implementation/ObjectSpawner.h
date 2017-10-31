@@ -2,7 +2,9 @@
 #include <Component.h>
 #include <Game.h>
 #include <AudioManager.h>
+#include <string>
 #include "SuddenJolt.h"
+#include "SoundSource.h"
 
 class ObjectSpawner : public Component
 {
@@ -47,5 +49,5 @@ private:
 	float timer;
 	int count;
 	unsigned int texId[3];
-	YSE::sound* sndRef;
+	SoundSource* sndRef;
 };
