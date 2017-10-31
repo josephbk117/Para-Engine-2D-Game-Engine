@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 {
 	Game game(600, 600, "2D Game Engine");
 	game.setCursor("Test Resources\\cursor.png");
-	game.lockCursor(true);
+	//game.lockCursor(true);
 	game.hideCursor(true);
 	unsigned int texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
 	unsigned int texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);

@@ -43,7 +43,7 @@ public:
 				sndRef->play();
 			}
 		}
-		ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
+		//ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
 	}
 private:
 	float timer;

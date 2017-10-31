@@ -8,8 +8,8 @@
 #include <Box2D\Box2D.h>
 #include <memory>
 #include <chrono>
-#include "imgui.h"
-#include "imgui_impl_glfw_gl3.h"
+//#include "imgui.h"
+//#include "imgui_impl_glfw_gl3.h"
 #include "stb_image_write.h"
 #include "AudioManager.h"
 #include "Transform.h"
@@ -54,7 +54,7 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
-	IMGUI_INIT(acess->window, true);
+	//IMGUI_INIT(acess->window, true);
 	YSE::System().init();
 }
 void Game::initialize()
@@ -82,7 +82,7 @@ void Game::initialize()
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
 }
-ImVec4 clearColour;
+//ImVec4 clearColour;
 void Game::update()
 {
 	ShaderProgram shaderProgram;
@@ -121,7 +121,7 @@ void Game::update()
 			{return a->getLayerOrder() < b->getLayerOrder(); });
 		}
 
-		IMGUI_NEWFRAME();
+		//IMGUI_NEWFRAME();
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		//processInput(window);
@@ -135,7 +135,8 @@ void Game::update()
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
 
-		glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
+		//glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
+		glClearColor(0.25f, 0.45f, 0.15f, 1.0f);
 
 		shaderProgram.use();
 		glm::mat4 matrixTransform;
@@ -168,15 +169,11 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
-		//Wrapper around Yse::sound
 		//Shader manager stuff
 		//gameobjects in game dynamic addition and deletion support
-		//Have to hide code dependencies, Facade Pattern
-		//Give mouse hide and lock to window support
-		//IMGUI maybe restriciting mouse hide and mouse lock
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
-		ImGui::Render();
+		//ImGui::Render();
 		glfwSwapBuffers(acess->window);
 		glfwPollEvents();
 
@@ -190,7 +187,7 @@ void Game::update()
 	}
 	//glfwDestroyCursor(cursor);
 	YSE::System().close();
-	IMGUI_SHUTDOWN();
+	//IMGUI_SHUTDOWN();
 	glfwTerminate();
 	return;
 }
