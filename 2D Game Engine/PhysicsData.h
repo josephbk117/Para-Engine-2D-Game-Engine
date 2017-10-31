@@ -1,11 +1,12 @@
 #pragma once
-#include <Box2D\Box2D.h>
+
 enum class PhysicsBody
 {
-	STATIC = b2BodyType::b2_staticBody,
-	KINEMATIC = b2BodyType::b2_kinematicBody,
-	DYNAMIC = b2BodyType::b2_dynamicBody
+	STATIC = 0,
+	KINEMATIC,
+	DYNAMIC
 };
+
 struct PhysicsMaterial
 {
 	float angularDamping;
@@ -13,7 +14,7 @@ struct PhysicsMaterial
 	float density;
 	float friction;
 	float bounciness;
-	PhysicsMaterial(float angularDamping, float linearDamping, float density, float friction,float bounciness)
+	PhysicsMaterial(float angularDamping, float linearDamping, float density, float friction, float bounciness)
 	{
 		this->angularDamping = angularDamping;
 		this->linearDamping = linearDamping;
@@ -21,7 +22,7 @@ struct PhysicsMaterial
 		this->friction = friction;
 		this->bounciness = bounciness;
 	}
-	PhysicsMaterial( float density, float friction, float bounciness)
+	PhysicsMaterial(float density, float friction, float bounciness)
 	{
 		this->angularDamping = 0.0f;
 		this->linearDamping = 0.0f;
