@@ -1,6 +1,8 @@
 #include "SceneManager.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include <fstream>
 #include "Transform.h"
 #include "Box.h"
 #include "Sprite.h"

@@ -18,6 +18,11 @@ void SoundSource::play()
 	acess->sData->play();
 }
 
+void SoundSource::stop()
+{
+	acess->sData->stop();
+}
+
 SoundSource::~SoundSource()
 {
 	delete acess->sData;

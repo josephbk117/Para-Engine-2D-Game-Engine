@@ -1,8 +1,6 @@
 #pragma once
-#include <GL\glew.h>
 #include <GLM\common.hpp>
 #include "Component.h"
-#include <iostream>
 class Sprite : public Component
 {
 public:
@@ -16,8 +14,8 @@ public:
 	void draw();
 private:
 	float width, height;
-	GLuint vboID;
-	GLuint textureID;
+	unsigned int vboID;
+	unsigned int textureID;
 	void setUpSpriteDimensions(float width, float height);
 };
 

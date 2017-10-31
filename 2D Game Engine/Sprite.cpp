@@ -1,4 +1,6 @@
 #include "Sprite.h"
+#include <GL\glew.h>
+#include <iostream>
 
 Sprite::Sprite()
 {

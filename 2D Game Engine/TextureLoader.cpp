@@ -1,4 +1,6 @@
 #include "TextureLoader.h"
+#include <GL\glew.h>
+#include <iostream>
 
 std::unordered_map<std::string, unsigned int> TextureManager::textureIdMap;
 

@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include <iostream>
 
 std::unordered_map<std::string, GameObject*> GameObject::gameObjectMap;
 std::vector<GameObject *> GameObject::gameObjectVector;

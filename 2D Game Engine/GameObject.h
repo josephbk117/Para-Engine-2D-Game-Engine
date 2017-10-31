@@ -3,7 +3,6 @@
 #include <unordered_map>
 class GameObject;
 #include "Component.h"
-#include <iostream>
 
 class GameObject
 {

@@ -11,7 +11,7 @@ public:
 	~BoxCollider();
 	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, PhysicsBody bodyType);
 	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial);
-	void canRotate(bool canObjectRotate)const;
+	void setRotationConstraint(bool canObjectRotate)const;
 	void applyTorque(float strength);
 	void applyForce(const glm::vec2& force);
 	void setVelocity(const glm::vec2& velocity);

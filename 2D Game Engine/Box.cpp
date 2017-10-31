@@ -49,7 +49,7 @@ void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial)
 	acess->body->SetAngularDamping(physicsMaterial.angularDamping);
 }
 
-void BoxCollider::canRotate(bool canObjectRotate)const
+void BoxCollider::setRotationConstraint(bool canObjectRotate)const
 {
 	acess->body->SetFixedRotation(canObjectRotate);
 }

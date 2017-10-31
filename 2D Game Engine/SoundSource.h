@@ -6,6 +6,7 @@ class SoundSource
 public:
 	SoundSource(const std::string& path);
 	void play();
+	void stop();
 	~SoundSource();
 private:
 	struct internalAcess;
