@@ -21,7 +21,7 @@ public:
 	const glm::vec2 getPosition()const;
 	const PhysicsBody getPhysicsType()const;
 private:
-	struct internalAcess;
-	internalAcess* acess = nullptr;
+	struct InternalAcess;
+	InternalAcess* acess = nullptr;
 };
 

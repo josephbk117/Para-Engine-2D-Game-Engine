@@ -5,6 +5,7 @@
 #include <Yse\yse.hpp>
 #include <Box2D\Box2D.h>
 #include <memory>
+#include <chrono>
 #include "Game.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
@@ -21,30 +22,37 @@ bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
 std::unique_ptr<b2World> Game::world;
-GLFWwindow* Game::window;
 glm::vec2 Game::mouseCoord;
-GLFWcursor* Game::cursor;
 
+struct Game::InternalAcess
+{
+	std::chrono::steady_clock clockTime;
+	GLFWwindow* window;
+	GLFWcursor* cursor;
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+};
+Game::InternalAcess* Game::acess;
 Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
 	glfwInit();
-	window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
-	if (window == NULL)
+	acess = new InternalAcess;
+	acess->window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
+	if (acess->window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 	}
-	glfwMakeContextCurrent(window);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwMakeContextCurrent(acess->window);
+	glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetFramebufferSizeCallback(acess->window, acess->framebuffer_size_callback);
 
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
-	IMGUI_INIT(window, true);
+	IMGUI_INIT(acess->window, true);
 	YSE::System().init();
 }
 void Game::initialize()
@@ -66,7 +74,7 @@ void Game::initialize()
 		std::cout << "\nNo Camera Has Been Attached To An Object\nProviding Default Camera\n";
 		camera = new Camera();
 		int width, height;
-		glfwGetWindowSize(window, &width, &height);
+		glfwGetWindowSize(acess->window, &width, &height);
 		camera->init(glm::vec2(width, height));
 	}
 	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
@@ -84,17 +92,17 @@ void Game::update()
 	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
 	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
 
-	std::chrono::steady_clock::time_point start = clockTime.now();
-	std::chrono::steady_clock::time_point initialTime = clockTime.now();
+	std::chrono::steady_clock::time_point start = acess->clockTime.now();
+	std::chrono::steady_clock::time_point initialTime = acess->clockTime.now();
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(acess->window))
 	{
 		if (frameBufferSizeUpated)
 		{
 			int width, height;
-			glfwGetWindowSize(window, &width, &height);
+			glfwGetWindowSize(acess->window, &width, &height);
 			std::cout << "\nUpdated to : " << width << " ," << height;
 			camera->setScreenRatio(glm::vec2(width, height));
 			frameBufferSizeUpated = false;
@@ -167,16 +175,16 @@ void Game::update()
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		ImGui::Render();
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(acess->window);
 		glfwPollEvents();
 
-		std::chrono::duration<float> frameTime = clockTime.now() - start;
+		std::chrono::duration<float> frameTime = acess->clockTime.now() - start;
 		deltaTime = frameTime.count();
 		world->Step(deltaTime, 4, 5);
-		std::chrono::duration<float> sinceStart = clockTime.now() - initialTime;
+		std::chrono::duration<float> sinceStart = acess->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 
-		start = clockTime.now();
+		start = acess->clockTime.now();
 	}
 	//glfwDestroyCursor(cursor);
 	YSE::System().close();
@@ -195,22 +203,22 @@ void Game::setCursor(const std::string & cursorImagePath)
 	image.height = h;
 	image.pixels = &pixels[0];
 
-	cursor = glfwCreateCursor(&image, 0, 0);
-	glfwSetCursor(window, cursor);
+	acess->cursor = glfwCreateCursor(&image, 0, 0);
+	glfwSetCursor(acess->window, acess->cursor);
 }
 void Game::hideCursor(bool hide)
 {
 	if (hide)
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	else
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 void Game::lockCursor(bool lock)
 {
 	if (lock)
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	else
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 bool pressed = false;
 
@@ -219,35 +227,32 @@ void Game::cleanUp()
 	GameObject::removeAllGameObjectsFromMemory();
 	AudioManager::removeLoadedAudioFromMemory();
 	TextureManager::unloadTexturesFromMemory();
-	if (cursor != nullptr)
-		glfwDestroyCursor(cursor);
+	if (acess->cursor != nullptr)
+		glfwDestroyCursor(acess->cursor);
 }
 
 Game::~Game()
 {
+	if (acess != nullptr)
+		delete acess;
 }
 
-void Game::framebuffer_size_callback(GLFWwindow * window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-	frameBufferSizeUpated = true;
-}
 bool Game::isKeyPressed(Key key)
 {
-	if (glfwGetKey(window, (int)key) == GLFW_PRESS)
+	if (glfwGetKey(acess->window, (int)key) == GLFW_PRESS)
 		return true;
 	return false;
 }
 bool Game::isKeyReleased(Key key)
 {
-	if (glfwGetKey(window, (int)key) == GLFW_RELEASE)
+	if (glfwGetKey(acess->window, (int)key) == GLFW_RELEASE)
 		return true;
 	return false;
 }
 const glm::vec2* Game::getMouseCoords()
 {
 	double x, y;
-	glfwGetCursorPos(window, &x, &y);
+	glfwGetCursorPos(acess->window, &x, &y);
 	mouseCoord.x = (float)x;
 	mouseCoord.y = (float)y;
 	return &mouseCoord;
@@ -255,4 +260,10 @@ const glm::vec2* Game::getMouseCoords()
 b2World* Game::getPhysicsWorld()
 {
 	return world.get();
+}
+
+void Game::InternalAcess::framebuffer_size_callback(GLFWwindow * window, int width, int height)
+{
+	glViewport(0, 0, width, height);
+	frameBufferSizeUpated = true;
 }

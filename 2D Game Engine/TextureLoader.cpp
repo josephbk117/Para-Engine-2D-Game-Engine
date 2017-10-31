@@ -10,7 +10,7 @@ void TextureManager::getRawImageDataFromFile(const std::string & path, std::vect
 	stbi_set_flip_vertically_on_load(flipImage);
 	unsigned char* ldata = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
 	unsigned int size = width * height * nrComponents;
-	for (int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 		data.push_back(ldata[i]);
 }
 

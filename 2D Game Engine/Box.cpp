@@ -1,7 +1,7 @@
 #include "Box.h"
 #include <Box2D\Box2D.h>
 
-struct BoxCollider::internalAcess
+struct BoxCollider::InternalAcess
 {
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
@@ -18,7 +18,7 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, const PhysicsMaterial& material, PhysicsBody bodyType = PhysicsBody::STATIC)
 {
-	acess = new internalAcess;
+	acess = new InternalAcess;
 	acess->dimension = dimension;
 	b2BodyDef bodyDef;
 	bodyDef.type = (b2BodyType)bodyType;

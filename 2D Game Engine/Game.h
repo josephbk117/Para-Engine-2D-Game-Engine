@@ -4,7 +4,6 @@ class b2World;
 #include <GLFW\glfw3.h>
 #include <GLM\glm.hpp>
 #include <memory>
-#include <chrono>
 #include "GameObject.h"
 #include "InputData.h"
 #include "Camera.h"
@@ -35,16 +34,14 @@ public:
 	Camera* camera;
 	~Game();
 private:
-	std::chrono::steady_clock clockTime;
 	std::vector<GameObject *> gameObjects;
-	static GLFWwindow* window;
 	static std::unique_ptr<b2World> world;
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
-	static GLFWcursor* cursor;
+	struct InternalAcess;
+	static InternalAcess* acess;
 };
 
 

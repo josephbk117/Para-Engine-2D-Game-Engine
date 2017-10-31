@@ -22,6 +22,6 @@ void GameObject::addComponent(Component * comp)
 
 GameObject::~GameObject()
 {
-	for (int i = 0; i < components.size(); i++)
+	for (unsigned int i = 0; i < components.size(); i++)
 		delete components[i];
 }
