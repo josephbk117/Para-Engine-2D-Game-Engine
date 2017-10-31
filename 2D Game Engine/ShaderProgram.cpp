@@ -1,6 +1,8 @@
 #include "ShaderProgram.h"
+#include <GL\glew.h>
+#include <iostream>
+#include <fstream>
 #include <vector>
-
 
 ShaderProgram::ShaderProgram()
 {
@@ -85,7 +87,7 @@ GLint ShaderProgram::getUniformLocation(const std::string & uniformName)const
 	return glGetUniformLocation(programID, uniformName.c_str());
 }
 
-void ShaderProgram::compileShader(const std::string & filePath, GLuint ID)
+void ShaderProgram::compileShader(const std::string & filePath, unsigned int ID)
 {
 	std::ifstream shaderFile(filePath);
 	if (shaderFile.fail())

@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <GL\glew.h>
-#include <fstream>
 #include <string>
 class ShaderProgram
 {
@@ -13,10 +10,10 @@ public:
 	void addAttribute(const std::string& attributeName);
 	void use();
 	void unuse();
-	GLint getUniformLocation(const std::string& uniformName)const;
+	int getUniformLocation(const std::string& uniformName)const;
 private:
-	GLuint programID, vertexShaderID, fragmentShaderID;
-	void compileShader(const std::string& filePath, GLuint ID);
+	unsigned int programID, vertexShaderID, fragmentShaderID;
+	void compileShader(const std::string& filePath, unsigned int ID);
 	int attributeCount;
 };
 

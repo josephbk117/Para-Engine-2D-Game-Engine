@@ -1,6 +1,13 @@
 #include "Box.h"
 #include <Box2D\Box2D.h>
 
+struct BoxCollider::internalAcess
+{
+	b2Body* body = nullptr;
+	b2Fixture* fixture = nullptr;
+	glm::vec2 dimension;
+};
+
 BoxCollider::BoxCollider()
 {
 }
@@ -11,13 +18,14 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, const PhysicsMaterial& material, PhysicsBody bodyType = PhysicsBody::STATIC)
 {
-	this->dimension = dimension;
+	acess = new internalAcess;
+	acess->dimension = dimension;
 	b2BodyDef bodyDef;
 	bodyDef.type = (b2BodyType)bodyType;
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.linearDamping = material.linearDamping;
 	bodyDef.angularDamping = material.angularDamping;
-	body = Game::getPhysicsWorld()->CreateBody(&bodyDef);
+	acess->body = Game::getPhysicsWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(dimension.x / 2.0f, dimension.y / 2.0f);
@@ -28,62 +36,62 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 	fixtureDef.friction = material.friction;
 	fixtureDef.restitution = material.bounciness;
 
-	body->SetSleepingAllowed(false);
-	fixture = body->CreateFixture(&fixtureDef);
+	acess->body->SetSleepingAllowed(false);
+	acess->fixture = acess->body->CreateFixture(&fixtureDef);
 }
 
 void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial)
 {
-	fixture->SetDensity(physicsMaterial.density);
-	fixture->SetFriction(physicsMaterial.friction);
-	fixture->SetRestitution(physicsMaterial.bounciness);
-	body->SetLinearDamping(physicsMaterial.linearDamping);
-	body->SetAngularDamping(physicsMaterial.angularDamping);
+	acess->fixture->SetDensity(physicsMaterial.density);
+	acess->fixture->SetFriction(physicsMaterial.friction);
+	acess->fixture->SetRestitution(physicsMaterial.bounciness);
+	acess->body->SetLinearDamping(physicsMaterial.linearDamping);
+	acess->body->SetAngularDamping(physicsMaterial.angularDamping);
 }
 
 void BoxCollider::canRotate(bool canObjectRotate)const
 {
-	body->SetFixedRotation(canObjectRotate);
+	acess->body->SetFixedRotation(canObjectRotate);
 }
 
 void BoxCollider::applyTorque(float strength)
 {
-	body->ApplyTorque(strength, true);
+	acess->body->ApplyTorque(strength, true);
 }
 
 void BoxCollider::applyForce(const glm::vec2& force)
 {
-	body->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
+	acess->body->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
 }
 
 void BoxCollider::setVelocity(const glm::vec2& velocity)
 {
-	body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+	acess->body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
 }
 
 void BoxCollider::setAngularVelocity(float velocity)
 {
-	body->SetAngularVelocity(velocity);
+	acess->body->SetAngularVelocity(velocity);
 }
 
 const glm::vec2 & BoxCollider::getDimensions()const
 {
-	return dimension;
+	return acess->dimension;
 }
 
 const float BoxCollider::getAngle() const
 {
-	return body->GetAngle();
+	return acess->body->GetAngle();
 }
 
 const glm::vec2 BoxCollider::getPosition() const
 {
-	return glm::vec2(body->GetPosition().x, body->GetPosition().y);
+	return glm::vec2(acess->body->GetPosition().x, acess->body->GetPosition().y);
 }
 
 const PhysicsBody BoxCollider::getPhysicsType() const
 {
-	switch (body->GetType())
+	switch (acess->body->GetType())
 	{
 	case b2BodyType::b2_staticBody:
 		return PhysicsBody::STATIC;

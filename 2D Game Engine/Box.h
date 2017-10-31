@@ -1,6 +1,4 @@
 #pragma once
-class b2Body;
-class b2Fixture;
 #include <GLM\glm.hpp>
 #include "Component.h"
 #include "Game.h"
@@ -23,8 +21,7 @@ public:
 	const glm::vec2 getPosition()const;
 	const PhysicsBody getPhysicsType()const;
 private:
-	b2Body* body = nullptr;
-	b2Fixture* fixture = nullptr;
-	glm::vec2 dimension;
+	struct internalAcess;
+	internalAcess* acess = nullptr;
 };
 
