@@ -2,6 +2,7 @@
 class b2World;
 #include <GLM\glm.hpp>
 #include <memory>
+#include <thread>
 #include "GameObject.h"
 #include "InputData.h"
 #include "Camera.h"
@@ -34,6 +35,7 @@ public:
 private:
 	std::vector<GameObject *> gameObjects;
 	static std::unique_ptr<b2World> world;
+	static std::thread* audioThread;
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;
