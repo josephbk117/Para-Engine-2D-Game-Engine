@@ -12,8 +12,9 @@
 
 int main(int argc, char* argv[])
 {
-	Game game(600, 600, "2D Game Engine");
-	game.setCursor("Test Resources\\cursor.png");
+	//Game game(600, 600, "2D Game Engine");
+	Game::setUpEngine(600, 600, "Para Engine - Game v0.1");
+	Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);
 	//game.hideCursor(true);
 	unsigned int texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
@@ -72,18 +73,42 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(new Transform(glm::vec2(-0.3f, -5.0f), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
-	tempSprite->init(8.0f, 1.0f);
+	tempSprite->init(10.0f, 1.0f);
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
 	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-		glm::vec2(8.0f, 1.0f), physicsMaterial1, PhysicsBody::STATIC);
+		glm::vec2(10.0f, 1.0f), physicsMaterial1, PhysicsBody::STATIC);
+	tempGameObject->addComponent(boxCollider);
+
+	tempGameObject = GameObject::createGameObject("Galoo1");
+	tempGameObject->addComponent(new Transform(glm::vec2(-5.0f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->setLayerOrder(20);
+	tempSprite = new Sprite();
+	tempSprite->init(1.0f, 10.0f);
+	tempSprite->setTextureID(texVal2);
+	tempGameObject->addComponent(tempSprite);
+	boxCollider = new BoxCollider();
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
+	tempGameObject->addComponent(boxCollider);
+
+	tempGameObject = GameObject::createGameObject("Galoo2");
+	tempGameObject->addComponent(new Transform(glm::vec2(5.0f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->setLayerOrder(20);
+	tempSprite = new Sprite();
+	tempSprite->init(1.0f, 10.0f);
+	tempSprite->setTextureID(texVal2);
+	tempGameObject->addComponent(tempSprite);
+	boxCollider = new BoxCollider();
+	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 
 	SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
-	game.initialize();
-	game.update();
-	game.cleanUp();
+	Game::initialize();
+	Game::update();
+	Game::cleanUp();
 	return 0;
 }

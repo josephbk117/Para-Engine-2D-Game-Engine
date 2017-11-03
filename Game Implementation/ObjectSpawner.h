@@ -21,9 +21,9 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (count < 12)
+		if (count < 1000)
 		{
-			if (timer >= 1.0f)
+			if (timer >= 0.3f)
 			{
 				GameObject* tempGameObject;
 				tempGameObject = GameObject::createGameObject("NewOne" + std::to_string(count));

@@ -78,11 +78,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>F:\Visual Studio 2017\Projects\2D Game Engine\includes;$(SolutionDir)2D Game Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\includes;$(SolutionDir)2D Game Engine</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>F:\Visual Studio 2017\Projects\2D Game Engine\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Box2D.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

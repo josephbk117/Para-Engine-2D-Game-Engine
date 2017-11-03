@@ -24,9 +24,10 @@ bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
 std::unique_ptr<b2World> Game::world;
+Camera* Game::camera;
+std::vector<GameObject *> Game::gameObjects;
 glm::vec2 Game::mouseCoord;
-std::thread* Game::audioThread;
-bool audioThreadKeepAlive = true;
+
 struct Game::InternalAcess
 {
 	std::chrono::steady_clock clockTime;
@@ -35,15 +36,8 @@ struct Game::InternalAcess
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };
 Game::InternalAcess* Game::acess;
-void runAudioThread()
-{
-	while (audioThreadKeepAlive)
-	{
-		YSE::System().update();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-	}
-}
-Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
+
+void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
 	glfwInit();
@@ -66,9 +60,32 @@ Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string titl
 	//IMGUI_INIT(acess->window, true);
 	YSE::System().init();
 }
+
+/*Game::Game(unsigned int screenWidth, unsigned int screenHeight, std::string title)
+{
+	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
+	glfwInit();
+	acess = new InternalAcess;
+	acess->window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
+	if (acess->window == NULL)
+	{
+		std::cout << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
+	}
+	glfwMakeContextCurrent(acess->window);
+	glfwSetInputMode(acess->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetFramebufferSizeCallback(acess->window, acess->framebuffer_size_callback);
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+		std::cout << "Error: %s\n" << glewGetErrorString(err);
+	else
+		std::cout << " Glew initialsed" << std::endl;
+	//IMGUI_INIT(acess->window, true);
+	YSE::System().init();
+}*/
 void Game::initialize()
 {
-	audioThread = new std::thread(runAudioThread);
 	gameObjects = GameObject::getAllGameObjects();
 	for (unsigned int i = 0; i < gameObjects.size(); i++)
 	{
@@ -119,7 +136,7 @@ void Game::update()
 			camera->setScreenRatio(glm::vec2(width, height));
 			frameBufferSizeUpated = false;
 		}
-
+		YSE::System().update();
 		if (gameObjects.size() != GameObject::getAllGameObjects().size())
 		{
 			GameObject* gameObjRef = GameObject::getAllGameObjects()[GameObject::getAllGameObjects().size() - 1];
@@ -195,11 +212,8 @@ void Game::update()
 
 		start = acess->clockTime.now();
 	}
-	//glfwDestroyCursor(cursor);
-	audioThreadKeepAlive = false;
-	audioThread->join();
-	YSE::System().close();
 	//IMGUI_SHUTDOWN();
+	YSE::System().close();
 	glfwTerminate();
 	return;
 }
@@ -241,12 +255,6 @@ void Game::cleanUp()
 	TextureManager::unloadTexturesFromMemory();
 	if (acess->cursor != nullptr)
 		glfwDestroyCursor(acess->cursor);
-	if (audioThread != nullptr)
-		delete audioThread;
-}
-
-Game::~Game()
-{
 	if (acess != nullptr)
 		delete acess;
 }
