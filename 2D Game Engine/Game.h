@@ -2,8 +2,6 @@
 class b2World;
 #include <GLM\glm.hpp>
 #include <memory>
-#include <thread>
-#include "GameObject.h"
 #include "InputData.h"
 #include "Camera.h"
 
@@ -32,14 +30,12 @@ public:
 		return timeSinceStartUp;
 	}
 private:
-	static std::vector<GameObject *> gameObjects;
-	static std::unique_ptr<b2World> world;
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
 	struct InternalAcess;
-	static InternalAcess* access;
+	static std::unique_ptr<InternalAcess> access;
 };
 
 

@@ -18,14 +18,14 @@
 #include "ShaderProgram.h"
 #include "Box.h"
 #include "Sprite.h"
+#include "GameObject.h"
 #include <GLFW\glfw3.h>
+#include "GuiElement.h"
 
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
-std::unique_ptr<b2World> Game::world;
 Camera* Game::camera;
-std::vector<GameObject *> Game::gameObjects;
 glm::vec2 Game::mouseCoord;
 
 struct Game::InternalAcess
@@ -33,15 +33,19 @@ struct Game::InternalAcess
 	std::chrono::steady_clock clockTime;
 	GLFWwindow* window;
 	GLFWcursor* cursor;
+	static std::vector<GameObject *> gameObjects;
+	static std::unique_ptr<b2World> world;
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };
-Game::InternalAcess* Game::access;
+std::unique_ptr<Game::InternalAcess> Game::access;
+std::vector<GameObject *> Game::InternalAcess::gameObjects;
+std::unique_ptr<b2World> Game::InternalAcess::world;
 
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
-	world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
+	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
 	glfwInit();
-	access = new InternalAcess;
+	access = std::make_unique<InternalAcess>();
 	access->window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
 	if (access->window == NULL)
 	{
@@ -63,16 +67,18 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 
 void Game::initialize()
 {
-	gameObjects = GameObject::getAllGameObjects();
-	for (unsigned int i = 0; i < gameObjects.size(); i++)
+	access->gameObjects = GameObject::getAllGameObjects();
+	unsigned int size = access->gameObjects.size();
+	for (unsigned int i = 0; i < size; i++)
 	{
-		std::vector<Component*> componentsAttachedToObject = gameObjects[i]->getAttachedComponents();
+		std::vector<Component*> componentsAttachedToObject = access->gameObjects[i]->getAttachedComponents();
+		unsigned int componentCount = componentsAttachedToObject.size();
 		if (camera == nullptr)
 		{
-			if (gameObjects[i]->hasComponent<Camera>())
-				camera = gameObjects[i]->getComponent<Camera>();
+			if (access->gameObjects[i]->hasComponent<Camera>())
+				camera = access->gameObjects[i]->getComponent<Camera>();
 		}
-		for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
+		for (unsigned int i = 0; i < componentCount; i++)
 			(*componentsAttachedToObject[i]).start();
 	}
 	if (camera == nullptr)
@@ -83,7 +89,7 @@ void Game::initialize()
 		glfwGetWindowSize(access->window, &width, &height);
 		camera->init(glm::vec2(width, height));
 	}
-	std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
+	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
 }
 //ImVec4 clearColour;
@@ -103,6 +109,10 @@ void Game::update()
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
+	GuiElement guiEle;
+	guiEle.setScreenLocation(glm::vec2(0, 0));
+	guiEle.setDimensions(glm::vec2(-0.6f, 0.6f));
+
 	while (!glfwWindowShouldClose(access->window))
 	{
 		if (frameBufferSizeUpated)
@@ -114,17 +124,25 @@ void Game::update()
 			frameBufferSizeUpated = false;
 		}
 		YSE::System().update();
-		if (gameObjects.size() != GameObject::getAllGameObjects().size())
+		if (access->gameObjects.size() != GameObject::getAllGameObjects().size())
 		{
-			GameObject* gameObjRef = GameObject::getAllGameObjects()[GameObject::getAllGameObjects().size() - 1];
-			gameObjects.push_back(gameObjRef);
-			std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
-			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
-				(*componentsAttachedToObject[i]).start();
-			std::stable_sort(gameObjects.begin(), gameObjects.end(), [](GameObject* a, GameObject* b)
+			unsigned int gameObjectCollectionSize = GameObject::getAllGameObjects().size();
+			int sizeDiff = gameObjectCollectionSize - access->gameObjects.size();
+			if (sizeDiff > 0)
+			{
+				for (int i = 1; i <= sizeDiff; i++)
+				{
+					GameObject* gameObjRef = GameObject::getAllGameObjects()[gameObjectCollectionSize - i];
+					access->gameObjects.push_back(gameObjRef);
+					std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
+					unsigned int componentCount = componentsAttachedToObject.size();
+					for (unsigned int i = 0; i < componentCount; i++)
+						(*componentsAttachedToObject[i]).start();
+				}
+			}
+			std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 			{return a->getLayerOrder() < b->getLayerOrder(); });
 		}
-
 		//IMGUI_NEWFRAME();
 
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -148,24 +166,24 @@ void Game::update()
 		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureLocation, 0);
 
-		for (unsigned int i = 0; i < gameObjects.size(); i++)
+		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
-			Transform *transformRef = gameObjects[i]->getComponent<Transform>();
-			if (gameObjects[i]->hasComponent<BoxCollider>())
+			Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
+			if (access->gameObjects[i]->hasComponent<BoxCollider>())
 			{
-				BoxCollider* boxcolBody = gameObjects[i]->getComponent<BoxCollider>();
+				BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
 				transformRef->position = glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y);
 				transformRef->rotation = boxcolBody->getAngle();
 			}
 			std::vector<Component*> componentsAttachedToObject =
-				GameObject::getGameObjectWithName(gameObjects[i]->getName())->getAttachedComponents();
+				GameObject::getGameObjectWithName(access->gameObjects[i]->getName())->getAttachedComponents();
 			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
 				(*componentsAttachedToObject[i]).update();
 			if (camera->isObjectInCameraView(transformRef->position, transformRef->scale))
 			{
 				glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
-				if (gameObjects[i]->hasComponent<Sprite>())
-					gameObjects[i]->getComponent<Sprite>()->draw();
+				if (access->gameObjects[i]->hasComponent<Sprite>())
+					access->gameObjects[i]->getComponent<Sprite>()->draw();
 			}
 		}
 
@@ -174,20 +192,22 @@ void Game::update()
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Attach frame buffer stuff and shader code for screen to camera
 		//Shader manager stuff
-		//gameobjects in game dynamic addition and deletion support
+		//gameobjects in game dynamic deletion support
 		shaderProgram.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
+		guiEle.display(access->gameObjects[3]->getComponent<Sprite>()->getTextureID());
 		//ImGui::Render();
 		glfwSwapBuffers(access->window);
 		glfwPollEvents();
 
 		std::chrono::duration<float> frameTime = access->clockTime.now() - start;
 		deltaTime = frameTime.count();
-		world->Step(deltaTime, 4, 5);
+		access->world->Step(deltaTime, 4, 5);
 		std::chrono::duration<float> sinceStart = access->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 
 		start = access->clockTime.now();
+
 	}
 	//IMGUI_SHUTDOWN();
 	YSE::System().close();
@@ -232,8 +252,6 @@ void Game::cleanUp()
 	TextureManager::unloadTexturesFromMemory();
 	if (access->cursor != nullptr)
 		glfwDestroyCursor(access->cursor);
-	if (access != nullptr)
-		delete access;
 }
 
 bool Game::isKeyPressed(Key key)
@@ -258,7 +276,7 @@ const glm::vec2* Game::getMouseCoords()
 }
 b2World* Game::getPhysicsWorld()
 {
-	return world.get();
+	return access->world.get();
 }
 
 void Game::InternalAcess::framebuffer_size_callback(GLFWwindow * window, int width, int height)
