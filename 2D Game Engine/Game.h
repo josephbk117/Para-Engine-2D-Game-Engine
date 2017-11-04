@@ -10,7 +10,7 @@ class b2World;
 class Game
 {
 public:
-	//Game(unsigned int screenWidth, unsigned int screenHeight, std::string title);
+
 	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	static void initialize();
 	static void update();
@@ -20,7 +20,9 @@ public:
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
 	static const glm::vec2 * getMouseCoords();
+	static void cleanUp();
 	static b2World* getPhysicsWorld();
+	static Camera* camera;
 	static float getDeltaTime()
 	{
 		return deltaTime;
@@ -29,8 +31,6 @@ public:
 	{
 		return timeSinceStartUp;
 	}
-	static void cleanUp();
-	static Camera* camera;
 private:
 	static std::vector<GameObject *> gameObjects;
 	static std::unique_ptr<b2World> world;
@@ -39,7 +39,7 @@ private:
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
 	struct InternalAcess;
-	static InternalAcess* acess;
+	static InternalAcess* access;
 };
 
 

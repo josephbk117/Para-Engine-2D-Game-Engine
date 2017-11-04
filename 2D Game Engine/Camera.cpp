@@ -77,3 +77,11 @@ void Camera::setScreenRatio(vec2 screenDimension)
 	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * (screenDimension.x / screenDimension.y), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f)*(screenDimension.y / screenDimension.x));
 	needsUpdate = true;
 }
+
+glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
+{
+	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->position.x, transform->position.y, 0.0f));
+	vec4 viewport(0.0f, 0.0f, screenDimensions.x, screenDimensions.y);
+	vec3 unprojected = glm::unProject(glm::vec3(screenPosition.x, screenPosition.y, 0.0f), model, orthographicMatrix, viewport);
+	return glm::vec2(unprojected.x, -unprojected.y);
+}

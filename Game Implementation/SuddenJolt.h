@@ -2,6 +2,7 @@
 #include <Component.h>
 #include <Box.h>
 #include <Game.h>
+#include <iostream>
 class SuddenJolt : public Component
 {
 public:

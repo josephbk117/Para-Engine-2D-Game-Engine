@@ -12,7 +12,6 @@
 
 int main(int argc, char* argv[])
 {
-	//Game game(600, 600, "2D Game Engine");
 	Game::setUpEngine(600, 600, "Para Engine - Game v0.1");
 	Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);
@@ -22,7 +21,7 @@ int main(int argc, char* argv[])
 	unsigned int texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
 	
 	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
-	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.3f);
+	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
@@ -45,7 +44,7 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(50);
 	tempSprite = new Sprite();
-	tempSprite->init(0.3f, 0.3f);
+	tempSprite->init(0.5f, 0.5f);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	tempGameObject->addComponent(new MagicObjectScaler);

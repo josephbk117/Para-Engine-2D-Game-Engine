@@ -17,6 +17,7 @@ public:
 	glm::mat4 getOrthoMatrix()const;
 	bool isObjectInCameraView(const glm::vec2 & position, const glm::vec2& dimensions)const;
 	void setScreenRatio(glm::vec2 screenDimension);
+	glm::vec2 convertScreenPointToWorldPoint(const glm::vec2& screenPosition, const glm::vec2& screenDimensions);
 private:
 	glm::vec2 screenDimensions;
 	bool needsUpdate;
