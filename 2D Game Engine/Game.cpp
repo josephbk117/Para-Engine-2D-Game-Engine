@@ -26,6 +26,7 @@ bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
 Camera* Game::camera;
+ShaderProgram Game::postProcessor;
 glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
 
@@ -66,9 +67,43 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 	//IMGUI_INIT(acess->window, true);
 	YSE::System().init();
 }
-
+GuiElement screenPostProcessingElement;
+unsigned int fbo;
 void Game::initialize()
 {
+
+	//_______FBO STUFF__________
+	
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+	// create a color attachment texture
+	unsigned int textureColorbuffer;
+	glGenTextures(1, &textureColorbuffer);
+	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowSize.x, windowSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+	// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowSize.x, windowSize.y); // use a single renderbuffer object for both a depth AND stencil buffer.
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+	screenPostProcessingElement.init(glm::vec2(1, 1), textureColorbuffer);
+	screenPostProcessingElement.setScreenLocation(glm::vec2(-0, 0));
+
+
+
+
+
 	access->gameObjects = GameObject::getAllGameObjects();
 	unsigned int size = access->gameObjects.size();
 	for (unsigned int i = 0; i < size; i++)
@@ -107,12 +142,17 @@ void Game::update()
 	shaderUiElementBase.addAttribute("vertexPosition");
 	shaderUiElementBase.linkShaders();
 
+	postProcessor.compileShaders("Test Resources\\postProcess.vs", "Test Resources\\postProcess.fs");
+	postProcessor.linkShaders();
+
 	GLint textureGameObjectLocation = shaderGameObjectsBase.getUniformLocation("textureOne");
 	GLint uniformProjectionMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("projection");
 	GLint uniformModelMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("model");
 
 	GLint textureUiLocation = shaderUiElementBase.getUniformLocation("textureOne");
 	GLint uniformModelMatrixUiLocation = shaderUiElementBase.getUniformLocation("model");
+
+	//GLint postProcessLoc = 
 
 	std::chrono::steady_clock::time_point start = access->clockTime.now();
 	std::chrono::steady_clock::time_point initialTime = access->clockTime.now();
@@ -123,8 +163,17 @@ void Game::update()
 	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 
+
 	while (!glfwWindowShouldClose(access->window))
 	{
+		//______FBO STUFF______
+		// render
+		// ------
+		// bind to framebuffer and draw scene as we normally would to color texture 
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		if (frameBufferSizeUpated)
 		{
 			int width, height;
@@ -155,7 +204,6 @@ void Game::update()
 		}
 		//IMGUI_NEWFRAME();
 
-		glClear(GL_COLOR_BUFFER_BIT);
 		//processInput(window);
 
 		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
@@ -166,9 +214,6 @@ void Game::update()
 		}
 		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
-
-		//glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
-		glClearColor(0.25f, 0.45f, 0.15f, 1.0f);
 
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
@@ -218,6 +263,16 @@ void Game::update()
 		}		
 		shaderUiElementBase.unuse();
 		glDisable(GL_BLEND);
+
+		//____FBO STUFF____
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		postProcessor.use();
+		screenPostProcessingElement.draw();
+		postProcessor.unuse();
+
 		//ImGui::Render();
 		glfwSwapBuffers(access->window);
 		glfwPollEvents();
@@ -229,7 +284,6 @@ void Game::update()
 		timeSinceStartUp = sinceStart.count();
 
 		start = access->clockTime.now();
-
 	}
 	//IMGUI_SHUTDOWN();
 	YSE::System().close();
@@ -274,6 +328,10 @@ void Game::cleanUp()
 	TextureManager::unloadTexturesFromMemory();
 	if (access->cursor != nullptr)
 		glfwDestroyCursor(access->cursor);
+}
+
+void Game::setPostProcessingShader(ShaderProgram program)
+{
 }
 
 bool Game::isKeyPressed(Key key)

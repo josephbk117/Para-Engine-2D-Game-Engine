@@ -4,6 +4,7 @@ class b2World;
 #include <memory>
 #include "InputData.h"
 #include "Camera.h"
+#include "ShaderProgram.h"
 
 class Game
 {
@@ -20,6 +21,7 @@ public:
 	static const glm::vec2 getWindowSize();
 	static const glm::vec2 * getMouseCoords();
 	static void cleanUp();
+	static void setPostProcessingShader(ShaderProgram program);
 	static b2World* getPhysicsWorld();
 	static Camera* camera;
 	
@@ -37,6 +39,7 @@ private:
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
 	static glm::vec2 windowSize;
+	static ShaderProgram postProcessor;
 	struct InternalAcess;
 	static std::unique_ptr<InternalAcess> access;
 };

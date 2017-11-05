@@ -34,12 +34,12 @@ public:
 					tempGameObject->addComponent(new Transform(glm::vec2(-3 + inc * 2, yVal), 0.0f, glm::vec2(1, 1)));
 					Sprite* tempSprite;
 					tempSprite = new Sprite();
-					tempSprite->init(0.7f, 0.7f);
+					tempSprite->init(0.2f, 0.2f);
 					tempSprite->setTextureID(texId[inc]);
 					tempGameObject->addComponent(tempSprite);
 					BoxCollider* boxCollider = new BoxCollider();
 					boxCollider->init(tempGameObject->getComponent<Transform>()->position,
-						glm::vec2(0.7f, 0.7f), PhysicsMaterial(1.0f, 0.6f, 0.3f), PhysicsBody::DYNAMIC);
+						glm::vec2(0.2f, 0.2f), PhysicsMaterial(1.0f, 0.6f, 0.3f), PhysicsBody::DYNAMIC);
 					tempGameObject->addComponent(boxCollider);
 					tempGameObject->addComponent(new SuddenJolt);
 				}

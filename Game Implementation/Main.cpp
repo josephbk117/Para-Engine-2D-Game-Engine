@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo");
-	tempGameObject->addComponent(new Transform(glm::vec2(-0.3f, -5.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, -5.0f), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(10.0f, 1.0f);
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo1");
-	tempGameObject->addComponent(new Transform(glm::vec2(-5.0f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform(glm::vec2(-5.5f, -0.0f), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(1.0f, 10.0f);
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo2");
-	tempGameObject->addComponent(new Transform(glm::vec2(5.0f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform(glm::vec2(5.5f, -0.0f), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(1.0f, 10.0f);
