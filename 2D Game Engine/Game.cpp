@@ -73,7 +73,7 @@ void Game::initialize()
 {
 
 	//_______FBO STUFF__________
-	
+
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -248,6 +248,15 @@ void Game::update()
 		//Attach frame buffer stuff and shader code for screen to camera
 		//Shader manager stuff
 		//gameobjects in game dynamic deletion support
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		postProcessor.use();
+		screenPostProcessingElement.draw();
+		postProcessor.unuse();
+
 		shaderGameObjectsBase.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -260,18 +269,9 @@ void Game::update()
 			glm::mat4 matrix = elements[i]->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
 			elements[i]->draw();
-		}		
+		}
 		shaderUiElementBase.unuse();
 		glDisable(GL_BLEND);
-
-		//____FBO STUFF____
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		postProcessor.use();
-		screenPostProcessingElement.draw();
-		postProcessor.unuse();
 
 		//ImGui::Render();
 		glfwSwapBuffers(access->window);

@@ -5,5 +5,8 @@ uniform sampler2D textureOne;
 void main()
 {
 	color = texture(textureOne,textureUV);
-	color = color*1.45;
+	float xVal = textureUV.x - 0.5;
+	float  yVal = textureUV.y -0.5;
+	if(sqrt(xVal*xVal + yVal*yVal)>0.5)
+		color = 1.0 - color;
 }
