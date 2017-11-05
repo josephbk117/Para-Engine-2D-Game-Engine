@@ -12,7 +12,7 @@ public:
 	virtual void update()
 	{
 		transform->scale = glm::vec2(1.0f + abs(sin(Game::getTimeSinceStartUp()*10.0f)), 1.0f);
-		transform->position = Game::camera->convertScreenPointToWorldPoint(glm::vec2(Game::getMouseCoords()->x, Game::getMouseCoords()->y), glm::vec2(600, 600));
+		transform->position = Game::camera->convertScreenPointToWorldPoint(glm::vec2(Game::getMouseCoords()->x, Game::getMouseCoords()->y), Game::getWindowSize());
 	}
 
 private:

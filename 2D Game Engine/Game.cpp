@@ -27,6 +27,7 @@ float Game::deltaTime;
 float Game::timeSinceStartUp;
 Camera* Game::camera;
 glm::vec2 Game::mouseCoord;
+glm::vec2 Game::windowSize;
 
 struct Game::InternalAcess
 {
@@ -44,6 +45,7 @@ std::unique_ptr<b2World> Game::InternalAcess::world;
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
+	windowSize = glm::vec2(screenWidth, screenHeight);
 	glfwInit();
 	access = std::make_unique<InternalAcess>();
 	access->window = glfwCreateWindow(screenWidth, screenHeight, title.c_str(), NULL, NULL);
@@ -118,9 +120,8 @@ void Game::update()
 	timeSinceStartUp = 0.0f;
 
 	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
-	guiEle->init(glm::vec2(1.0f, 1.0f), TextureManager::getTextureFromReference("translu"));
-	guiEle->setScreenLocation(glm::vec2(0.0, 0));
-
+	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
+	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -190,7 +191,7 @@ void Game::update()
 				(*componentsAttachedToObject[i]).update();
 			if (camera->isObjectInCameraView(transformRef->position, transformRef->scale))
 			{
-				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
+				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
 				if (access->gameObjects[i]->hasComponent<Sprite>())
 					access->gameObjects[i]->getComponent<Sprite>()->draw();
 			}
@@ -211,7 +212,7 @@ void Game::update()
 		unsigned int size = elements.size();
 		for (int i = 0; i < size; i++)
 		{
-			glm::mat4 matrix = elements[i]->getModelMatrix();
+			glm::mat4 matrix = elements[i]->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
 			elements[i]->draw();
 		}		
@@ -287,6 +288,10 @@ bool Game::isKeyReleased(Key key)
 		return true;
 	return false;
 }
+const glm::vec2 Game::getWindowSize()
+{
+	return windowSize;
+}
 const glm::vec2* Game::getMouseCoords()
 {
 	double x, y;
@@ -302,6 +307,7 @@ b2World* Game::getPhysicsWorld()
 
 void Game::InternalAcess::framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
+	windowSize = glm::vec2(width, height);
 	glViewport(0, 0, width, height);
 	frameBufferSizeUpated = true;
 }

@@ -8,7 +8,7 @@ public:
 	GuiElement();
 	~GuiElement();
 
-	void init(glm::vec2 dimensions, unsigned int textureID) { uiSprite.init(dimensions.x, dimensions.y); uiSprite.setTextureID(textureID); };
+	void init(glm::vec2 dimensions, unsigned int textureID) { uiSprite.init(dimensions.x*2.0f, dimensions.y*2.0f); uiSprite.setTextureID(textureID); };
 	void setTextureID(unsigned int textureID) { uiSprite.setTextureID(textureID); };
 
 	void setScreenLocation(const glm::vec2& screenPosition) { transform.position = screenPosition; transform.update(); };
@@ -16,12 +16,11 @@ public:
 	void setDimensions(const glm::vec2& dimension) { uiSprite.setDimension(dimension); };
 	glm::vec2 getDimensions()const { return uiSprite.getDimensions(); };
 	void draw() { uiSprite.draw(); }
-	glm::mat4 getModelMatrix()const { return transform.getModelMatrix(); };
+	glm::mat4 getMatrix()const { return transform.getMatrix(); };
 
 	static GuiElement* createGuiElement(const std::string& name)
 	{
 		GuiElement* gameObject = new GuiElement;
-		//gameObjectMap[name] = gameObject;
 		guiElementVector.push_back(gameObject);
 		return gameObject;
 	}

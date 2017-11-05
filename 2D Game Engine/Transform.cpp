@@ -1,5 +1,6 @@
 #include "Transform.h"
-glm::mat4 Transform::getModelMatrix()const
+#include <GLM\gtc\matrix_transform.hpp>
+glm::mat4 Transform::getMatrix()const
 {
 	return modelMatrix;
 }

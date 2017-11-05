@@ -17,10 +17,12 @@ public:
 	static void lockCursor(bool lock);
 	static bool isKeyPressed(Key key);
 	static bool isKeyReleased(Key key);
+	static const glm::vec2 getWindowSize();
 	static const glm::vec2 * getMouseCoords();
 	static void cleanUp();
 	static b2World* getPhysicsWorld();
 	static Camera* camera;
+	
 	static float getDeltaTime()
 	{
 		return deltaTime;
@@ -34,6 +36,7 @@ private:
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;
+	static glm::vec2 windowSize;
 	struct InternalAcess;
 	static std::unique_ptr<InternalAcess> access;
 };
