@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 	unsigned int texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
 	unsigned int texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
 	unsigned int texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
+	TextureManager::loadTextureFromFile("Test Resources\\goli.png", "translu", false);
 	
 	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);

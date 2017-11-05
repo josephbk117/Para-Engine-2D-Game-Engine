@@ -95,23 +95,32 @@ void Game::initialize()
 //ImVec4 clearColour;
 void Game::update()
 {
-	ShaderProgram shaderProgram;
-	shaderProgram.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
-	shaderProgram.addAttribute("vertexPosition");
-	shaderProgram.linkShaders();
+	ShaderProgram shaderGameObjectsBase;
+	shaderGameObjectsBase.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
+	shaderGameObjectsBase.addAttribute("vertexPosition");
+	shaderGameObjectsBase.linkShaders();
 
-	GLint textureLocation = shaderProgram.getUniformLocation("textureOne");
-	GLint uniformProjectionMatrixLocation = shaderProgram.getUniformLocation("projection");
-	GLint uniformModelMatrixLocation = shaderProgram.getUniformLocation("model");
+	ShaderProgram shaderUiElementBase;
+	shaderUiElementBase.compileShaders("Test Resources\\uiElementBase.vs", "Test Resources\\uiElementBase.fs");
+	shaderUiElementBase.addAttribute("vertexPosition");
+	shaderUiElementBase.linkShaders();
+
+	GLint textureGameObjectLocation = shaderGameObjectsBase.getUniformLocation("textureOne");
+	GLint uniformProjectionMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("projection");
+	GLint uniformModelMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("model");
+
+	GLint textureUiLocation = shaderUiElementBase.getUniformLocation("textureOne");
+	GLint uniformModelMatrixUiLocation = shaderUiElementBase.getUniformLocation("model");
 
 	std::chrono::steady_clock::time_point start = access->clockTime.now();
 	std::chrono::steady_clock::time_point initialTime = access->clockTime.now();
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
-	GuiElement guiEle;
-	guiEle.setScreenLocation(glm::vec2(0, 0));
-	guiEle.setDimensions(glm::vec2(-0.6f, 0.6f));
+	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
+	guiEle->init(glm::vec2(1.0f, 1.0f), TextureManager::getTextureFromReference("translu"));
+	guiEle->setScreenLocation(glm::vec2(0.0, 0));
+
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -160,11 +169,11 @@ void Game::update()
 		//glClearColor(clearColour.x, clearColour.y, clearColour.z, 1.0f);
 		glClearColor(0.25f, 0.45f, 0.15f, 1.0f);
 
-		shaderProgram.use();
+		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
 		glm::mat4 cameraMatrix = camera->getOrthoMatrix();
-		glUniformMatrix4fv(uniformProjectionMatrixLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
-		glUniform1i(textureLocation, 0);
+		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+		glUniform1i(textureGameObjectLocation, 0);
 
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
@@ -181,7 +190,7 @@ void Game::update()
 				(*componentsAttachedToObject[i]).update();
 			if (camera->isObjectInCameraView(transformRef->position, transformRef->scale))
 			{
-				glUniformMatrix4fv(uniformModelMatrixLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
+				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getModelMatrix()[0][0]));
 				if (access->gameObjects[i]->hasComponent<Sprite>())
 					access->gameObjects[i]->getComponent<Sprite>()->draw();
 			}
@@ -193,9 +202,21 @@ void Game::update()
 		//Attach frame buffer stuff and shader code for screen to camera
 		//Shader manager stuff
 		//gameobjects in game dynamic deletion support
-		shaderProgram.unuse();
+		shaderGameObjectsBase.unuse();
 		glBindTexture(GL_TEXTURE_2D, 0);
-		guiEle.display(access->gameObjects[3]->getComponent<Sprite>()->getTextureID());
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		shaderUiElementBase.use();
+		std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
+		unsigned int size = elements.size();
+		for (int i = 0; i < size; i++)
+		{
+			glm::mat4 matrix = elements[i]->getModelMatrix();
+			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
+			elements[i]->draw();
+		}		
+		shaderUiElementBase.unuse();
+		glDisable(GL_BLEND);
 		//ImGui::Render();
 		glfwSwapBuffers(access->window);
 		glfwPollEvents();
