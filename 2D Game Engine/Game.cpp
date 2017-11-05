@@ -248,6 +248,7 @@ void Game::update()
 		//Attach frame buffer stuff and shader code for screen to camera
 		//Shader manager stuff
 		//gameobjects in game dynamic deletion support
+		shaderGameObjectsBase.unuse();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -256,8 +257,7 @@ void Game::update()
 		postProcessor.use();
 		screenPostProcessingElement.draw();
 		postProcessor.unuse();
-
-		shaderGameObjectsBase.unuse();
+		
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
