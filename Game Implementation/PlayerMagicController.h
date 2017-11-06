@@ -17,18 +17,18 @@ public:
 	}
 	virtual void update()
 	{
-		activeTransform->rotation = rotOffset;
+		activeTransform->setRotation(rotOffset);
 		float deltaTime = Game::getDeltaTime();
 		if (shouldDoCircleMotion)
 			rotOffset += deltaTime * 3.0f;
 		if (Game::isKeyPressed(Key::W))
-			activeTransform->position.y += 10.0f * deltaTime;
+			activeTransform->setY(activeTransform->getPosition().y + 10.0f * deltaTime);
 		if (Game::isKeyPressed(Key::S))
-			activeTransform->position.y -= 10.0f * deltaTime;
+			activeTransform->setY(activeTransform->getPosition().y - 10.0f * deltaTime);
 		if (Game::isKeyPressed(Key::A))
-			activeTransform->position.x -= 10.0f * deltaTime;
+			activeTransform->setX(activeTransform->getPosition().x - 10.0f * deltaTime);
 		if (Game::isKeyPressed(Key::D))
-			activeTransform->position.x += 10.0f * deltaTime;
+			activeTransform->setX(activeTransform->getPosition().x + 10.0f * deltaTime);
 		if (Game::isKeyPressed(Key::Q))
 			shouldDoCircleMotion = true;
 		if (Game::isKeyReleased(Key::Q))

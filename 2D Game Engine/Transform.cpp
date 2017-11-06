@@ -1,12 +1,51 @@
 #include "Transform.h"
 #include <GLM\gtc\matrix_transform.hpp>
-glm::mat4 Transform::getMatrix()const
+const glm::mat4& Transform::getMatrix()const
 {
 	return modelMatrix;
 }
 void Transform::update()
 {
-	setModelMatrix();
+	if (needsUpdate)
+	{
+		setModelMatrix();
+		needsUpdate = false;
+	}
+}
+void Transform::setPosition(const glm::vec2 & position)
+{
+	needsUpdate = true;
+	this->position = position;
+}
+void Transform::setX(const float & xValue)
+{
+	setPosition(glm::vec2(xValue, position.y));
+}
+void Transform::setY(const float & yValue)
+{
+	setPosition(glm::vec2(position.x, yValue));
+}
+void Transform::setRotation(const float & rotation)
+{
+	needsUpdate = true;
+	this->rotation = rotation;
+}
+void Transform::setScale(const glm::vec2 scale)
+{
+	needsUpdate = true;
+	this->scale = scale;
+}
+const glm::vec2 & Transform::getPosition()const
+{
+	return position;
+}
+const float & Transform::getRotation()const
+{
+	return rotation;
+}
+const glm::vec2 Transform::getScale()const
+{
+	return scale;
 }
 bool Transform::operator==(const Transform & transform)const
 {

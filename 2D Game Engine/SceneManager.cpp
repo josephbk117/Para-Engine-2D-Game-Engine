@@ -31,11 +31,11 @@ void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::stri
 				if (typeid(Transform) == typeid(*components[i]))
 				{
 					Transform * ref = (Transform *)(components[i]);
-					data.append(" " + std::to_string(ref->position.x) + " " +
-						std::to_string(ref->position.x) + " " +
-						std::to_string(ref->rotation) + " " +
-						std::to_string(ref->scale.x) + " " +
-						std::to_string(ref->scale.y));
+					data.append(" " + std::to_string(ref->getPosition().x) + " " +
+						std::to_string(ref->getPosition().x) + " " +
+						std::to_string(ref->getRotation()) + " " +
+						std::to_string(ref->getScale().x) + " " +
+						std::to_string(ref->getScale().y));
 				}
 				else if (typeid(Sprite) == typeid(*components[i]))
 				{

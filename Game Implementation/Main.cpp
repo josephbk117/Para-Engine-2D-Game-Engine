@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position, glm::vec2(1.5f, 1.5f),
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(), glm::vec2(1.5f, 1.5f),
 		physicsMaterial1, PhysicsBody::DYNAMIC);
 	tempGameObject->addComponent(boxCollider);
 
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
 		glm::vec2(10.0f, 1.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
 		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->position,
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
 		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 

@@ -23,7 +23,7 @@ void Camera::init(vec2 screenDimensions)
 void Camera::start()
 {
 	transform = attachedGameObject->getComponent<Transform>();
-	previousTransformData.rotation = transform->rotation + 5;
+	previousTransformData.setRotation(transform->getRotation() + 5);
 }
 
 void Camera::setScale(float newScale)
@@ -48,8 +48,8 @@ void Camera::update()
 	{
 		previousTransformData = *transform;
 		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
-		viewMatrix = glm::rotate(viewMatrix, transform->rotation, glm::vec3(0, 0, 1));
-		viewMatrix = glm::translate(viewMatrix, vec3(-transform->position.x, -transform->position.y, 0));
+		viewMatrix = glm::rotate(viewMatrix, transform->getRotation(), glm::vec3(0, 0, 1));
+		viewMatrix = glm::translate(viewMatrix, vec3(-transform->getPosition().x, -transform->getPosition().y, 0));
 	}
 }
 
@@ -60,7 +60,7 @@ bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& sprit
 	const float MIN_DISTANCE_X = scaledScreenDimensions.x + (float)spriteDimensions.x;
 	const float MIN_DISTANCE_Y = scaledScreenDimensions.y + (float)spriteDimensions.y;
 
-	vec2 distVec = spritePosition - transform->position;
+	vec2 distVec = spritePosition - transform->getPosition();
 
 	//Get depth of collision
 	float xDepth = MIN_DISTANCE_X - abs(distVec.x);
@@ -80,7 +80,7 @@ void Camera::setScreenRatio(vec2 screenDimension)
 
 glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
 {
-	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->position.x, transform->position.y, 0.0f));
+	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->getPosition().x, transform->getPosition().y, 0.0f));
 	vec4 viewport(0.0f, 0.0f, screenDimensions.x, screenDimensions.y);
 	vec3 unprojected = glm::unProject(glm::vec3(screenPosition.x, screenPosition.y, 0.0f), model, orthographicMatrix, viewport);
 	return glm::vec2(unprojected.x, -unprojected.y);

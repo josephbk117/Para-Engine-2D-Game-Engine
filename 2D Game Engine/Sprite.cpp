@@ -20,7 +20,6 @@ void Sprite::init(float width, float height)
 	if (vboID == 0)
 		glGenBuffers(1, &vboID);
 	setUpSpriteDimensions(width, height);
-
 }
 
 void Sprite::draw()

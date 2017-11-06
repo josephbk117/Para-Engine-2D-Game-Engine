@@ -11,8 +11,8 @@ public:
 	void init(glm::vec2 dimensions, unsigned int textureID) { uiSprite.init(dimensions.x*2.0f, dimensions.y*2.0f); uiSprite.setTextureID(textureID); };
 	void setTextureID(unsigned int textureID) { uiSprite.setTextureID(textureID); };
 
-	void setScreenLocation(const glm::vec2& screenPosition) { transform.position = screenPosition; transform.update(); };
-	glm::vec2 getScreenLocation()const { return transform.position; };
+	void setScreenLocation(const glm::vec2& screenPosition) { transform.setPosition(screenPosition); transform.update(); };
+	const glm::vec2& getScreenLocation()const { return transform.getPosition(); };
 	void setDimensions(const glm::vec2& dimension) { uiSprite.setDimension(dimension); };
 	glm::vec2 getDimensions()const { return uiSprite.getDimensions(); };
 	void draw() { uiSprite.draw(); }

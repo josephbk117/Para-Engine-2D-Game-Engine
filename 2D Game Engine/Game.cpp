@@ -227,14 +227,14 @@ void Game::update()
 			if (access->gameObjects[i]->hasComponent<BoxCollider>())
 			{
 				BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
-				transformRef->position = glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y);
-				transformRef->rotation = boxcolBody->getAngle();
+				transformRef->setPosition(glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y));
+				transformRef->setRotation( boxcolBody->getAngle());
 			}
 			std::vector<Component*> componentsAttachedToObject =
 				GameObject::getGameObjectWithName(access->gameObjects[i]->getName())->getAttachedComponents();
 			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
 				(*componentsAttachedToObject[i]).update();
-			if (camera->isObjectInCameraView(transformRef->position, transformRef->scale))
+			if (camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
 			{
 				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
 				if (access->gameObjects[i]->hasComponent<Sprite>())
@@ -245,7 +245,6 @@ void Game::update()
 		//TODO:
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
-		//Attach frame buffer stuff and shader code for screen to camera
 		//Shader manager stuff
 		//gameobjects in game dynamic deletion support
 		shaderGameObjectsBase.unuse();
