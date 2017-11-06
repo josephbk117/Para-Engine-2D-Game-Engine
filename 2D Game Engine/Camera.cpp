@@ -32,12 +32,12 @@ void Camera::setScale(float newScale)
 	scale = newScale;
 }
 
-float Camera::getScale()const
+const float& Camera::getScale()const
 {
 	return scale;
 }
 
-mat4 Camera::getOrthoMatrix()const
+const mat4& Camera::getOrthoMatrix()const
 {
 	return viewMatrix;
 }
@@ -78,7 +78,7 @@ void Camera::setScreenRatio(vec2 screenDimension)
 	needsUpdate = true;
 }
 
-glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
+const glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
 {
 	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->getPosition().x, transform->getPosition().y, 0.0f));
 	vec4 viewport(0.0f, 0.0f, screenDimensions.x, screenDimensions.y);

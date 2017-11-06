@@ -69,6 +69,17 @@ int main(int argc, char* argv[])
 		physicsMaterial1, PhysicsBody::DYNAMIC);
 	tempGameObject->addComponent(boxCollider);
 
+	tempGameObject = GameObject::createGameObject("PhyMove");
+	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, 3.5f), 0.0f, glm::vec2(1, 1)));
+	tempSprite = new Sprite();
+	tempSprite->init(0.4f, 0.4f);
+	tempSprite->setTextureID(texVal2);
+	tempGameObject->addComponent(tempSprite);
+	boxCollider = new BoxCollider();
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(), glm::vec2(0.4f, 0.4f),
+		physicsMaterial1, PhysicsBody::KINEMATIC);
+	tempGameObject->addComponent(boxCollider);
+
 	tempGameObject = GameObject::createGameObject("Galoo");
 	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, -5.0f), 0.0f, glm::vec2(1, 1)));
 	tempGameObject->setLayerOrder(20);
@@ -104,6 +115,8 @@ int main(int argc, char* argv[])
 	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
 		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
+
+
 
 	SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 

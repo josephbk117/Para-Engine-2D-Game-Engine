@@ -96,13 +96,8 @@ void Game::initialize()
 		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
 	screenPostProcessingElement.init(glm::vec2(1, 1), textureColorbuffer);
-	screenPostProcessingElement.setScreenLocation(glm::vec2(-0, 0));
-
-
-
-
+	screenPostProcessingElement.setScreenLocation(glm::vec2(0, 0));
 
 	access->gameObjects = GameObject::getAllGameObjects();
 	unsigned int size = access->gameObjects.size();
@@ -152,8 +147,6 @@ void Game::update()
 	GLint textureUiLocation = shaderUiElementBase.getUniformLocation("textureOne");
 	GLint uniformModelMatrixUiLocation = shaderUiElementBase.getUniformLocation("model");
 
-	//GLint postProcessLoc = 
-
 	std::chrono::steady_clock::time_point start = access->clockTime.now();
 	std::chrono::steady_clock::time_point initialTime = access->clockTime.now();
 	deltaTime = 0.0f;
@@ -162,7 +155,6 @@ void Game::update()
 	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
 	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -263,7 +255,7 @@ void Game::update()
 		shaderUiElementBase.use();
 		std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
 		unsigned int size = elements.size();
-		for (int i = 0; i < size; i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			glm::mat4 matrix = elements[i]->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));

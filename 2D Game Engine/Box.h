@@ -16,12 +16,14 @@ public:
 	void applyForce(const glm::vec2& force);
 	void setVelocity(const glm::vec2& velocity);
 	void setAngularVelocity(float velocity);
+	void setPosition(const glm::vec2& position);
+	void setRotation(const float& rotation);
 	const glm::vec2& getDimensions()const;
 	const float getAngle()const;
 	const glm::vec2 getPosition()const;
 	const PhysicsBody getPhysicsType()const;
 private:
 	struct InternalAcess;
-	InternalAcess* acess = nullptr;
+	InternalAcess* access = nullptr;
 };
 

@@ -1,8 +1,12 @@
 #include "Transform.h"
 #include <GLM\gtc\matrix_transform.hpp>
+
 const glm::mat4& Transform::getMatrix()const
 {
 	return modelMatrix;
+}
+void Transform::start()
+{
 }
 void Transform::update()
 {

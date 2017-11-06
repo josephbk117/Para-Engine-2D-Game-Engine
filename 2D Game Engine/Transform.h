@@ -18,6 +18,7 @@ public:
 		setModelMatrix();
 	}
 	const glm::mat4& getMatrix()const;
+	virtual void start();
 	virtual void update();
 	void setPosition(const glm::vec2& position);
 	void setX(const float& xValue);
