@@ -179,7 +179,7 @@ void Game::update()
 		YSE::System().update();
 		if (access->gameObjects.size() != GameObject::getAllGameObjects().size())
 		{
-			unsigned int gameObjectCollectionSize = GameObject::getAllGameObjects().size();
+			/*unsigned int gameObjectCollectionSize = GameObject::getAllGameObjects().size();
 			int sizeDiff = gameObjectCollectionSize - access->gameObjects.size();
 			if (sizeDiff > 0)
 			{
@@ -195,6 +195,21 @@ void Game::update()
 						for (unsigned int i = 0; i < componentCount; i++)
 							(*componentsAttachedToObject[i]).start();
 					}
+				}
+			}*/
+			access->gameObjects = GameObject::getAllGameObjects();
+			unsigned int sizeValue = access->gameObjects.size();
+			for (int i = 0; i < sizeValue; i++)
+			{
+				GameObject* gameObjRef = access->gameObjects[i];
+				if (!gameObjRef->hasStartBeenCalled)
+				{
+					gameObjRef->hasStartBeenCalled = true;
+					//access->gameObjects.push_back(gameObjRef);
+					std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
+					unsigned int componentCount = componentsAttachedToObject.size();
+					for (unsigned int i = 0; i < componentCount; i++)
+						(*componentsAttachedToObject[i]).start();
 				}
 			}
 			std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)

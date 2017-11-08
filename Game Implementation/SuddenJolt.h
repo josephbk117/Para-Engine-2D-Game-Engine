@@ -13,6 +13,13 @@ public:
 	}
 	virtual void update()
 	{
+		if (Game::isKeyPressed(Key::NUM_1))
+		{
+			if (GameObject::getGameObjectWithName("Galoo2") != nullptr)
+			{
+				GameObject::deleteGameObjectWithName("Galoo2");
+			}
+		}
 		if (Game::isKeyPressed(Key::U))
 			boxCol->applyForce(glm::vec2(0, 20.0f));
 		if (Game::isKeyPressed(Key::J))

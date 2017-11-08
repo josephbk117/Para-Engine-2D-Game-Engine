@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include <unordered_map>
 class GameObject;
 #include "Component.h"
@@ -36,6 +37,12 @@ public:
 	static const std::vector<GameObject*>& getAllGameObjects()
 	{
 		return gameObjectVector;
+	}
+	static void deleteGameObjectWithName(const std::string & name)
+	{
+		auto itr = std::find(gameObjectVector.begin(), gameObjectVector.end(), gameObjectMap[name]);
+		gameObjectVector.erase(itr);
+		gameObjectMap.erase(name);
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
