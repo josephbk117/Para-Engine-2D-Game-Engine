@@ -23,6 +23,8 @@ public:
 	{
 		return gameObjectMap[name];
 	}
+	template<class T>
+	static GameObject* getGameObjectWithComponent(void);
 	static GameObject* createGameObject(const std::string& name)
 	{
 		GameObject* gameObject = new GameObject(name);
@@ -51,7 +53,8 @@ private:
 template<class T>
 inline T * GameObject::getComponent(void)
 {
-	for (unsigned int i = 0; i < components.size(); i++)
+	unsigned int sizeValue = components.size();
+	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
 			return (T *)components[i];
@@ -62,10 +65,23 @@ inline T * GameObject::getComponent(void)
 template<class T>
 inline bool GameObject::hasComponent(void)
 {
-	for (unsigned int i = 0; i < components.size(); i++)
+	unsigned int sizeValue = components.size();
+	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
 			return true;
 	}
 	return false;
+}
+
+template<class T>
+inline GameObject * GameObject::getGameObjectWithComponent(void)
+{
+	unsigned int sizeValue = gameObjectVector.size();
+	for (int i = 0; i < sizeValue; i++)
+	{
+		if (gameObjectVector[i]->hasComponent<T>())
+			return gameObjectVector[i];
+	}
+	return nullptr;
 }

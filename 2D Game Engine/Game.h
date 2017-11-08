@@ -23,7 +23,6 @@ public:
 	static void cleanUp();
 	static void setPostProcessingShader(ShaderProgram program);
 	static b2World* getPhysicsWorld();
-	static Camera* camera;
 	
 	static float getDeltaTime()
 	{

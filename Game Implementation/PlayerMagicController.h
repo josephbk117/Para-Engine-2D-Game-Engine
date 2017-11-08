@@ -18,7 +18,7 @@ public:
 	virtual void update()
 	{
 		activeTransform->setRotation(rotOffset);
-		float deltaTime = Game::getDeltaTime();
+		const float deltaTime = Game::getDeltaTime();
 		if (shouldDoCircleMotion)
 			rotOffset += deltaTime * 3.0f;
 		if (Game::isKeyPressed(Key::W))
@@ -38,6 +38,6 @@ public:
 private:
 	Transform* activeTransform = nullptr;
 	Transform* followInYtransform = nullptr;
-	float rotOffset;
-	bool shouldDoCircleMotion;
+	float rotOffset = 0.0f;
+	bool shouldDoCircleMotion = false;
 };
