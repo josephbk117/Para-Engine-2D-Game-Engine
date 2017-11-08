@@ -11,9 +11,9 @@ class GameObject
 public:
 	GameObject();
 	GameObject(const std::string& name);
-	void setName(const std::string & name) { this->name = name; }
+	void setName(const std::string & name) { isDirty = true; this->name = name; }
 	const std::string& getName()const { return name; }
-	void setLayerOrder(int order) { this->layerOrder = order; }
+	void setLayerOrder(int order) { isDirty = true; this->layerOrder = order; }
 	const int& getLayerOrder()const { return layerOrder; }
 	template<class T>
 	T *getComponent(void);
@@ -29,6 +29,7 @@ public:
 	static GameObject* getGameObjectWithComponent(void);
 	static GameObject* createGameObject(const std::string& name)
 	{
+		isDirty = true;
 		GameObject* gameObject = new GameObject(name);
 		gameObjectMap[name] = gameObject;
 		gameObjectVector.push_back(gameObject);
@@ -40,9 +41,8 @@ public:
 	}
 	static void deleteGameObjectWithName(const std::string & name)
 	{
-		auto itr = std::find(gameObjectVector.begin(), gameObjectVector.end(), gameObjectMap[name]);
-		gameObjectVector.erase(itr);
-		gameObjectMap.erase(name);
+		objectsMarkedForDeletion.push_back(gameObjectMap[name]);
+		isDirty = true;
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
@@ -58,6 +58,21 @@ private:
 	bool hasStartBeenCalled = false;
 	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
+	static bool isDirty;
+	static std::vector<GameObject *> objectsMarkedForDeletion;
+	static void removeAllObjectsMarkedForDeletion()
+	{
+		if (objectsMarkedForDeletion.size() < 0)
+			return;
+		for (unsigned int i = 0; i < objectsMarkedForDeletion.size(); i++)
+		{
+			auto itr = std::find(gameObjectVector.begin(), gameObjectVector.end(), objectsMarkedForDeletion[i]);
+			std::string name = objectsMarkedForDeletion[i]->getName();
+			gameObjectVector.erase(itr);
+			gameObjectMap.erase(name);
+		}
+		objectsMarkedForDeletion.clear();
+	}
 };
 
 template<class T>

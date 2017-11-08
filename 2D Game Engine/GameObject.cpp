@@ -3,6 +3,9 @@
 
 std::unordered_map<std::string, GameObject*> GameObject::gameObjectMap;
 std::vector<GameObject *> GameObject::gameObjectVector;
+std::vector<GameObject *> GameObject::objectsMarkedForDeletion;
+bool GameObject::isDirty = false;
+
 GameObject::GameObject()
 {
 	this->name = "";

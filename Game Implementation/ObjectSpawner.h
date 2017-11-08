@@ -21,7 +21,7 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (count < 1000)
+		/*if (count < 1000)
 		{
 			if (timer >= 0.8f)
 			{
@@ -47,7 +47,7 @@ public:
 				timer = 0.0f;
 				sndRef->play();
 			}
-		}
+		}*/
 		//ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
 	}
 private:

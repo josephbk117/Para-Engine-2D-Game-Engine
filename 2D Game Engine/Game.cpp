@@ -177,8 +177,9 @@ void Game::update()
 			frameBufferSizeUpated = false;
 		}
 		YSE::System().update();
-		if (access->gameObjects.size() != GameObject::getAllGameObjects().size())
+		if (GameObject::isDirty)
 		{
+			GameObject::isDirty = false;
 			/*unsigned int gameObjectCollectionSize = GameObject::getAllGameObjects().size();
 			int sizeDiff = gameObjectCollectionSize - access->gameObjects.size();
 			if (sizeDiff > 0)
@@ -197,6 +198,7 @@ void Game::update()
 					}
 				}
 			}*/
+			GameObject::removeAllObjectsMarkedForDeletion();
 			access->gameObjects = GameObject::getAllGameObjects();
 			unsigned int sizeValue = access->gameObjects.size();
 			for (int i = 0; i < sizeValue; i++)
@@ -205,7 +207,6 @@ void Game::update()
 				if (!gameObjRef->hasStartBeenCalled)
 				{
 					gameObjRef->hasStartBeenCalled = true;
-					//access->gameObjects.push_back(gameObjRef);
 					std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
 					unsigned int componentCount = componentsAttachedToObject.size();
 					for (unsigned int i = 0; i < componentCount; i++)
@@ -241,7 +242,7 @@ void Game::update()
 			{
 				BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
 				transformRef->setPosition(glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y));
-				transformRef->setRotation( boxcolBody->getAngle());
+				transformRef->setRotation(boxcolBody->getAngle());
 			}
 			std::vector<Component*> componentsAttachedToObject =
 				GameObject::getGameObjectWithName(access->gameObjects[i]->getName())->getAttachedComponents();
@@ -269,7 +270,7 @@ void Game::update()
 		postProcessor.use();
 		screenPostProcessingElement.draw();
 		postProcessor.unuse();
-		
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
