@@ -82,6 +82,7 @@ void Camera::setScreenRatio(vec2 screenDimension)
 const glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
 {
 	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->getPosition().x, transform->getPosition().y, 0.0f));
+	model = rotate(model, -transform->getRotation(), glm::vec3(0, 0, 1.0f));
 	vec4 viewport(0.0f, 0.0f, screenDimensions.x, screenDimensions.y);
 	vec3 unprojected = glm::unProject(glm::vec3(screenPosition.x, screenPosition.y, 0.0f), model, orthographicMatrix, viewport);
 	return glm::vec2(unprojected.x, -unprojected.y);

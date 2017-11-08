@@ -73,7 +73,6 @@ GuiElement screenPostProcessingElement;
 unsigned int fbo;
 void Game::initialize()
 {
-
 	//_______FBO STUFF__________
 
 	glGenFramebuffers(1, &fbo);
@@ -105,6 +104,7 @@ void Game::initialize()
 	unsigned int size = access->gameObjects.size();
 	for (unsigned int i = 0; i < size; i++)
 	{
+		access->gameObjects[i]->hasStartBeenCalled = true;
 		std::vector<Component*> componentsAttachedToObject = access->gameObjects[i]->getAttachedComponents();
 		unsigned int componentCount = componentsAttachedToObject.size();
 		if (access->camera == nullptr)
@@ -186,11 +186,15 @@ void Game::update()
 				for (int i = 1; i <= sizeDiff; i++)
 				{
 					GameObject* gameObjRef = GameObject::getAllGameObjects()[gameObjectCollectionSize - i];
-					access->gameObjects.push_back(gameObjRef);
-					std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
-					unsigned int componentCount = componentsAttachedToObject.size();
-					for (unsigned int i = 0; i < componentCount; i++)
-						(*componentsAttachedToObject[i]).start();
+					if (!gameObjRef->hasStartBeenCalled)
+					{
+						gameObjRef->hasStartBeenCalled = true;
+						access->gameObjects.push_back(gameObjRef);
+						std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
+						unsigned int componentCount = componentsAttachedToObject.size();
+						for (unsigned int i = 0; i < componentCount; i++)
+							(*componentsAttachedToObject[i]).start();
+					}
 				}
 			}
 			std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)

@@ -6,19 +6,20 @@ class GameObject;
 
 class GameObject
 {
+	friend class Game;
 public:
 	GameObject();
 	GameObject(const std::string& name);
 	void setName(const std::string & name) { this->name = name; }
-	std::string getName()const { return name; }
+	const std::string& getName()const { return name; }
 	void setLayerOrder(int order) { this->layerOrder = order; }
-	int getLayerOrder()const { return layerOrder; }
+	const int& getLayerOrder()const { return layerOrder; }
 	template<class T>
 	T *getComponent(void);
 	void addComponent(Component *comp);
 	template<class T>
 	bool hasComponent(void);
-	std::vector<Component *> getAttachedComponents() { return components; };
+	const std::vector<Component *>& getAttachedComponents() { return components; };
 	static GameObject* getGameObjectWithName(const std::string& name)
 	{
 		return gameObjectMap[name];
@@ -47,6 +48,7 @@ private:
 	std::string name;
 	std::vector<Component *> components;
 	int layerOrder;
+	bool hasStartBeenCalled = false;
 	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
 };
@@ -79,7 +81,7 @@ template<class T>
 inline GameObject * GameObject::getGameObjectWithComponent(void)
 {
 	unsigned int sizeValue = gameObjectVector.size();
-	for (int i = 0; i < sizeValue; i++)
+	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (gameObjectVector[i]->hasComponent<T>())
 			return gameObjectVector[i];
