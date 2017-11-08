@@ -12,6 +12,7 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+
 }
 
 void Camera::init(vec2 screenDimensions)

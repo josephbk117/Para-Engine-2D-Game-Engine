@@ -32,13 +32,14 @@ public:
 		gameObjectVector.push_back(gameObject);
 		return gameObject;
 	}
-	static std::vector<GameObject*> getAllGameObjects()
+	static const std::vector<GameObject*>& getAllGameObjects()
 	{
 		return gameObjectVector;
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
-		for (unsigned int i = 0; i < gameObjectVector.size(); i++)
+		unsigned int sizeValue = gameObjectVector.size();
+		for (unsigned int i = 0; i < sizeValue; i++)
 			delete gameObjectVector[i];
 	}
 	~GameObject();
