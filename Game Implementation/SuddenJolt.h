@@ -3,6 +3,7 @@
 #include <Box.h>
 #include <Game.h>
 #include <iostream>
+
 class SuddenJolt : public Component
 {
 public:
@@ -13,13 +14,6 @@ public:
 	}
 	virtual void update()
 	{
-		if (Game::isKeyPressed(Key::NUM_1))
-		{
-			if (GameObject::getGameObjectWithName("Galoo2") != nullptr)
-				GameObject::deleteGameObjectWithName("Galoo2");
-			else if (GameObject::getGameObjectWithName("Galoo1") != nullptr)
-				GameObject::deleteGameObjectWithName("Galoo1");
-		}
 		if (Game::isKeyPressed(Key::U))
 			boxCol->applyForce(glm::vec2(0, 20.0f));
 		if (Game::isKeyPressed(Key::J))

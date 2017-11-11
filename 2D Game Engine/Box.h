@@ -22,6 +22,7 @@ public:
 	const float getAngle()const;
 	const glm::vec2 getPosition()const;
 	const PhysicsBody getPhysicsType()const;
+	
 private:
 	struct InternalAcess;
 	InternalAcess* access = nullptr;

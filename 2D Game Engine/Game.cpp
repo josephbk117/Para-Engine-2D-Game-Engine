@@ -180,24 +180,6 @@ void Game::update()
 		if (GameObject::isDirty)
 		{
 			GameObject::isDirty = false;
-			/*unsigned int gameObjectCollectionSize = GameObject::getAllGameObjects().size();
-			int sizeDiff = gameObjectCollectionSize - access->gameObjects.size();
-			if (sizeDiff > 0)
-			{
-				for (int i = 1; i <= sizeDiff; i++)
-				{
-					GameObject* gameObjRef = GameObject::getAllGameObjects()[gameObjectCollectionSize - i];
-					if (!gameObjRef->hasStartBeenCalled)
-					{
-						gameObjRef->hasStartBeenCalled = true;
-						access->gameObjects.push_back(gameObjRef);
-						std::vector<Component*> componentsAttachedToObject = gameObjRef->getAttachedComponents();
-						unsigned int componentCount = componentsAttachedToObject.size();
-						for (unsigned int i = 0; i < componentCount; i++)
-							(*componentsAttachedToObject[i]).start();
-					}
-				}
-			}*/
 			GameObject::removeAllObjectsMarkedForDeletion();
 			access->gameObjects = GameObject::getAllGameObjects();
 			unsigned int sizeValue = access->gameObjects.size();

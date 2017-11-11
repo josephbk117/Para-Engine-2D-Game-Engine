@@ -41,8 +41,24 @@ public:
 	}
 	static void deleteGameObjectWithName(const std::string & name)
 	{
-		objectsMarkedForDeletion.push_back(gameObjectMap[name]);
-		isDirty = true;
+		
+		if (gameObjectMap.count(name) <= 0)
+			return;
+
+		bool canAdd = true;
+		for (int i = 0; i < objectsMarkedForDeletion.size(); i++)
+		{
+			if (gameObjectMap[name] == objectsMarkedForDeletion[i])
+			{
+				canAdd = false;
+				break;
+			}
+		}
+		if (canAdd)
+		{
+			objectsMarkedForDeletion.push_back(gameObjectMap[name]);
+			isDirty = true;
+		}
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
@@ -60,19 +76,7 @@ private:
 	static std::vector<GameObject *> gameObjectVector;
 	static bool isDirty;
 	static std::vector<GameObject *> objectsMarkedForDeletion;
-	static void removeAllObjectsMarkedForDeletion()
-	{
-		if (objectsMarkedForDeletion.size() < 0)
-			return;
-		for (unsigned int i = 0; i < objectsMarkedForDeletion.size(); i++)
-		{
-			auto itr = std::find(gameObjectVector.begin(), gameObjectVector.end(), objectsMarkedForDeletion[i]);
-			std::string name = objectsMarkedForDeletion[i]->getName();
-			gameObjectVector.erase(itr);
-			gameObjectMap.erase(name);
-		}
-		objectsMarkedForDeletion.clear();
-	}
+	static void removeAllObjectsMarkedForDeletion();
 };
 
 template<class T>

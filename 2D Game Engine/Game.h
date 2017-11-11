@@ -9,7 +9,7 @@ class b2World;
 class Game
 {
 public:
-
+	friend class GameObject;
 	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	static void initialize();
 	static void update();

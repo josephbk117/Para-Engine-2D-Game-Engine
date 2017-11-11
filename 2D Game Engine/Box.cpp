@@ -14,6 +14,7 @@ BoxCollider::BoxCollider()
 
 BoxCollider::~BoxCollider()
 {
+	access->body->GetWorld()->DestroyBody(access->body);
 }
 
 void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, const PhysicsMaterial& material, PhysicsBody bodyType = PhysicsBody::STATIC)
