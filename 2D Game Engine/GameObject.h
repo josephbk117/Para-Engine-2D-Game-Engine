@@ -44,9 +44,9 @@ public:
 		
 		if (gameObjectMap.count(name) <= 0)
 			return;
-
 		bool canAdd = true;
-		for (int i = 0; i < objectsMarkedForDeletion.size(); i++)
+		unsigned int objDeletionSize = objectsMarkedForDeletion.size();
+		for (unsigned int i = 0; i < objDeletionSize; i++)
 		{
 			if (gameObjectMap[name] == objectsMarkedForDeletion[i])
 			{

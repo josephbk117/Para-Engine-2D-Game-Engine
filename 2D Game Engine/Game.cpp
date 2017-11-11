@@ -1,3 +1,4 @@
+#define IMGUI_USE
 #include <GL\glew.h>
 #include "Game.h"
 #include <iostream>
@@ -8,8 +9,12 @@
 #include <Box2D\Box2D.h>
 #include <memory>
 #include <chrono>
-//#include "imgui.h"
-//#include "imgui_impl_glfw_gl3.h"
+
+#ifdef IMGUI_USE
+#include "imgui.h"
+#include "imgui_impl_glfw_gl3.h"
+#endif 
+
 #include "stb_image_write.h"
 #include "AudioManager.h"
 #include "Transform.h"
@@ -66,7 +71,10 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
-	//IMGUI_INIT(acess->window, true);
+#ifdef IMGUI_USE
+	IMGUI_INIT(access->window, true);
+#endif // IMGUI_USE
+
 	YSE::System().init();
 }
 GuiElement screenPostProcessingElement;
@@ -74,7 +82,6 @@ unsigned int fbo;
 void Game::initialize()
 {
 	//_______FBO STUFF__________
-
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -161,9 +168,7 @@ void Game::update()
 	while (!glfwWindowShouldClose(access->window))
 	{
 		//______FBO STUFF______
-		// render
-		// ------
-		// bind to framebuffer and draw scene as we normally would to color texture 
+
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -183,7 +188,7 @@ void Game::update()
 			GameObject::removeAllObjectsMarkedForDeletion();
 			access->gameObjects = GameObject::getAllGameObjects();
 			unsigned int sizeValue = access->gameObjects.size();
-			for (int i = 0; i < sizeValue; i++)
+			for (unsigned int i = 0; i < sizeValue; i++)
 			{
 				GameObject* gameObjRef = access->gameObjects[i];
 				if (!gameObjRef->hasStartBeenCalled)
@@ -198,19 +203,13 @@ void Game::update()
 			std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 			{return a->getLayerOrder() < b->getLayerOrder(); });
 		}
-		//IMGUI_NEWFRAME();
+#ifdef IMGUI_USE
+		IMGUI_NEWFRAME();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+#endif // IMGUI_USE
 
 		//processInput(window);
-
-		/*for (unsigned int i = 0; i < gameObjects.size(); i++)
-		{
-			Transform * temp = gameObjects[i]->getComponent<Transform>();
-			ImGui::Text("OBJECT : %s is at position = ( %.2f , %.2f ) | Rotation is : %.2f", gameObjects[i]->getName().c_str(),
-				temp->position.x, temp->position.y, temp->rotation);
-		}
-		ImGui::ColorEdit3("BG COLOUR", (float*)&clearColour);
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);*/
-
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
 		glm::mat4 cameraMatrix = access->camera->getOrthoMatrix();
@@ -242,7 +241,6 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Shader manager stuff
-		//gameobjects in game dynamic deletion support
 		shaderGameObjectsBase.unuse();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -268,7 +266,10 @@ void Game::update()
 		shaderUiElementBase.unuse();
 		glDisable(GL_BLEND);
 
-		//ImGui::Render();
+#ifdef IMGUI_USE
+		ImGui::Render();
+#endif // IMGUI_USE
+
 		glfwSwapBuffers(access->window);
 		glfwPollEvents();
 
@@ -280,7 +281,9 @@ void Game::update()
 
 		start = access->clockTime.now();
 	}
-	//IMGUI_SHUTDOWN();
+#ifdef IMGUI_USE
+	IMGUI_SHUTDOWN();
+#endif // IMGUI_USE
 	YSE::System().close();
 	glfwTerminate();
 	return;

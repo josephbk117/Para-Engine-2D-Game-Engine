@@ -116,8 +116,6 @@ int main(int argc, char* argv[])
 		glm::vec2(1.0f, 10.0f), physicsMaterial1, PhysicsBody::STATIC);
 	tempGameObject->addComponent(boxCollider);
 
-
-
 	SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
 	Game::initialize();
