@@ -11,7 +11,6 @@
 :class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
 :class Sprite 0.500000 0.500000 1
 :class MagicObjectScaler
-:class SuddenJolt
 ^Lola 10
 :class Transform -1.000000 -1.000000 0.000000 1.000000 1.000000
 :class Sprite 0.500000 0.500000 1

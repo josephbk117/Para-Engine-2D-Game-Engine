@@ -49,7 +49,6 @@ int main(int argc, char* argv[])
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	tempGameObject->addComponent(new MagicObjectScaler);
-	tempGameObject->addComponent(new SuddenJolt);
 
 	tempGameObject = GameObject::createGameObject("Lola");
 	tempGameObject->setLayerOrder(10);
