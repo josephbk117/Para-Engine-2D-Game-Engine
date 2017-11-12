@@ -92,7 +92,7 @@ struct Game::ContactListener : public b2ContactListener
 };
 
 std::unique_ptr<Game::InternalAcess> Game::access;
-std::unique_ptr<Game::ContactListener> Game::contactListener;
+Game::ContactListener* Game::contactListener;
 std::vector<GameObject *> Game::InternalAcess::gameObjects;
 std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
@@ -102,7 +102,7 @@ Camera* Game::InternalAcess::camera;
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
-	contactListener = std::make_unique<ContactListener>();
+	contactListener = new ContactListener;
 
 	windowSize = glm::vec2(screenWidth, screenHeight);
 	glfwInit();
@@ -184,7 +184,7 @@ void Game::initialize()
 	}
 	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
-	access->world.get()->SetContactListener(contactListener.get());
+	access->world.get()->SetContactListener(contactListener);
 }
 //ImVec4 clearColour;
 void Game::update()
@@ -318,7 +318,7 @@ void Game::update()
 		}
 		shaderUiElementBase.unuse();
 		glDisable(GL_BLEND);
-		access->world->SetContactListener(contactListener.get());
+		access->world->SetContactListener(contactListener);
 #ifdef IMGUI_USE
 		ImGui::Render();
 #endif // IMGUI_USE
@@ -339,6 +339,8 @@ void Game::update()
 	IMGUI_SHUTDOWN();
 #endif // IMGUI_USE
 	YSE::System().close();
+	access->world.get()->SetContactListener(nullptr);
+	delete contactListener;
 	glfwTerminate();
 	return;
 }
