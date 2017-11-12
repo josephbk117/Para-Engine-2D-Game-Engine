@@ -34,6 +34,14 @@ public:
 			physicsMover->setPosition(glm::vec2(physicsMover->getPosition().x, physicsMover->getPosition().y - 0.1*Game::getDeltaTime()));
 
 	}
+	virtual void collisionStarted(GameObject* gameObject)
+	{
+		boxCol->applyTorque(4.0f);
+	}
+	virtual void collisionEnded(GameObject* gameObject)
+	{
+		boxCol->applyTorque(-4.0f);
+	}
 private:
 	BoxCollider* boxCol = nullptr;
 	BoxCollider* physicsMover = nullptr;

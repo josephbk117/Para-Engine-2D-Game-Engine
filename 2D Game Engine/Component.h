@@ -6,7 +6,9 @@ class Component
 public:
 	virtual void start() { };
 	virtual void update() { };
-	Component() {};
+	virtual void collisionStarted(GameObject* gameObject) { };
+	virtual void collisionEnded(GameObject* gameObject) { };
+	Component() { };
 	GameObject* attachedGameObject = nullptr;
 	virtual ~Component() {};
 };

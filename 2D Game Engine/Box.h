@@ -5,11 +5,13 @@
 #include "PhysicsData.h"
 
 class BoxCollider : public Component
+
 {
 public:
 	BoxCollider();
 	~BoxCollider();
 	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, PhysicsBody bodyType);
+	virtual void start();
 	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial);
 	void setRotationConstraint(bool canObjectRotate)const;
 	void applyTorque(float strength);
@@ -22,7 +24,7 @@ public:
 	const float getAngle()const;
 	const glm::vec2 getPosition()const;
 	const PhysicsBody getPhysicsType()const;
-	
+
 private:
 	struct InternalAcess;
 	InternalAcess* access = nullptr;

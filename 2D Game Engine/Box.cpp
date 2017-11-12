@@ -1,11 +1,36 @@
+#include <iostream>
 #include "Box.h"
 #include <Box2D\Box2D.h>
 
-struct BoxCollider::InternalAcess
+struct BoxCollider::InternalAcess : public b2ContactListener
 {
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
+	GameObject* attachedObject = nullptr;
 	glm::vec2 dimension;
+	void BeginContact(b2Contact* contact)
+	{
+		if (attachedObject != nullptr)
+		{
+			std::vector<Component *> components = attachedObject->getAttachedComponents();
+			GameObject* gameObjRef = static_cast<GameObject *>(contact->GetFixtureA()->GetBody()->GetUserData());
+			unsigned int sizeValue = components.size();
+			for (unsigned int i = 0; i < sizeValue; i++)
+				components[i]->collisionStarted(gameObjRef);
+		}
+	}
+	void EndContact(b2Contact* contact)
+	{
+		if (attachedObject != nullptr)
+		{
+			std::vector<Component *> components = attachedObject->getAttachedComponents();
+			GameObject* gameObjRef = static_cast<GameObject *>(contact->GetFixtureA()->GetBody()->GetUserData());
+			unsigned int sizeValue = components.size();
+			for (unsigned int i = 0; i < sizeValue; i++)
+				components[i]->collisionEnded(gameObjRef);
+		}
+	}
+
 };
 
 BoxCollider::BoxCollider()
@@ -39,6 +64,13 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 
 	access->body->SetSleepingAllowed(false);
 	access->fixture = access->body->CreateFixture(&fixtureDef);
+	Game::getPhysicsWorld()->SetContactListener(access);
+}
+
+void BoxCollider::start()
+{
+	access->attachedObject = attachedGameObject;
+	access->body->SetUserData(attachedGameObject);
 }
 
 void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial)
