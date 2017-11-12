@@ -41,6 +41,8 @@ private:
 	static ShaderProgram postProcessor;
 	struct InternalAcess;
 	static std::unique_ptr<InternalAcess> access;
+	struct ContactListener;
+	static std::unique_ptr<ContactListener> contactListener;
 };
 
 

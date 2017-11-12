@@ -21,15 +21,15 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (count < 1000)
+		if (count < 3)
 		{
-			if (timer >= 2.8f)
+			if (timer >= 2.0f)
 			{
 				float yVal = 3 + count * 0.7f;
-				for (int inc = 0; inc < 3; inc++)
+				for (int inc = 0; inc < 1; inc++)
 				{
 					GameObject* tempGameObject;
-					std::string name = "NewOne" + std::to_string(count) + "_" + std::to_string(inc);
+					std::string name = "New One_" + std::to_string(count) + "_" + std::to_string(inc);
 					tempGameObject = GameObject::createGameObject(name);
 					tempGameObject->addComponent(new Transform(glm::vec2(-3 + inc * 2, yVal), 0.0f, glm::vec2(1, 1)));
 					Sprite* tempSprite;

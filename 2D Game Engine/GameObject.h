@@ -40,8 +40,7 @@ public:
 		return gameObjectVector;
 	}
 	static void deleteGameObjectWithName(const std::string & name)
-	{
-		
+	{		
 		if (gameObjectMap.count(name) <= 0)
 			return;
 		bool canAdd = true;

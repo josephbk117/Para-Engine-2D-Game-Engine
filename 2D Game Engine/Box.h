@@ -5,7 +5,6 @@
 #include "PhysicsData.h"
 
 class BoxCollider : public Component
-
 {
 public:
 	BoxCollider();

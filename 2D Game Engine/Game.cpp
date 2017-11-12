@@ -37,6 +37,7 @@ glm::vec2 Game::windowSize;
 
 struct Game::InternalAcess
 {
+	friend class BoxCollider;
 	std::chrono::steady_clock clockTime;
 	GLFWwindow* window;
 	GLFWcursor* cursor;
@@ -44,15 +45,65 @@ struct Game::InternalAcess
 	static std::unique_ptr<b2World> world;
 	static Camera* camera;
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 };
+
+struct Game::ContactListener : public b2ContactListener
+{
+	void BeginContact(b2Contact* contact)
+	{
+		GameObject* gameObjRefA = static_cast<GameObject *>(contact->GetFixtureA()->GetBody()->GetUserData());
+		GameObject* gameObjRefB = static_cast<GameObject *>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+		std::vector<Component *> components = gameObjRefA->getAttachedComponents();
+		unsigned int sizeValue = components.size();
+		for (unsigned int i = 0; i < sizeValue; i++)
+			components[i]->collisionStarted(gameObjRefB);
+
+		components = gameObjRefB->getAttachedComponents();
+		sizeValue = components.size();
+		for (unsigned int i = 0; i < sizeValue; i++)
+			components[i]->collisionStarted(gameObjRefA);
+	}
+	void EndContact(b2Contact* contact)
+	{
+		GameObject* gameObjRefA = static_cast<GameObject *>(contact->GetFixtureA()->GetBody()->GetUserData());
+		GameObject* gameObjRefB = static_cast<GameObject *>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+		if (gameObjRefA != nullptr && gameObjRefB != nullptr)
+		{
+			std::vector<Component *> components = gameObjRefA->getAttachedComponents();
+			unsigned int sizeValue = components.size();
+			for (unsigned int i = 0; i < sizeValue; i++)
+			{
+				if (components[i] != nullptr && gameObjRefB != nullptr)
+					components[i]->collisionEnded(gameObjRefB);
+			}
+
+			components = gameObjRefB->getAttachedComponents();
+			sizeValue = components.size();
+			for (unsigned int i = 0; i < sizeValue; i++)
+			{
+				if (components[i] != nullptr)
+					components[i]->collisionEnded(gameObjRefA);
+			}
+		}
+	}
+};
+
 std::unique_ptr<Game::InternalAcess> Game::access;
+std::unique_ptr<Game::ContactListener> Game::contactListener;
 std::vector<GameObject *> Game::InternalAcess::gameObjects;
 std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
 
+
+
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
+	contactListener = std::make_unique<ContactListener>();
+
 	windowSize = glm::vec2(screenWidth, screenHeight);
 	glfwInit();
 	access = std::make_unique<InternalAcess>();
@@ -81,6 +132,7 @@ GuiElement screenPostProcessingElement;
 unsigned int fbo;
 void Game::initialize()
 {
+
 	//_______FBO STUFF__________
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -132,6 +184,7 @@ void Game::initialize()
 	}
 	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
+	access->world.get()->SetContactListener(contactListener.get());
 }
 //ImVec4 clearColour;
 void Game::update()
@@ -265,7 +318,7 @@ void Game::update()
 		}
 		shaderUiElementBase.unuse();
 		glDisable(GL_BLEND);
-
+		access->world->SetContactListener(contactListener.get());
 #ifdef IMGUI_USE
 		ImGui::Render();
 #endif // IMGUI_USE
@@ -276,6 +329,7 @@ void Game::update()
 		std::chrono::duration<float> frameTime = access->clockTime.now() - start;
 		deltaTime = frameTime.count();
 		access->world->Step(deltaTime, 4, 5);
+		
 		std::chrono::duration<float> sinceStart = access->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 

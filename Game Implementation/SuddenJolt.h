@@ -36,10 +36,12 @@ public:
 	}
 	virtual void collisionStarted(GameObject* gameObject)
 	{
+		std::cout << "\nStarted :: Object Name : " << attachedGameObject->getName().c_str() << " hit against : " << gameObject->getName().c_str();
 		boxCol->applyTorque(4.0f);
 	}
 	virtual void collisionEnded(GameObject* gameObject)
 	{
+		std::cout << "\nEnded :: Object Name : " << attachedGameObject->getName().c_str() << " hit against : " << gameObject->getName().c_str();
 		boxCol->applyTorque(-4.0f);
 	}
 private:
