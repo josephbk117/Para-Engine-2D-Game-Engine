@@ -16,10 +16,10 @@ public:
 	void setLayerOrder(int order) { isDirty = true; this->layerOrder = order; }
 	const int& getLayerOrder()const { return layerOrder; }
 	template<class T>
-	T *getComponent(void);
+	T* const getComponent(void)const;
 	void addComponent(Component *comp);
 	template<class T>
-	bool hasComponent(void);
+	bool hasComponent(void)const;
 	const std::vector<Component *>& getAttachedComponents() { return components; };
 	static GameObject* getGameObjectWithName(const std::string& name)
 	{
@@ -79,7 +79,7 @@ private:
 };
 
 template<class T>
-inline T * GameObject::getComponent(void)
+inline T* const GameObject::getComponent(void)const
 {
 	unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
@@ -91,7 +91,7 @@ inline T * GameObject::getComponent(void)
 }
 
 template<class T>
-inline bool GameObject::hasComponent(void)
+inline bool GameObject::hasComponent(void)const
 {
 	unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)

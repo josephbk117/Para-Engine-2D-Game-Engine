@@ -221,8 +221,6 @@ void Game::update()
 
 	while (!glfwWindowShouldClose(access->window))
 	{
-		//______FBO STUFF______
-
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -6,7 +6,7 @@ class Transform : public Component
 {
 public:
 	
-	Transform(glm::vec2 _position, float _rotation, glm::vec2 _scale)
+	Transform(const glm::vec2& _position, const float& _rotation, const glm::vec2& _scale)
 	{
 		position = _position;
 		rotation = _rotation;

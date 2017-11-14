@@ -2,14 +2,14 @@
 #include <iostream>
 
 std::unordered_map<std::string, SoundSource *> AudioManager::audioUoMap;
-SoundSource* AudioManager::loadAudioFromFile(const std::string & path, const std::string & referenceString)
+SoundSource* const AudioManager::loadAudioFromFile(const std::string & path, const std::string & referenceString)
 {
 	SoundSource* sData = new SoundSource(path);
 	audioUoMap[referenceString] = sData;
 	return sData;
 }
 
-SoundSource* AudioManager::getAudioFromReference(const std::string & referenceString)
+SoundSource* const AudioManager::getAudioFromReference(const std::string & referenceString)
 {
 	return audioUoMap[referenceString];
 }
