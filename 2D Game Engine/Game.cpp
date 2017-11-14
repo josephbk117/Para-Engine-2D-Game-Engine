@@ -185,6 +185,7 @@ void Game::initialize()
 	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
 	access->world.get()->SetContactListener(contactListener);
+	glEnable(GL_CULL_FACE);
 }
 //ImVec4 clearColour;
 void Game::update()
