@@ -27,7 +27,7 @@ public:
 	void setScale(const glm::vec2 scale);
 	const glm::vec2& getPosition()const;
 	const float& getRotation()const;
-	const glm::vec2 getScale()const;
+	const glm::vec2& getScale()const;
 	bool operator==(const Transform& transform)const;
 	bool operator!=(const Transform& transform)const;
 	~Transform() {};

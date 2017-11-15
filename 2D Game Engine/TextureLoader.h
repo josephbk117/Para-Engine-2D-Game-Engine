@@ -10,5 +10,6 @@ public:
 	static unsigned int getTextureFromReference(const std::string& referenceString);
 	static void unloadTexturesFromMemory();
 private:
+	TextureManager() {}
 	static std::unordered_map<std::string, unsigned int> textureIdMap;
 };

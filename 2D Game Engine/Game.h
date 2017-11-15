@@ -23,7 +23,7 @@ public:
 	static void cleanUp();
 	static void setPostProcessingShader(ShaderProgram program);
 	static b2World* getPhysicsWorld();
-	
+
 	static float getDeltaTime()
 	{
 		return deltaTime;
@@ -33,6 +33,7 @@ public:
 		return timeSinceStartUp;
 	}
 private:
+	Game() {}
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;

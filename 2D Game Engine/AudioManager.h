@@ -9,4 +9,5 @@ public:
 	static void removeLoadedAudioFromMemory();
 private:
 	static std::unordered_map<std::string, SoundSource *> audioUoMap;
+	AudioManager() {}
 };

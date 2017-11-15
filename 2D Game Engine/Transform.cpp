@@ -47,7 +47,7 @@ const float & Transform::getRotation()const
 {
 	return rotation;
 }
-const glm::vec2 Transform::getScale()const
+const glm::vec2& Transform::getScale()const
 {
 	return scale;
 }

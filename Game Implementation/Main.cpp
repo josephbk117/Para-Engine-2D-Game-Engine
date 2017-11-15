@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
 	
 	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
-
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
 	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
