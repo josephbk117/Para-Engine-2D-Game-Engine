@@ -9,6 +9,7 @@ class b2World;
 class Game
 {
 public:
+	Game() = delete;
 	friend class GameObject;
 	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title);
 	static void initialize();
@@ -33,7 +34,6 @@ public:
 		return timeSinceStartUp;
 	}
 private:
-	Game() {}
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;

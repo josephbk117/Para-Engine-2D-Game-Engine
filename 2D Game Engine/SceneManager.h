@@ -3,8 +3,7 @@
 class SceneManager
 {
 public:
-	SceneManager();
+	SceneManager() = delete;
 	static void SaveSceneData(std::vector<GameObject*> gameObjects, std::string filePath);
-	~SceneManager();
 };
 

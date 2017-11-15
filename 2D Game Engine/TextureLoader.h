@@ -5,11 +5,11 @@
 class TextureManager
 {
 public:
+	TextureManager() = delete;
 	static void getRawImageDataFromFile(const std::string& path, std::vector<unsigned char>& data, int &width, int &height, bool flipImage);
 	static unsigned int loadTextureFromFile(const std::string& path, const std::string& referenceString, bool gamma);
 	static unsigned int getTextureFromReference(const std::string& referenceString);
 	static void unloadTexturesFromMemory();
 private:
-	TextureManager() {}
 	static std::unordered_map<std::string, unsigned int> textureIdMap;
 };

@@ -7,10 +7,6 @@
 #include "Box.h"
 #include "Sprite.h"
 
-SceneManager::SceneManager()
-{
-}
-
 void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::string filePath)
 {
 	if (filePath == "s")
@@ -72,9 +68,4 @@ void SceneManager::SaveSceneData(std::vector<GameObject*> gameObjects, std::stri
 		on.open("SceneData.para", std::ios::binary);
 		on.close();
 	}
-}
-
-
-SceneManager::~SceneManager()
-{
 }
