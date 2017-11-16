@@ -36,7 +36,10 @@ public:
 	}
 	virtual void collisionStarted(GameObject* gameObject)
 	{
+		++collisionCount;
 		boxCol->applyTorque(4.0f);
+		if (collisionCount >= 10)
+			GameObject::deleteGameObjectWithName(attachedGameObject->getName());
 	}
 	virtual void collisionEnded(GameObject* gameObject)
 	{
@@ -45,4 +48,5 @@ public:
 private:
 	BoxCollider* boxCol = nullptr;
 	BoxCollider* physicsMover = nullptr;
+	int collisionCount = 0;
 };

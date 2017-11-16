@@ -6,8 +6,8 @@ class Sprite : public Component
 public:
 	Sprite();
 	~Sprite();
-	void init(float width, float height);
-	void setTextureID(unsigned int textureID);
+	void init(const float& width, const float& height);
+	void setTextureID(const unsigned int& textureID);
 	unsigned int getTextureID()const;
 	glm::vec2 getDimensions() const;
 	void setDimension(glm::vec2 newDimension);

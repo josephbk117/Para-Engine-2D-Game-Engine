@@ -21,12 +21,12 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (count < 3)
+		if (count < 30)
 		{
 			if (timer >= 2.0f)
 			{
 				float yVal = 3 + count * 0.7f;
-				for (int inc = 0; inc < 1; inc++)
+				for (int inc = 0; inc < 3; inc++)
 				{
 					GameObject* tempGameObject;
 					std::string name = "New One_" + std::to_string(count) + "_" + std::to_string(inc);

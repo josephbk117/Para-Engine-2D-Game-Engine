@@ -13,7 +13,7 @@ Sprite::~Sprite()
 		glDeleteBuffers(1, &vboID);
 }
 
-void Sprite::init(float width, float height)
+void Sprite::init(const float& width, const float& height)
 {
 	this->width = width;
 	this->height = height;
@@ -37,7 +37,7 @@ void Sprite::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, 1);
 }
 
-void Sprite::setTextureID(unsigned int textureID)
+void Sprite::setTextureID(const unsigned int& textureID)
 {
 	this->textureID = textureID;
 }
