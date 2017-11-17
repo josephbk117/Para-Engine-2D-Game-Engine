@@ -46,7 +46,6 @@ void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, 
 
 void BoxCollider::start()
 {
-	std::cout << "\nGame object : " << attachedGameObject->getName().c_str();
 	access->attachedObject = attachedGameObject;
 	access->body->SetUserData(attachedGameObject);
 }

@@ -23,19 +23,19 @@ public:
 		timer += Game::getDeltaTime();
 		if (count < 30)
 		{
-			if (timer >= 2.0f)
+			if (timer >= 1.0f)
 			{
 				float yVal = 3 + count * 0.7f;
-				for (int inc = 0; inc < 3; inc++)
+				for (int inc = 0; inc < 20; inc++)
 				{
 					GameObject* tempGameObject;
 					std::string name = "New One_" + std::to_string(count) + "_" + std::to_string(inc);
 					tempGameObject = GameObject::createGameObject(name);
-					tempGameObject->addComponent(new Transform(glm::vec2(-3 + inc * 2, yVal), 0.0f, glm::vec2(1, 1)));
+					tempGameObject->addComponent(new Transform(glm::vec2(-3 + inc * 0.3f, yVal), 0.0f, glm::vec2(1, 1)));
 					Sprite* tempSprite;
 					tempSprite = new Sprite();
 					tempSprite->init(0.2f, 0.2f);
-					tempSprite->setTextureID(texId[inc]);
+					tempSprite->setTextureID(texId[inc%3]);
 					tempGameObject->addComponent(tempSprite);
 					BoxCollider* boxCollider = new BoxCollider();
 					boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
@@ -48,7 +48,6 @@ public:
 				sndRef->play();
 			}
 		}
-		//ImGui::Text("Frame rate: %f", 1.0f / Game::getDeltaTime());
 	}
 private:
 	float timer;

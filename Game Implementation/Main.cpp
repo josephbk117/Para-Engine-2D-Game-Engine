@@ -1,6 +1,5 @@
 #include <Game.h>
 #include <GLM\glm.hpp>
-#include <fstream>
 #include <SceneManager.h>
 #include <AudioManager.h>
 #include <TextureLoader.h>
