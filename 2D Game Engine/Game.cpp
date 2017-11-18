@@ -379,7 +379,8 @@ void Game::update()
 		shaderUiElementBase.unuse();
 		my_stbtt_print(-380, 450, "abcdefghijklmnopqrstuvwxyz");
 		my_stbtt_print(-380, 420, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		my_stbtt_print(-380, 380, "!@#$%^&*(){}:\"<>?~\\");
+		my_stbtt_print(-380, 390, "0123456789");
+		my_stbtt_print(-380, 360, "!@#$%^&*(){}:\"<>?~\\");
 		
 		glDisable(GL_BLEND);
 

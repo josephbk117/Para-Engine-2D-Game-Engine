@@ -21,7 +21,7 @@ public:
 	virtual void update()
 	{
 		timer += Game::getDeltaTime();
-		if (count < 30)
+		if (count < 10)
 		{
 			if (timer >= 1.0f)
 			{

@@ -7,7 +7,7 @@ public:
 	virtual void start() { };
 	virtual void update() { };
 	GuiComponent() { };
-	GameObject* attachedGuiObject = nullptr;
+	GuiElement* attachedGuiObject = nullptr;
 	virtual ~GuiComponent() {};
 };
 

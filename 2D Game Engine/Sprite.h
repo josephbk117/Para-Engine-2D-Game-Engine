@@ -10,7 +10,7 @@ public:
 	void setTextureID(const unsigned int& textureID);
 	unsigned int getTextureID()const;
 	glm::vec2 getDimensions() const;
-	void setDimension(glm::vec2 newDimension);
+	void setDimension(const glm::vec2& newDimension);
 	void draw();
 private:
 	float width, height;
