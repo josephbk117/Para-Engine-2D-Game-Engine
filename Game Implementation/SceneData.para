@@ -7,13 +7,13 @@
 :class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
 :class Sprite 10.000000 10.000000 1
 :class ObjectSpawner
-^Sammy 50
-:class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
-:class Sprite 0.500000 0.500000 1
-:class MagicObjectScaler
 ^Lola 10
 :class Transform -1.000000 -1.000000 0.000000 1.000000 1.000000
 :class Sprite 0.500000 0.500000 1
+^FollowMouse 10
+:class Transform 0.000000 0.000000 0.000000 1.000000 1.000000
+:class Sprite 0.500000 0.500000 1
+:class MagicObjectScaler
 ^Babu 0
 :class Transform -0.300000 -0.300000 0.000000 1.000000 1.000000
 :class Sprite 1.500000 1.500000 1

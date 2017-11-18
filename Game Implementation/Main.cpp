@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	unsigned int texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
 	unsigned int texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
 	TextureManager::loadTextureFromFile("Test Resources\\goli.png", "translu", false);
-	
+
 	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
@@ -31,22 +31,13 @@ int main(int argc, char* argv[])
 	tempGameObject->addComponent(new PlayerMagicController);
 
 	tempGameObject = GameObject::createGameObject("BG");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform());
 	tempGameObject->setLayerOrder(-10);
 	Sprite * tempSprite = new Sprite();
 	tempSprite->init(10, 10);
 	tempSprite->setTextureID(texVal3);
 	tempGameObject->addComponent(tempSprite);
 	tempGameObject->addComponent(new ObjectSpawner);
-
-	tempGameObject = GameObject::createGameObject("Sammy");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
-	tempGameObject->setLayerOrder(50);
-	tempSprite = new Sprite();
-	tempSprite->init(0.5f, 0.5f);
-	tempSprite->setTextureID(texVal1);
-	tempGameObject->addComponent(tempSprite);
-	tempGameObject->addComponent(new MagicObjectScaler);
 
 	tempGameObject = GameObject::createGameObject("Lola");
 	tempGameObject->setLayerOrder(10);
@@ -55,6 +46,15 @@ int main(int argc, char* argv[])
 	tempSprite->init(0.5f, 0.5f);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
+
+	tempGameObject = GameObject::createGameObject("FollowMouse");
+	tempGameObject->setLayerOrder(10);
+	tempGameObject->addComponent(new Transform);
+	tempSprite = new Sprite();
+	tempSprite->init(0.5f, 0.5f);
+	tempSprite->setTextureID(texVal1);
+	tempGameObject->addComponent(tempSprite);
+	tempGameObject->addComponent(new MagicObjectScaler);
 
 	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->addComponent(new Transform(glm::vec2(-0.3f, 5.5f), 0.0f, glm::vec2(1, 1)));

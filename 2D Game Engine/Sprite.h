@@ -14,6 +14,7 @@ public:
 	void draw();
 private:
 	float width, height;
+	unsigned int vaoID;
 	unsigned int vboID;
 	unsigned int textureID;
 	void setUpSpriteDimensions(float width, float height);

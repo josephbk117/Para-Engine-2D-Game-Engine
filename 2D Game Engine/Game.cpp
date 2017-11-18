@@ -28,7 +28,7 @@
 #include "Camera.h"
 #include <GLFW\glfw3.h>
 #include "GuiElement.h"
-#include <fstream>
+#include "Text.h"
 
 //___TEXT STUFF____
 #include "stb_truetype.h"
@@ -38,9 +38,9 @@ unsigned char temp_bitmap[512 * 512];
 
 stbtt_bakedchar cdata[96]; // ASCII 32..126 is 95 glyphs
 GLuint ftex;
+
 void my_stbtt_initfont(void)
 {
-
 	fread(ttf_buffer, 1, 1 << 20, fopen("Test Resources\\arial.ttf", "rb"));
 	stbtt_BakeFontBitmap(ttf_buffer, 0, 32.0, temp_bitmap, 512, 512, 32, 96, cdata); // no guarantee this fits!
 																					 // can free ttf_buffer at this point
@@ -152,8 +152,6 @@ Game::ContactListener* Game::contactListener;
 std::vector<GameObject *> Game::InternalAcess::gameObjects;
 std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
-
-
 
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
@@ -278,6 +276,7 @@ void Game::update()
 
 	//_____FONT STUFF_____
 	my_stbtt_initfont();
+
 	while (!glfwWindowShouldClose(access->window))
 	{
 		access->world->SetContactListener(contactListener);
@@ -381,6 +380,7 @@ void Game::update()
 		my_stbtt_print(-380, 450, "abcdefghijklmnopqrstuvwxyz");
 		my_stbtt_print(-380, 420, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		my_stbtt_print(-380, 380, "!@#$%^&*(){}:\"<>?~\\");
+		
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE

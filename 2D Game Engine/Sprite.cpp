@@ -5,6 +5,7 @@
 Sprite::Sprite()
 {
 	vboID = 0;
+	vaoID = 0;
 }
 
 Sprite::~Sprite()
@@ -17,23 +18,16 @@ void Sprite::init(const float& width, const float& height)
 {
 	this->width = width;
 	this->height = height;
-	if (vboID == 0)
-		glGenBuffers(1, &vboID);
+	glGenVertexArrays(1, &vaoID);
+	glGenBuffers(1, &vboID);
 	setUpSpriteDimensions(width, height);
 }
 
 void Sprite::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glBindBuffer(GL_ARRAY_BUFFER, vboID);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+	glBindVertexArray(vaoID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Sprite::setTextureID(const unsigned int& textureID)
@@ -59,7 +53,6 @@ void Sprite::setDimension(glm::vec2 newDimension)
 void Sprite::setUpSpriteDimensions(float width, float height)
 {
 	float vertexData[24];
-
 	vertexData[0] = width * 0.5f;
 	vertexData[1] = height * 0.5f;
 
@@ -96,7 +89,13 @@ void Sprite::setUpSpriteDimensions(float width, float height)
 	vertexData[22] = 1.0f;
 	vertexData[23] = 1.0f;
 
+	glBindVertexArray(vaoID);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
