@@ -360,7 +360,9 @@ void Game::update()
 			elements[i]->draw();
 		}
 		shaderUiElementBase.unuse();
-		my_stbtt_print(-380, 480, "Text Is Now Rendering...");
+		my_stbtt_print(-380, 450, "abcdefghijklmnopqrstuvwxyz");
+		my_stbtt_print(-380, 420, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		my_stbtt_print(-380, 380, "!@#$%^&*(){}:\"<>?~\\");
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE
