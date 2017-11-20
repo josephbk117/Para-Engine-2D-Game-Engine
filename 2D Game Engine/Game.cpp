@@ -95,6 +95,7 @@ float Game::timeSinceStartUp;
 ShaderProgram Game::postProcessor;
 glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
+std::unordered_map<std::string, std::function<void()>> Game::scenes;
 
 struct Game::InternalAcess
 {
@@ -153,6 +154,10 @@ std::vector<GameObject *> Game::InternalAcess::gameObjects;
 std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
 
+//_____LOCAL DATA_____
+GuiElement screenPostProcessingElement;
+unsigned int fbo;
+
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -179,14 +184,9 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 #ifdef IMGUI_USE
 	IMGUI_INIT(access->window, true);
 #endif // IMGUI_USE
-
 	YSE::System().init();
-}
-GuiElement screenPostProcessingElement;
-unsigned int fbo;
-void Game::initialize()
-{
 
+	//_________FBO SET UP_________
 	//_______FBO STUFF__________
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -213,6 +213,10 @@ void Game::initialize()
 	screenPostProcessingElement.init(glm::vec2(1, 1), textureColorbuffer);
 	screenPostProcessingElement.setScreenLocation(glm::vec2(0, 0));
 
+}
+
+void Game::initialize()
+{
 	access->gameObjects = GameObject::getAllGameObjects();
 	unsigned int size = access->gameObjects.size();
 	for (unsigned int i = 0; i < size; i++)
@@ -327,7 +331,6 @@ void Game::update()
 		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 		glUniform1i(textureGameObjectLocation, 0);
 
-
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
 			Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
@@ -346,7 +349,6 @@ void Game::update()
 				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
 				if (access->gameObjects[i]->hasComponent<Sprite>())
 					access->gameObjects[i]->getComponent<Sprite>()->draw();
-
 			}
 		}
 
@@ -381,7 +383,7 @@ void Game::update()
 		my_stbtt_print(-380, 420, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		my_stbtt_print(-380, 390, "0123456789");
 		my_stbtt_print(-380, 360, "!@#$%^&*(){}:\"<>?~\\");
-		
+
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE
@@ -451,6 +453,19 @@ void Game::cleanUp()
 
 void Game::setPostProcessingShader(ShaderProgram program)
 {
+}
+
+void Game::addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName)
+{
+	scenes[sceneName] = sceneSetupFunc;
+}
+
+void Game::startScene(const std::string & sceneName)
+{
+	GameObject::removeAllGameObjectsFromMemory();
+	scenes[sceneName]();
+	initialize();
+	update();
 }
 
 bool Game::isKeyPressed(Key key)

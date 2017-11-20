@@ -14,6 +14,8 @@ public:
 	}
 	virtual void update()
 	{
+		if (Game::isKeyPressed(Key::NUM_6))
+			Game::startScene("scene2");
 		if (Game::isKeyPressed(Key::U))
 			boxCol->applyForce(glm::vec2(0, 20.0f));
 		if (Game::isKeyPressed(Key::J))
