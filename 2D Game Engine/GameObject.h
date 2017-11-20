@@ -44,7 +44,7 @@ public:
 		if (gameObjectMap.count(name) <= 0)
 			return;
 		bool canAdd = true;
-		unsigned int objDeletionSize = objectsMarkedForDeletion.size();
+		const unsigned int objDeletionSize = objectsMarkedForDeletion.size();
 		for (unsigned int i = 0; i < objDeletionSize; i++)
 		{
 			if (gameObjectMap[name] == objectsMarkedForDeletion[i])
@@ -61,7 +61,7 @@ public:
 	}
 	static void removeAllGameObjectsFromMemory()
 	{
-		unsigned int sizeValue = gameObjectVector.size();
+		const unsigned int sizeValue = gameObjectVector.size();
 		for (unsigned int i = 0; i < sizeValue; i++)
 			delete gameObjectVector[i];
 	}
@@ -81,7 +81,7 @@ private:
 template<class T>
 inline T* const GameObject::getComponent(void)const
 {
-	unsigned int sizeValue = components.size();
+	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
@@ -93,7 +93,7 @@ inline T* const GameObject::getComponent(void)const
 template<class T>
 inline bool GameObject::hasComponent(void)const
 {
-	unsigned int sizeValue = components.size();
+	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (typeid(*components[i]) == typeid(T))
@@ -105,7 +105,7 @@ inline bool GameObject::hasComponent(void)const
 template<class T>
 inline GameObject * GameObject::getGameObjectWithComponent(void)
 {
-	unsigned int sizeValue = gameObjectVector.size();
+	const unsigned int sizeValue = gameObjectVector.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
 	{
 		if (gameObjectVector[i]->hasComponent<T>())

@@ -50,7 +50,7 @@ public:
 		}
 	}
 private:
-	float timer;
+	float timer = 0.0f;
 	int count;
 	unsigned int texId[3];
 	SoundSource* sndRef;
