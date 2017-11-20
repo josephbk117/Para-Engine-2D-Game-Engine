@@ -24,7 +24,7 @@ public:
 	void setX(const float& xValue);
 	void setY(const float& yValue);
 	void setRotation(const float& rotation);
-	void setScale(const glm::vec2 scale);
+	void setScale(const glm::vec2& scale);
 	const glm::vec2& getPosition()const;
 	const float& getRotation()const;
 	const glm::vec2& getScale()const;

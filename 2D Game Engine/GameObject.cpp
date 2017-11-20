@@ -30,14 +30,14 @@ void GameObject::removeAllObjectsMarkedForDeletion()
 	unsigned int deletionSize = objectsMarkedForDeletion.size();
 	for (unsigned int i = 0; i < deletionSize; i++)
 	{
-		for (unsigned int j = 0; i < gameObjectVector.size(); j++)
+		unsigned int gameVecObjSize = gameObjectVector.size();
+		for (unsigned int j = 0; i < gameVecObjSize; j++)
 		{
 			if (objectsMarkedForDeletion[i] != nullptr)
 			{
 				if (gameObjectVector[j] == objectsMarkedForDeletion[i])
 				{
-					std::string name = objectsMarkedForDeletion[i]->getName();
-					gameObjectMap.erase(name);
+					gameObjectMap.erase(objectsMarkedForDeletion[i]->getName());
 					delete objectsMarkedForDeletion[i];
 					break;
 				}

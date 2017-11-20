@@ -9,7 +9,7 @@ class BoxCollider : public Component
 public:
 	BoxCollider();
 	~BoxCollider();
-	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, PhysicsBody bodyType);
+	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, const PhysicsBody& bodyType);
 	virtual void start();
 	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial);
 	void setRotationConstraint(bool canObjectRotate)const;

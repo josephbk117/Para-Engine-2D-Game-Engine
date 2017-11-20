@@ -34,7 +34,7 @@ void Transform::setRotation(const float & rotation)
 	needsUpdate = true;
 	this->rotation = rotation;
 }
-void Transform::setScale(const glm::vec2 scale)
+void Transform::setScale(const glm::vec2& scale)
 {
 	needsUpdate = true;
 	this->scale = scale;

@@ -187,7 +187,6 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 	YSE::System().init();
 
 	//_________FBO SET UP_________
-	//_______FBO STUFF__________
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -276,7 +275,6 @@ void Game::update()
 	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
 	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-
 
 	//_____FONT STUFF_____
 	my_stbtt_initfont();

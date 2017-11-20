@@ -17,8 +17,6 @@ SoundSource* const AudioManager::getAudioFromReference(const std::string & refer
 void AudioManager::removeLoadedAudioFromMemory()
 {
 	for (auto& x : audioUoMap)
-	{
 		delete x.second;
-	}
 	audioUoMap.erase(audioUoMap.begin(), audioUoMap.end());
 }

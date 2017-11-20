@@ -19,7 +19,7 @@ BoxCollider::~BoxCollider()
 	access->body->GetWorld()->DestroyBody(access->body);
 }
 
-void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, const PhysicsMaterial& material, PhysicsBody bodyType = PhysicsBody::STATIC)
+void BoxCollider::init(const glm::vec2 & position, const glm::vec2 & dimension, const PhysicsMaterial& material, const PhysicsBody& bodyType = PhysicsBody::STATIC)
 {
 	access = new InternalAcess;
 	access->dimension = dimension;
