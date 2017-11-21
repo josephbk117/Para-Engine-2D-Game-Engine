@@ -10,6 +10,7 @@
 #include <memory>
 #include <chrono>
 #include <thread>
+#include <functional>
 
 #ifdef IMGUI_USE
 #include "imgui.h"
@@ -96,6 +97,7 @@ ShaderProgram Game::postProcessor;
 glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
 std::unordered_map<std::string, std::function<void()>> Game::scenes;
+std::function<void()> Game::activeSceneInitFunc;
 
 struct Game::InternalAcess
 {
@@ -211,11 +213,13 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 
 	screenPostProcessingElement.init(glm::vec2(1, 1), textureColorbuffer);
 	screenPostProcessingElement.setScreenLocation(glm::vec2(0, 0));
-
+	activeSceneInitFunc = NULL;
+	glEnable(GL_CULL_FACE);
 }
 
-void Game::initialize()
+void Game::initialize(std::function<void()> initFunc)
 {
+	initFunc();
 	access->gameObjects = GameObject::getAllGameObjects();
 	unsigned int size = access->gameObjects.size();
 	for (unsigned int i = 0; i < size; i++)
@@ -242,7 +246,6 @@ void Game::initialize()
 	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
 	{return a->getLayerOrder() < b->getLayerOrder(); });
 	access->world.get()->SetContactListener(contactListener);
-	glEnable(GL_CULL_FACE);
 }
 //ImVec4 clearColour;
 void Game::update()
@@ -281,11 +284,17 @@ void Game::update()
 
 	while (!glfwWindowShouldClose(access->window))
 	{
-		access->world->SetContactListener(contactListener);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		if (activeSceneInitFunc != NULL)
+		{
+			initialize(activeSceneInitFunc);
+			activeSceneInitFunc = NULL;
+		}
+		else
+			access->world->SetContactListener(contactListener);
 		if (frameBufferSizeUpated)
 		{
 			int width, height;
@@ -458,12 +467,20 @@ void Game::addScene(std::function<void()> sceneSetupFunc, const std::string & sc
 	scenes[sceneName] = sceneSetupFunc;
 }
 
-void Game::startScene(const std::string & sceneName)
+void Game::startScene(const std::string & sceneName, bool isStartScene)
 {
-	GameObject::removeAllGameObjectsFromMemory();
-	scenes[sceneName]();
-	initialize();
-	update();
+	//GameObject::removeAllGameObjectsFromMemory();
+	std::vector<GameObject *> gObjs = GameObject::getAllGameObjects();
+	unsigned int sizeValue = gObjs.size();
+	for (unsigned int i = 0; i < sizeValue; i++)
+		GameObject::deleteGameObjectWithName(gObjs[i]->getName());
+	if (!isStartScene)
+		activeSceneInitFunc = scenes[sceneName];
+	else
+	{
+		initialize(scenes[sceneName]);
+		update();
+	}
 }
 
 bool Game::isKeyPressed(Key key)

@@ -24,7 +24,7 @@ public:
 	static void cleanUp();
 	static void setPostProcessingShader(ShaderProgram program);
 	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
-	static void startScene(const std::string & sceneName);
+	static void startScene(const std::string & sceneNameconst, bool isStartScene);
 	static b2World* getPhysicsWorld();
 
 	static float getDeltaTime()
@@ -47,7 +47,8 @@ private:
 	static std::unique_ptr<InternalAcess> access;
 	struct ContactListener;
 	static ContactListener* contactListener;
-	static void initialize();
+	static void initialize(std::function<void()> initFunc);
+	static std::function<void()> activeSceneInitFunc;
 	static void update();
 };
 

@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
 	Game::addScene(scene1Data, "scene1");
 	Game::addScene(scene2Data, "scene2");
-	Game::startScene("scene1");
+	Game::startScene("scene1",true);
 
 	//SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
