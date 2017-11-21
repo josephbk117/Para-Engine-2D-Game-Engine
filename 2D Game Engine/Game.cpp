@@ -220,6 +220,7 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 void Game::initialize(std::function<void()> initFunc)
 {
 	//GameObject::removeAllGameObjectsFromMemory();
+	access->camera = nullptr;
 	GameObject::clearGameObjectData();
 	initFunc();
 	access->gameObjects = GameObject::getAllGameObjects();

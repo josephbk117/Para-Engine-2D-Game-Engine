@@ -39,7 +39,6 @@ private:
 	static bool frameBufferSizeUpated;
 	static float deltaTime;
 	static float timeSinceStartUp;
-	static std::unordered_map<std::string, std::function<void()>> scenes;
 	static glm::vec2 mouseCoord;
 	static glm::vec2 windowSize;
 	static ShaderProgram postProcessor;
@@ -47,6 +46,7 @@ private:
 	static std::unique_ptr<InternalAcess> access;
 	struct ContactListener;
 	static ContactListener* contactListener;
+	static std::unordered_map<std::string, std::function<void()>> scenes;
 	static void initialize(std::function<void()> initFunc);
 	static std::function<void()> activeSceneInitFunc;
 	static void update();

@@ -2968,3 +2968,13 @@ Log started: 21 Nov 2017 4:58:01pm
 === start of YSE log ===
 Log started: 21 Nov 2017 5:01:15pm
 
+
+**********************************************************
+=== start of YSE log ===
+Log started: 21 Nov 2017 5:02:34pm
+
+
+**********************************************************
+=== start of YSE log ===
+Log started: 21 Nov 2017 5:05:07pm
+
