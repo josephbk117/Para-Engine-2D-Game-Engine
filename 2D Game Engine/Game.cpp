@@ -219,6 +219,8 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 
 void Game::initialize(std::function<void()> initFunc)
 {
+	//GameObject::removeAllGameObjectsFromMemory();
+	GameObject::clearGameObjectData();
 	initFunc();
 	access->gameObjects = GameObject::getAllGameObjects();
 	unsigned int size = access->gameObjects.size();
@@ -474,13 +476,13 @@ void Game::startScene(const std::string & sceneName, bool isStartScene)
 	unsigned int sizeValue = gObjs.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
 		GameObject::deleteGameObjectWithName(gObjs[i]->getName());
-	if (!isStartScene)
-		activeSceneInitFunc = scenes[sceneName];
-	else
+	if (isStartScene)
 	{
 		initialize(scenes[sceneName]);
 		update();
 	}
+	else
+		activeSceneInitFunc = scenes[sceneName];
 }
 
 bool Game::isKeyPressed(Key key)

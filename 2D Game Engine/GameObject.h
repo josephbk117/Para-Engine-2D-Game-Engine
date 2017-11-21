@@ -64,6 +64,13 @@ public:
 		const unsigned int sizeValue = gameObjectVector.size();
 		for (unsigned int i = 0; i < sizeValue; i++)
 			delete gameObjectVector[i];
+		clearGameObjectData();
+	}
+	static void clearGameObjectData()
+	{
+		gameObjectMap.clear();
+		gameObjectVector.clear();
+		objectsMarkedForDeletion.clear();
 	}
 	~GameObject();
 private:
