@@ -24,7 +24,7 @@ public:
 	static void cleanUp();
 	static void setPostProcessingShader(ShaderProgram program);
 	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
-	static void startScene(const std::string & sceneNameconst, bool isStartScene);
+	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
 	static b2World* getPhysicsWorld();
 
 	static float getDeltaTime()

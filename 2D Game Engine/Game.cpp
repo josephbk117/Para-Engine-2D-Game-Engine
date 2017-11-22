@@ -1,4 +1,4 @@
-#define IMGUI_USE
+#define IMGUI_USEN
 #include <GL\glew.h>
 #include "Game.h"
 #include <iostream>
@@ -287,7 +287,7 @@ void Game::update()
 	while (!glfwWindowShouldClose(access->window))
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (activeSceneInitFunc != NULL)
