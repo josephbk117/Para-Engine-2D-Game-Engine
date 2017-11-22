@@ -32,5 +32,8 @@
     <ClInclude Include="SuddenJolt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InitialSceneLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

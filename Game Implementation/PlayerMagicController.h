@@ -11,7 +11,6 @@ public:
 	virtual void start()
 	{
 		activeTransform = attachedGameObject->getComponent<Transform>();
-		//followInYtransform = GameObject::getGameObjectWithName("Sammy")->getComponent<Transform>();
 		rotOffset = 0.0f;
 		shouldDoCircleMotion = true;
 	}
@@ -47,7 +46,6 @@ public:
 	}
 private:
 	Transform* activeTransform = nullptr;
-	Transform* followInYtransform = nullptr;
 	float rotOffset = 0.0f;
 	bool shouldDoCircleMotion = false;
 };

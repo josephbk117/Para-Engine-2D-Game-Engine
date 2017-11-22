@@ -13,7 +13,7 @@ class Game
 public:
 	Game() = delete;
 	friend class GameObject;
-	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title);
+	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title);
 	static void setCursor(const std::string & cursorImagePath);
 	static void hideCursor(bool hide);
 	static void lockCursor(bool lock);

@@ -8,6 +8,7 @@
 #include "MagicObjectScaler.h"
 #include "ObjectSpawner.h"
 #include "SuddenJolt.h"
+#include "InitialSceneLogic.h"
 unsigned int texVal1;
 unsigned int texVal2;
 unsigned int texVal3;
@@ -17,7 +18,7 @@ void scene2Data();
 
 int main(int argc, char* argv[])
 {
-	Game::setUpEngine(600, 600, "Para Engine - Game v0.1");
+	Game::setUpEngine(600, 600, "Para Engine - Game v0.5");
 	Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);
 	//game.hideCursor(true);
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
 
 	Game::addScene(scene1Data, "scene1");
 	Game::addScene(scene2Data, "scene2");
-	Game::startScene("scene1",true);
+	Game::startScene("scene2",true);
 
 	//SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
@@ -41,7 +42,7 @@ void scene1Data()
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform());
 	Camera* camera = new Camera;
 	camera->init(glm::vec2(10, 10));
 	tempGameObject->addComponent(camera);
@@ -134,25 +135,19 @@ void scene1Data()
 
 void scene2Data()
 {
-	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
+	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;
+	tempGameObject = GameObject::createGameObject("Logo");
+	tempGameObject->addComponent(new Transform);
+	Sprite* sprite = new Sprite;
+	sprite->init(4.0f, 4.0f);
+	sprite->setTextureID(logoTexValue);
+	tempGameObject->addComponent(sprite);
+
 	tempGameObject = GameObject::createGameObject("Camera");
-	tempGameObject->addComponent(new Transform(glm::vec2(0, 0), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->addComponent(new Transform());
 	Camera* camera = new Camera;
 	camera->init(glm::vec2(10, 10));
 	tempGameObject->addComponent(camera);
-	tempGameObject->addComponent(new PlayerMagicController);
-
-	tempGameObject = GameObject::createGameObject("Galoo");
-	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, -5.0f), 0.0f, glm::vec2(1, 1)));
-	tempGameObject->setLayerOrder(20);
-	Sprite* tempSprite = new Sprite();
-	tempSprite->init(10.0f, 1.0f);
-	tempSprite->setTextureID(texVal2);
-	tempGameObject->addComponent(tempSprite);
-	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
-		glm::vec2(10.0f, 1.0f), physicsMaterial1, PhysicsBody::STATIC);
-	tempGameObject->addComponent(boxCollider);
-
+	tempGameObject->addComponent(new InitialSceneLogic);
 }

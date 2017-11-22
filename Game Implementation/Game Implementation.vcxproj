@@ -134,6 +134,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InitialSceneLogic.h" />
     <ClInclude Include="MagicObjectScaler.h" />
     <ClInclude Include="ObjectSpawner.h" />
     <ClInclude Include="PlayerMagicController.h" />

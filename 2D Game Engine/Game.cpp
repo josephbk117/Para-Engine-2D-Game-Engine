@@ -160,7 +160,7 @@ Camera* Game::InternalAcess::camera;
 GuiElement screenPostProcessingElement;
 unsigned int fbo;
 
-void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std::string title)
+void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
 	contactListener = new ContactListener;
@@ -219,7 +219,6 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, std:
 
 void Game::initialize(std::function<void()> initFunc)
 {
-	//GameObject::removeAllGameObjectsFromMemory();
 	access->camera = nullptr;
 	GameObject::clearGameObjectData();
 	initFunc();
