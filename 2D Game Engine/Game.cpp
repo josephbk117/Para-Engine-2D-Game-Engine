@@ -31,65 +31,6 @@
 #include "GuiElement.h"
 #include "Text.h"
 
-//___TEXT STUFF____
-#include "stb_truetype.h"
-
-unsigned char ttf_buffer[1 << 20];
-unsigned char temp_bitmap[512 * 512];
-
-stbtt_bakedchar cdata[96]; // ASCII 32..126 is 95 glyphs
-GLuint ftex;
-
-void my_stbtt_initfont(void)
-{
-	fread(ttf_buffer, 1, 1 << 20, fopen("Test Resources\\arial.ttf", "rb"));
-	stbtt_BakeFontBitmap(ttf_buffer, 0, 32.0, temp_bitmap, 512, 512, 32, 96, cdata); // no guarantee this fits!
-																					 // can free ttf_buffer at this point
-	glGenTextures(1, &ftex);
-	glBindTexture(GL_TEXTURE_2D, ftex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512, 512, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);
-	// can free temp_bitmap at this point
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-}
-
-void my_stbtt_print(float x, float y, char *text)
-{
-	// assume orthographic projection with units = screen pixels, origin at top left
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ftex);
-	glBegin(GL_QUADS);
-
-	while (*text) {
-		if (*text >= 32 && *text < 128) {
-			stbtt_aligned_quad q;
-			stbtt_GetBakedQuad(cdata, 512, 512, *text - 32, &x, &y, &q, 1);//1=opengl & d3d10+,0=d3d9
-			if (*text == 'g' || *text == 'j' || *text == 'p' || *text == 'q' || *text == 'y')
-			{
-				glTexCoord2f(q.s0, q.t1); glVertex2f(q.x0 / 500, (q.y0 - 6.0f) / 500);
-				glTexCoord2f(q.s1, q.t1); glVertex2f(q.x1 / 500, (q.y0 - 6.0f) / 500);
-				glTexCoord2f(q.s1, q.t0); glVertex2f(q.x1 / 500, (q.y1 - 6.0f) / 500);
-				glTexCoord2f(q.s0, q.t0); glVertex2f(q.x0 / 500, (q.y1 - 6.0f) / 500);
-			}
-			else if (cdata[(int)*text - 32].yoff < -16)
-			{
-				glTexCoord2f(q.s0, q.t1); glVertex2f(q.x0 / 500, (q.y0 + 4.0f) / 500);
-				glTexCoord2f(q.s1, q.t1); glVertex2f(q.x1 / 500, (q.y0 + 4.0f) / 500);
-				glTexCoord2f(q.s1, q.t0); glVertex2f(q.x1 / 500, (q.y1 + 4.0f) / 500);
-				glTexCoord2f(q.s0, q.t0); glVertex2f(q.x0 / 500, (q.y1 + 4.0f) / 500);
-			}
-			else
-			{
-				glTexCoord2f(q.s0, q.t1); glVertex2f(q.x0 / 500, q.y0 / 500);
-				glTexCoord2f(q.s1, q.t1); glVertex2f(q.x1 / 500, q.y0 / 500);
-				glTexCoord2f(q.s1, q.t0); glVertex2f(q.x1 / 500, q.y1 / 500);
-				glTexCoord2f(q.s0, q.t0); glVertex2f(q.x0 / 500, q.y1 / 500);
-			}
-		}
-		++text;
-	}
-	glEnd();
-}
-
 bool Game::frameBufferSizeUpated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
@@ -250,6 +191,7 @@ void Game::initialize(std::function<void()> initFunc)
 	access->world.get()->SetContactListener(contactListener);
 }
 //ImVec4 clearColour;
+GLint postProcesBrightnessLocation;
 void Game::update()
 {
 	ShaderProgram shaderGameObjectsBase;
@@ -272,6 +214,8 @@ void Game::update()
 	GLint textureUiLocation = shaderUiElementBase.getUniformLocation("textureOne");
 	GLint uniformModelMatrixUiLocation = shaderUiElementBase.getUniformLocation("model");
 
+	postProcesBrightnessLocation = postProcessor.getUniformLocation("brightness");
+
 	std::chrono::steady_clock::time_point start = access->clockTime.now();
 	std::chrono::steady_clock::time_point initialTime = access->clockTime.now();
 	deltaTime = 0.0f;
@@ -282,7 +226,9 @@ void Game::update()
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 
 	//_____FONT STUFF_____
-	my_stbtt_initfont();
+	Text textGui;
+	textGui.init("Test Resources\\arial.ttf", -380, 450);
+	textGui.text = "This is text render test :\n 123456789 !@#$%^&*():\"<> ? {}";
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -372,6 +318,7 @@ void Game::update()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		postProcessor.use();
+		glUniform1f(postProcesBrightnessLocation, (-1.0f + sin(Game::getTimeSinceStartUp())) / 2.0f);
 		screenPostProcessingElement.draw();
 		postProcessor.unuse();
 
@@ -388,11 +335,8 @@ void Game::update()
 			elements[i]->draw();
 		}
 		shaderUiElementBase.unuse();
-		my_stbtt_print(-380, 450, "abcdefghijklmnopqrstuvwxyz");
-		my_stbtt_print(-380, 420, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		my_stbtt_print(-380, 390, "0123456789");
-		my_stbtt_print(-380, 360, "!@#$%^&*(){}:\"<>?~\\");
-
+		textGui.x = -360 + (sin(timeSinceStartUp)*140);
+		textGui.update();
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE
