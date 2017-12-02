@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Text.h"
 Text::Text() {}
 Text::~Text() {}
@@ -25,5 +26,6 @@ void Text::start()
 
 void Text::update()
 {
+	std::cout << "Text updated";
 	my_stbtt_print(x, y);
 }

@@ -226,9 +226,14 @@ void Game::update()
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 
 	//_____FONT STUFF_____
-	Text textGui;
-	textGui.init("Test Resources\\arial.ttf", -380, 450);
-	textGui.text = "This is text render test :\n 123456789 !@#$%^&*():\"<> ? {}";
+	Text* textGui = new Text();
+	textGui->init("Test Resources\\arial.ttf", -380, 450);
+	textGui->text = "";
+
+	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
+	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
+	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
+	guiElementWithText->addGuiComponent(textGui);
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -278,7 +283,6 @@ void Game::update()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 #endif // IMGUI_USE
-
 		//processInput(window);
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
@@ -311,6 +315,8 @@ void Game::update()
 		//Make transform component automatically take care of it's physics
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Shader manager stuff
+		//Make Sprite A component of UI, not as already there 
+		
 		shaderGameObjectsBase.unuse();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -325,18 +331,25 @@ void Game::update()
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		shaderUiElementBase.use();
+		//temp shaderUiElementBase.use();
 		std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
 		unsigned int size = elements.size();
 		for (unsigned int i = 0; i < size; i++)
 		{
+			shaderUiElementBase.use();
 			glm::mat4 matrix = elements[i]->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
 			elements[i]->draw();
+			const std::vector<GuiComponent *>guiComponents = elements[i]->getAttachedComponents();
+			unsigned int componentSize = guiComponents.size();
+			shaderUiElementBase.unuse();
+			for (unsigned int i = 0; i < componentSize; i++)
+			{
+				guiComponents[i]->update();
+			}
 		}
-		shaderUiElementBase.unuse();
-		textGui.x = -360 + (sin(timeSinceStartUp)*140);
-		textGui.update();
+		//temp shaderUiElementBase.unuse();
+		//textGui.x = -360 + (sin(timeSinceStartUp)*140);
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE
@@ -349,7 +362,7 @@ void Game::update()
 		std::chrono::duration<float> frameTime = access->clockTime.now() - start;
 		deltaTime = frameTime.count();
 		access->world->Step(deltaTime, 4, 5);
-
+		textGui->text = std::to_string(1.0f/deltaTime);
 		std::chrono::duration<float> sinceStart = access->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 

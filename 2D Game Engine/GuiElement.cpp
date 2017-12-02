@@ -8,3 +8,9 @@ GuiElement::GuiElement()
 GuiElement::~GuiElement()
 {
 }
+
+void GuiElement::addGuiComponent(GuiComponent * component)
+{
+	component->attachedGuiObject = this;
+	guiComponents.push_back(component);
+}
