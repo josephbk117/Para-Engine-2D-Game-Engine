@@ -221,7 +221,7 @@ void Game::update()
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
-	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
+	/*GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
 	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
 	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 
@@ -233,7 +233,7 @@ void Game::update()
 	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
 	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
 	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-	guiElementWithText->addGuiComponent(textGui);
+	guiElementWithText->addGuiComponent(textGui);*/
 
 	while (!glfwWindowShouldClose(access->window))
 	{
@@ -316,6 +316,7 @@ void Game::update()
 		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Shader manager stuff
 		//Make Sprite A component of UI, not as already there 
+		//Remove ui elements on scene change as well
 		
 		shaderGameObjectsBase.unuse();
 
@@ -361,8 +362,7 @@ void Game::update()
 
 		std::chrono::duration<float> frameTime = access->clockTime.now() - start;
 		deltaTime = frameTime.count();
-		access->world->Step(deltaTime, 4, 5);
-		textGui->text = std::to_string(1.0f/deltaTime);
+		access->world->Step(deltaTime, 4, 5);		
 		std::chrono::duration<float> sinceStart = access->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 

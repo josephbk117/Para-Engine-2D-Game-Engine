@@ -4,6 +4,8 @@
 #include <AudioManager.h>
 #include <TextureLoader.h>
 #include <Sprite.h>
+#include <GuiElement.h>
+#include <Text.h>
 #include "PlayerMagicController.h"
 #include "MagicObjectScaler.h"
 #include "ObjectSpawner.h"
@@ -39,6 +41,15 @@ int main(int argc, char* argv[])
 }
 void scene1Data()
 {
+	Text* textGui = new Text();
+	textGui->init("Test Resources\\arial.ttf", -380, 450);
+	textGui->text = "LOLZ";
+
+	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
+	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
+	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
+	guiElementWithText->addGuiComponent(textGui);
+
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
@@ -135,6 +146,10 @@ void scene1Data()
 
 void scene2Data()
 {
+	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
+	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
+	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
+
 	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Logo");
