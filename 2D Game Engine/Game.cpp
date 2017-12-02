@@ -221,20 +221,6 @@ void Game::update()
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
-	/*GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
-	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
-	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-
-	//_____FONT STUFF_____
-	Text* textGui = new Text();
-	textGui->init("Test Resources\\arial.ttf", -380, 450);
-	textGui->text = "";
-
-	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
-	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
-	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-	guiElementWithText->addGuiComponent(textGui);*/
-
 	while (!glfwWindowShouldClose(access->window))
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -317,6 +303,8 @@ void Game::update()
 		//Shader manager stuff
 		//Make Sprite A component of UI, not as already there 
 		//Remove ui elements on scene change as well
+		//Fix issues with ,.;"' symbols in fonts
+		//Add Font manager as well
 		
 		shaderGameObjectsBase.unuse();
 

@@ -15,8 +15,8 @@ unsigned int texVal1;
 unsigned int texVal2;
 unsigned int texVal3;
 
-void scene1Data();
-void scene2Data();
+void scene2LoadData();
+void scene1LoadData();
 
 int main(int argc, char* argv[])
 {
@@ -30,8 +30,8 @@ int main(int argc, char* argv[])
 	TextureManager::loadTextureFromFile("Test Resources\\goli.png", "translu", false);
 	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
 
-	Game::addScene(scene1Data, "scene1");
-	Game::addScene(scene2Data, "scene2");
+	Game::addScene(scene2LoadData, "scene1");
+	Game::addScene(scene1LoadData, "scene2");
 	Game::startScene("scene2",true);
 
 	//SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 	Game::cleanUp();
 	return 0;
 }
-void scene1Data()
+void scene2LoadData()
 {
 	Text* textGui = new Text();
 	textGui->init("Test Resources\\arial.ttf", -380, 450);
-	textGui->text = "LOLZ";
+	textGui->text = "2nd Scene ,This got loaded up";
 
 	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
 	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
@@ -144,7 +144,7 @@ void scene1Data()
 	tempGameObject->addComponent(boxCollider);
 }
 
-void scene2Data()
+void scene1LoadData()
 {
 	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
 	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
