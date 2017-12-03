@@ -43,7 +43,7 @@ void scene2LoadData()
 {
 	Text* textGui = new Text();
 	textGui->init("Test Resources\\arial.ttf", -380, 450);
-	textGui->text = "2nd Scene ,This got loaded up";
+	textGui->text = "This got loaded up in this scene";
 
 	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
 	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));

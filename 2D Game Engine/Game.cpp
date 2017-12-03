@@ -299,15 +299,13 @@ void Game::update()
 		}
 
 		//TODO:
-		//Make transform component automatically take care of it's physics
-		//Maybe each sprite should have reference to it's transform( or modelMatrixLocation and shader used)
 		//Shader manager stuff
-		//Make Sprite A component of UI, not as already there 
 		//Remove ui elements on scene change as well
 		//Fix issues with ,.;"' symbols in fonts
 		//Add Font manager as well
 		//Implement scene graph
-		
+		//make gui element less dependant on gameobject or merge them together
+		//---can implicitly make them gui elements if attached to canvas object etc
 		shaderGameObjectsBase.unuse();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -322,7 +320,7 @@ void Game::update()
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		//temp shaderUiElementBase.use();
+
 		std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
 		unsigned int size = elements.size();
 		for (unsigned int i = 0; i < size; i++)
@@ -336,12 +334,8 @@ void Game::update()
 				elements[i]->getGuiComponent<Sprite>()->draw();
 			shaderUiElementBase.unuse();
 			for (unsigned int i = 0; i < componentSize; i++)
-			{
 				guiComponents[i]->update();
-			}
 		}
-		//temp shaderUiElementBase.unuse();
-		//textGui.x = -360 + (sin(timeSinceStartUp)*140);
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE
