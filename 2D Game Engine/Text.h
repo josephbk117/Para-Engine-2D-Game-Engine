@@ -1,5 +1,5 @@
 #pragma once
-#include "GuiComponent.h"
+#include "Component.h"
 #include "stb_truetype.h"
 #include "GL\glew.h"
 

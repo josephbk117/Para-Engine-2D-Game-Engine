@@ -5,7 +5,7 @@
 #include "Transform.h"
 class GuiElement;
 #include "Component.h"
-class GuiElement : public GameObject
+class GuiElement : private GameObject
 {
 public:
 	GuiElement();
