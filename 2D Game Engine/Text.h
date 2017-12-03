@@ -3,7 +3,7 @@
 #include "stb_truetype.h"
 #include "GL\glew.h"
 
-class Text : public GuiComponent
+class Text : public Component
 {
 public:
 	Text();

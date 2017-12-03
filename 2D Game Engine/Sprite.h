@@ -1,5 +1,6 @@
 #pragma once
 #include <GLM\common.hpp>
+class Component;
 #include "Component.h"
 class Sprite : public Component
 {

@@ -100,7 +100,6 @@ Camera* Game::InternalAcess::camera;
 //_____LOCAL DATA_____
 GuiElement screenPostProcessingElement;
 unsigned int fbo;
-
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title)
 {
 	access->world = std::make_unique<b2World>(b2Vec2(0, -9.81f));
@@ -151,9 +150,11 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, cons
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	screenPostProcessingElement.init(glm::vec2(1, 1), textureColorbuffer);
 	screenPostProcessingElement.setScreenLocation(glm::vec2(0, 0));
+	Sprite* spritePostProcess = new Sprite;
+	spritePostProcess->init(2, 2);
+	spritePostProcess->setTextureID(textureColorbuffer);
+	screenPostProcessingElement.addGuiComponent(spritePostProcess);
 	activeSceneInitFunc = NULL;
 	glEnable(GL_CULL_FACE);
 }
@@ -305,6 +306,7 @@ void Game::update()
 		//Remove ui elements on scene change as well
 		//Fix issues with ,.;"' symbols in fonts
 		//Add Font manager as well
+		//Implement scene graph
 		
 		shaderGameObjectsBase.unuse();
 
@@ -314,7 +316,7 @@ void Game::update()
 
 		postProcessor.use();
 		glUniform1f(postProcesBrightnessLocation, (-1.0f + sin(Game::getTimeSinceStartUp())) / 2.0f);
-		screenPostProcessingElement.draw();
+		screenPostProcessingElement.getGuiComponent<Sprite>()->draw();
 		postProcessor.unuse();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -328,9 +330,10 @@ void Game::update()
 			shaderUiElementBase.use();
 			glm::mat4 matrix = elements[i]->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
-			elements[i]->draw();
-			const std::vector<GuiComponent *>guiComponents = elements[i]->getAttachedComponents();
+			const std::vector<Component *>guiComponents = elements[i]->getAttachedComponents();
 			unsigned int componentSize = guiComponents.size();
+			if (elements[i]->getGuiComponent<Sprite>() != nullptr)
+				elements[i]->getGuiComponent<Sprite>()->draw();
 			shaderUiElementBase.unuse();
 			for (unsigned int i = 0; i < componentSize; i++)
 			{
@@ -416,11 +419,10 @@ void Game::addScene(std::function<void()> sceneSetupFunc, const std::string & sc
 
 void Game::startScene(const std::string & sceneName, bool isStartScene)
 {
-	//GameObject::removeAllGameObjectsFromMemory();
-	std::vector<GameObject *> gObjs = GameObject::getAllGameObjects();
-	unsigned int sizeValue = gObjs.size();
+	std::vector<GameObject *> gameObjs = GameObject::getAllGameObjects();
+	unsigned int sizeValue = gameObjs.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
-		GameObject::deleteGameObjectWithName(gObjs[i]->getName());
+		GameObject::deleteGameObjectWithName(gameObjs[i]->getName());
 	if (isStartScene)
 	{
 		initialize(scenes[sceneName]);

@@ -46,7 +46,6 @@ void scene2LoadData()
 	textGui->text = "2nd Scene ,This got loaded up";
 
 	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
-	guiElementWithText->init(glm::vec2(0.05f, 0.05f), -1);
 	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 	guiElementWithText->addGuiComponent(textGui);
 
@@ -147,8 +146,11 @@ void scene2LoadData()
 void scene1LoadData()
 {
 	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
-	guiEle->init(glm::vec2(0.5f, 0.05f), TextureManager::getTextureFromReference("translu"));
-	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.95f));
+	Sprite* guiSprite = new Sprite;
+	guiSprite->init(1.0f, 0.15f);
+	guiSprite->setTextureID(TextureManager::getTextureFromReference("translu"));
+	guiEle->addGuiComponent(guiSprite);
+	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.925f));
 
 	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;

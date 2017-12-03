@@ -9,8 +9,8 @@ GuiElement::~GuiElement()
 {
 }
 
-void GuiElement::addGuiComponent(GuiComponent * component)
+void GuiElement::addGuiComponent(Component * component)
 {
-	component->attachedGuiObject = this;
+	component->attachedGameObject = this;
 	guiComponents.push_back(component);
 }
