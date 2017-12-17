@@ -40,7 +40,7 @@ public:
 		return gameObjectVector;
 	}
 	static void deleteGameObjectWithName(const std::string & name)
-	{		
+	{
 		if (gameObjectMap.count(name) <= 0)
 			return;
 		bool canAdd = true;
@@ -86,7 +86,7 @@ private:
 };
 
 template<class T>
-inline T* const GameObject::getComponent(void)const
+T* const GameObject::getComponent(void)const
 {
 	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
@@ -98,7 +98,7 @@ inline T* const GameObject::getComponent(void)const
 }
 
 template<class T>
-inline bool GameObject::hasComponent(void)const
+bool GameObject::hasComponent(void)const
 {
 	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
@@ -110,7 +110,7 @@ inline bool GameObject::hasComponent(void)const
 }
 
 template<class T>
-inline GameObject * GameObject::getGameObjectWithComponent(void)
+GameObject * GameObject::getGameObjectWithComponent(void)
 {
 	const unsigned int sizeValue = gameObjectVector.size();
 	for (unsigned int i = 0; i < sizeValue; i++)

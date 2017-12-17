@@ -45,12 +45,14 @@ const mat4& Camera::getOrthoMatrix()const
 
 void Camera::update()
 {
-	if (*transform != previousTransformData)
+	if (*transform != previousTransformData || needsUpdate)
 	{
 		previousTransformData = *transform;
 		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
 		viewMatrix = glm::rotate(viewMatrix, transform->getRotation(), glm::vec3(0, 0, 1));
 		viewMatrix = glm::translate(viewMatrix, vec3(-transform->getPosition().x, -transform->getPosition().y, 0));
+		if (needsUpdate)
+			needsUpdate = false;
 	}
 }
 
