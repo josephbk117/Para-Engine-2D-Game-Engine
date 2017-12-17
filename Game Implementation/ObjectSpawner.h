@@ -35,11 +35,11 @@ public:
 					Sprite* tempSprite;
 					tempSprite = new Sprite();
 					tempSprite->init(0.2f, 0.2f);
-					tempSprite->setTextureID(texId[inc%3]);
+					tempSprite->setTextureID(texId[inc % 3]);
 					tempGameObject->addComponent(tempSprite);
 					BoxCollider* boxCollider = new BoxCollider();
 					boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
-						glm::vec2(0.2f, 0.2f), PhysicsMaterial(1.0f, 0.6f, 0.3f), PhysicsBody::DYNAMIC);
+						glm::vec2(0.2f, 0.2f), PhysicsMaterial(0, 0, 1.0f, 0.6f, 0.3f), PhysicsBody::DYNAMIC);
 					tempGameObject->addComponent(boxCollider);
 					tempGameObject->addComponent(new SuddenJolt);
 				}

@@ -9,7 +9,7 @@ class Camera : public Component
 public:
 	Camera();
 	~Camera();
-	void init(glm::vec2 screenDimensions);
+	void init(const glm::vec2& screenDimensions);
 	virtual void start();
 	virtual void update();
 	void setScale(float newScale);

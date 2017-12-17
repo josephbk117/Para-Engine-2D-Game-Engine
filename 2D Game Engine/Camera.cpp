@@ -6,16 +6,12 @@ Camera::Camera()
 	orthographicMatrix = mat4(1.0f);
 	viewMatrix = mat4(1.0f);
 	scale = 1.0f;
-	needsUpdate = true;
 	screenDimensions = vec2(500, 500);
 }
 
-Camera::~Camera()
-{
+Camera::~Camera(){}
 
-}
-
-void Camera::init(vec2 screenDimensions)
+void Camera::init(const vec2& screenDimensions)
 {
 	this->screenDimensions = screenDimensions;
 	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f), ((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f));
@@ -24,7 +20,8 @@ void Camera::init(vec2 screenDimensions)
 void Camera::start()
 {
 	transform = attachedGameObject->getComponent<Transform>();
-	previousTransformData.setRotation(transform->getRotation() + 5);
+	needsUpdate = true;
+	previousTransformData.setRotation(transform->getRotation());
 }
 
 void Camera::setScale(float newScale)
@@ -49,7 +46,7 @@ void Camera::update()
 	{
 		previousTransformData = *transform;
 		viewMatrix = glm::scale(orthographicMatrix, vec3(scale, scale, 0.0f));
-		viewMatrix = glm::rotate(viewMatrix, transform->getRotation(), glm::vec3(0, 0, 1));
+		viewMatrix = glm::rotate(viewMatrix, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1));
 		viewMatrix = glm::translate(viewMatrix, vec3(-transform->getPosition().x, -transform->getPosition().y, 0));
 		if (needsUpdate)
 			needsUpdate = false;

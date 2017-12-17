@@ -173,8 +173,9 @@ void Game::initialize(std::function<void()> initFunc)
 		unsigned int componentCount = componentsAttachedToObject.size();
 		if (access->camera == nullptr)
 		{
-			if (access->gameObjects[i]->hasComponent<Camera>())
-				access->camera = access->gameObjects[i]->getComponent<Camera>();
+			Camera* camera = access->gameObjects[i]->getComponent<Camera>();
+			if (camera != nullptr)
+				access->camera = camera;
 		}
 		for (unsigned int i = 0; i < componentCount; i++)
 			(*componentsAttachedToObject[i]).start();
@@ -270,19 +271,16 @@ void Game::update()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 #endif // IMGUI_USE
-		//processInput(window);
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
-		glm::mat4 cameraMatrix = access->camera->getOrthoMatrix();
-		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &access->camera->getOrthoMatrix()[0][0]);
 		glUniform1i(textureGameObjectLocation, 0);
-
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
 			Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
-			if (access->gameObjects[i]->hasComponent<BoxCollider>())
+			BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
+			if (boxcolBody != nullptr)
 			{
-				BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
 				transformRef->setPosition(glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y));
 				transformRef->setRotation(boxcolBody->getAngle());
 			}
@@ -293,8 +291,9 @@ void Game::update()
 			if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
 			{
 				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
-				if (access->gameObjects[i]->hasComponent<Sprite>())
-					access->gameObjects[i]->getComponent<Sprite>()->draw();
+				Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
+				if (spriteToDraw != nullptr)
+					spriteToDraw->draw();
 			}
 		}
 
@@ -347,7 +346,7 @@ void Game::update()
 
 		std::chrono::duration<float> frameTime = access->clockTime.now() - start;
 		deltaTime = frameTime.count();
-		access->world->Step(deltaTime, 4, 5);		
+		access->world->Step(deltaTime, 4, 5);
 		std::chrono::duration<float> sinceStart = access->clockTime.now() - initialTime;
 		timeSinceStartUp = sinceStart.count();
 

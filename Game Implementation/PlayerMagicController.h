@@ -19,7 +19,7 @@ public:
 		activeTransform->setRotation(rotOffset);
 		const float deltaTime = Game::getDeltaTime();
 		if (shouldDoCircleMotion)
-			rotOffset += deltaTime * 3.0f;
+			rotOffset += deltaTime;
 		if (Game::isKeyPressed(Key::NUM_1))
 		{
 			if (GameObject::getGameObjectWithName("Galoo2") != nullptr)

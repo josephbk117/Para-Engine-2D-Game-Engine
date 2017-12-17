@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Transform.h"
 #include <GLM\gtc\matrix_transform.hpp>
 
@@ -21,15 +22,15 @@ void Transform::setPosition(const glm::vec2 & position)
 	needsUpdate = true;
 	this->position = position;
 }
-void Transform::setX(const float & xValue)
+void Transform::setX(float xValue)
 {
 	setPosition(glm::vec2(xValue, position.y));
 }
-void Transform::setY(const float & yValue)
+void Transform::setY(float yValue)
 {
 	setPosition(glm::vec2(position.x, yValue));
 }
-void Transform::setRotation(const float & rotation)
+void Transform::setRotation(float rotation)
 {
 	needsUpdate = true;
 	this->rotation = rotation;
@@ -43,7 +44,7 @@ const glm::vec2 & Transform::getPosition()const
 {
 	return position;
 }
-const float & Transform::getRotation()const
+float Transform::getRotation()const
 {
 	return rotation;
 }
@@ -62,6 +63,6 @@ bool Transform::operator!=(const Transform & transform)const
 void Transform::setModelMatrix()
 {
 	modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0));
-	modelMatrix = glm::rotate(modelMatrix, rotation, glm::vec3(0, 0, 1.0f));
+	modelMatrix = glm::rotate(modelMatrix, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 	modelMatrix = glm::scale(modelMatrix, glm::vec3(scale.x, scale.y, 0));
 }

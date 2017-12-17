@@ -21,12 +21,12 @@ public:
 	virtual void start();
 	virtual void update();
 	void setPosition(const glm::vec2& position);
-	void setX(const float& xValue);
-	void setY(const float& yValue);
-	void setRotation(const float& rotation);
+	void setX(float xValue);
+	void setY(float yValue);
+	void setRotation(float rotation);
 	void setScale(const glm::vec2& scale);
 	const glm::vec2& getPosition()const;
-	const float& getRotation()const;
+	float getRotation()const;
 	const glm::vec2& getScale()const;
 	bool operator==(const Transform& transform)const;
 	bool operator!=(const Transform& transform)const;
