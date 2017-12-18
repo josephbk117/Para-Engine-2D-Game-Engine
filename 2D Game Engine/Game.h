@@ -13,6 +13,7 @@ class Game
 public:
 	Game() = delete;
 	friend class GameObject;
+	friend class BoxCollider;
 	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title);
 	static void setCursor(const std::string & cursorImagePath);
 	static void hideCursor(bool hide);
@@ -25,7 +26,6 @@ public:
 	static void setPostProcessingShader(ShaderProgram program);
 	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
 	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
-	static b2World* getPhysicsWorld();
 
 	static float getDeltaTime()
 	{
@@ -50,6 +50,7 @@ private:
 	static void initialize(std::function<void()> initFunc);
 	static std::function<void()> activeSceneInitFunc;
 	static void update();
+	static b2World* getPhysicsWorld();
 };
 
 
