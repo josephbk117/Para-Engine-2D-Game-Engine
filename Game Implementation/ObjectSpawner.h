@@ -25,13 +25,14 @@ public:
 		{
 			if (timer >= 1.0f)
 			{
+				GameObject* tempGameObject;
 				float yVal = 3 + count * 0.7f;
 				for (int inc = 0; inc < 20; inc++)
 				{
-					GameObject* tempGameObject;
 					std::string name = "New One_" + std::to_string(count) + "_" + std::to_string(inc);
 					tempGameObject = GameObject::createGameObject(name);
-					tempGameObject->addComponent(new Transform(glm::vec2(-3 + inc * 0.3f, yVal), 0.0f, glm::vec2(1, 1)));
+					tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-3 + inc * 0.3f, yVal));
+
 					Sprite* tempSprite;
 					tempSprite = new Sprite();
 					tempSprite->init(0.2f, 0.2f);

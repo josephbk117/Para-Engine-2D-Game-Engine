@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Transform.h"
 #include "Box.h"
 #include <iostream>
 
@@ -22,6 +23,15 @@ void GameObject::addComponent(Component * comp)
 {
 	comp->attachedGameObject = this;
 	components.push_back(comp);
+}
+GameObject * GameObject::createGameObject(const std::string & name)
+{
+	isDirty = true;
+	GameObject* gameObject = new GameObject(name);
+	gameObject->addComponent(new Transform);
+	gameObjectMap[name] = gameObject;
+	gameObjectVector.push_back(gameObject);
+	return gameObject;
 }
 void GameObject::removeAllObjectsMarkedForDeletion()
 {

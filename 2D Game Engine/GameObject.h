@@ -27,14 +27,7 @@ public:
 	}
 	template<class T>
 	static GameObject* getGameObjectWithComponent(void);
-	static GameObject* createGameObject(const std::string& name)
-	{
-		isDirty = true;
-		GameObject* gameObject = new GameObject(name);
-		gameObjectMap[name] = gameObject;
-		gameObjectVector.push_back(gameObject);
-		return gameObject;
-	}
+	static GameObject* createGameObject(const std::string& name);
 	static const std::vector<GameObject*>& getAllGameObjects()
 	{
 		return gameObjectVector;

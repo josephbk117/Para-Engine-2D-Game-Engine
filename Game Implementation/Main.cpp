@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
 	Game::addScene(scene2LoadData, "scene1");
 	Game::addScene(scene1LoadData, "scene2");
-	Game::startScene("scene2",true);
+	Game::startScene("scene2", true);
 
 	//SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
 
@@ -52,14 +52,12 @@ void scene2LoadData()
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
-	tempGameObject->addComponent(new Transform());
 	Camera* camera = new Camera;
 	camera->init(glm::vec2(10, 10));
 	tempGameObject->addComponent(camera);
 	tempGameObject->addComponent(new PlayerMagicController);
 
 	tempGameObject = GameObject::createGameObject("BG");
-	tempGameObject->addComponent(new Transform());
 	tempGameObject->setLayerOrder(-10);
 	Sprite * tempSprite = new Sprite();
 	tempSprite->init(10, 10);
@@ -69,7 +67,7 @@ void scene2LoadData()
 
 	tempGameObject = GameObject::createGameObject("Lola");
 	tempGameObject->setLayerOrder(10);
-	tempGameObject->addComponent(new Transform(glm::vec2(-1, -2), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-1, -2));
 	tempSprite = new Sprite();
 	tempSprite->init(0.5f, 0.5f);
 	tempSprite->setTextureID(texVal1);
@@ -77,7 +75,6 @@ void scene2LoadData()
 
 	tempGameObject = GameObject::createGameObject("FollowMouse");
 	tempGameObject->setLayerOrder(10);
-	tempGameObject->addComponent(new Transform);
 	tempSprite = new Sprite();
 	tempSprite->init(0.5f, 0.5f);
 	tempSprite->setTextureID(texVal1);
@@ -85,29 +82,29 @@ void scene2LoadData()
 	tempGameObject->addComponent(new MagicObjectScaler);
 
 	tempGameObject = GameObject::createGameObject("Babu");
-	tempGameObject->addComponent(new Transform(glm::vec2(-0.3f, 5.5f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-0.3f, 5.5f));
 	tempSprite = new Sprite();
 	tempSprite->init(1.5f, 1.5f);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
 	BoxCollider* boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(), glm::vec2(1.5f, 1.5f),
-		physicsMaterial1, PhysicsBody::DYNAMIC);
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
+		glm::vec2(1.5f, 1.5f), physicsMaterial1, PhysicsBody::DYNAMIC);
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("PhyMove");
-	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, 3.5f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(0.0f, 3.5f));
 	tempSprite = new Sprite();
 	tempSprite->init(0.4f, 0.4f);
 	tempSprite->setTextureID(texVal2);
 	tempGameObject->addComponent(tempSprite);
 	boxCollider = new BoxCollider();
-	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(), glm::vec2(0.4f, 0.4f),
-		physicsMaterial1, PhysicsBody::KINEMATIC);
+	boxCollider->init(tempGameObject->getComponent<Transform>()->getPosition(),
+		glm::vec2(0.4f, 0.4f), physicsMaterial1, PhysicsBody::KINEMATIC);
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo");
-	tempGameObject->addComponent(new Transform(glm::vec2(0.0f, -5.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(0.0f, -5.0f));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(10.0f, 1.0f);
@@ -119,7 +116,7 @@ void scene2LoadData()
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo1");
-	tempGameObject->addComponent(new Transform(glm::vec2(-5.5f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-5.5f, -0.0f));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(1.0f, 10.0f);
@@ -131,7 +128,7 @@ void scene2LoadData()
 	tempGameObject->addComponent(boxCollider);
 
 	tempGameObject = GameObject::createGameObject("Galoo2");
-	tempGameObject->addComponent(new Transform(glm::vec2(5.5f, -0.0f), 0.0f, glm::vec2(1, 1)));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(5.5f, -0.0f));
 	tempGameObject->setLayerOrder(20);
 	tempSprite = new Sprite();
 	tempSprite->init(1.0f, 10.0f);
@@ -155,14 +152,12 @@ void scene1LoadData()
 	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Logo");
-	tempGameObject->addComponent(new Transform);
 	Sprite* sprite = new Sprite;
 	sprite->init(4.0f, 4.0f);
 	sprite->setTextureID(logoTexValue);
 	tempGameObject->addComponent(sprite);
 
 	tempGameObject = GameObject::createGameObject("Camera");
-	tempGameObject->addComponent(new Transform());
 	Camera* camera = new Camera;
 	camera->init(glm::vec2(10, 10));
 	tempGameObject->addComponent(camera);
