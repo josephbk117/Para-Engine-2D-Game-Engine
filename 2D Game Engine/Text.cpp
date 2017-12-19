@@ -3,10 +3,8 @@
 Text::Text() {}
 Text::~Text() {}
 
-void Text::init(const std::string & fontFilePath,int x, int y)
+void Text::init(const std::string & fontFilePath)
 {
-	this->x = x;
-	this->y = y;
 	unsigned char* ttf_buffer = new unsigned char[600000];
 	unsigned char temp_bitmap[512 * 512];
 	fread(ttf_buffer, 1, 600000, fopen(fontFilePath.c_str(), "rb"));
@@ -21,10 +19,11 @@ void Text::init(const std::string & fontFilePath,int x, int y)
 
 void Text::start()
 {
-
+	transform = attachedGameObject->getComponent<Transform>();
 }
 
 void Text::update()
 {
-	my_stbtt_print(x, y);
+	glm::vec2 position = transform->getPosition();
+	printText(position.x, position.y);
 }

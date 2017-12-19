@@ -219,7 +219,7 @@ void Game::update()
 	postProcesBrightnessLocation = postProcessor.getUniformLocation("brightness");
 
 	std::chrono::steady_clock::time_point start = access->clockTime.now();
-	std::chrono::steady_clock::time_point initialTime = access->clockTime.now();
+	std::chrono::steady_clock::time_point initialTime = start;
 	deltaTime = 0.0f;
 	timeSinceStartUp = 0.0f;
 
@@ -305,6 +305,7 @@ void Game::update()
 		//Implement scene graph
 		//make gui element less dependant on gameobject or merge them together
 		//---can implicitly make them gui elements if attached to canvas object etc
+
 		shaderGameObjectsBase.unuse();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -335,6 +336,18 @@ void Game::update()
 			for (unsigned int i = 0; i < componentSize; i++)
 				guiComponents[i]->update();
 		}
+
+		GameObject* txtObj = GameObject::getGameObjectWithComponent<Text>();
+		if (txtObj != nullptr)
+		{
+			glm::mat4 matrix = txtObj->getComponent<Transform>()->getMatrix();
+			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
+			const std::vector<Component *>guiComponents = txtObj->getAttachedComponents();
+			unsigned int componentSize = guiComponents.size();
+			for (int i = 0; i < componentSize; i++)
+				guiComponents[i]->update();
+		}
+
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE

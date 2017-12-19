@@ -52,5 +52,3 @@ private:
 	static void update();
 	static b2World* getPhysicsWorld();
 };
-
-

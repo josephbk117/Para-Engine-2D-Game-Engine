@@ -41,13 +41,10 @@ int main(int argc, char* argv[])
 }
 void scene2LoadData()
 {
-	Text* textGui = new Text();
-	textGui->init("Test Resources\\arial.ttf", -380, 450);
-	textGui->text = "This got loaded up in this scene";
+	//GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
+	//guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
+	//guiElementWithText->addGuiComponent(textGui);
 
-	GuiElement* guiElementWithText = GuiElement::createGuiElement("textelement");
-	guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
-	guiElementWithText->addGuiComponent(textGui);
 
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
@@ -56,6 +53,18 @@ void scene2LoadData()
 	camera->init(glm::vec2(10, 10));
 	tempGameObject->addComponent(camera);
 	tempGameObject->addComponent(new PlayerMagicController);
+
+
+	//Text object
+
+	Text* textGui = new Text();
+	textGui->init("Test Resources\\arial.ttf");
+	textGui->text = "This got loaded up in this scene";
+
+	tempGameObject = GameObject::createGameObject("textelement");
+	tempGameObject->setLayerOrder(1500);
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-380, 450));
+	tempGameObject->addComponent(textGui);
 
 	tempGameObject = GameObject::createGameObject("BG");
 	tempGameObject->setLayerOrder(-10);
