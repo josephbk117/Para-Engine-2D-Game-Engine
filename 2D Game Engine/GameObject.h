@@ -27,7 +27,7 @@ public:
 	}
 	template<class T>
 	static GameObject* getGameObjectWithComponent(void);
-	static GameObject* createGameObject(const std::string& name);
+	static GameObject* createGameObject(const std::string& name, bool isUI = false);
 	static const std::vector<GameObject*>& getAllGameObjects()
 	{
 		return gameObjectVector;
@@ -71,6 +71,7 @@ private:
 	std::vector<Component *> components;
 	int layerOrder;
 	bool hasStartBeenCalled = false;
+	bool isPartOfUI = false;
 	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
 	static bool isDirty;

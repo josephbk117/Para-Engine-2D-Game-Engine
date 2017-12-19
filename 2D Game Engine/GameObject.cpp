@@ -24,11 +24,12 @@ void GameObject::addComponent(Component * comp)
 	comp->attachedGameObject = this;
 	components.push_back(comp);
 }
-GameObject * GameObject::createGameObject(const std::string & name)
+GameObject * GameObject::createGameObject(const std::string & name, bool isUI)
 {
 	isDirty = true;
 	GameObject* gameObject = new GameObject(name);
 	gameObject->addComponent(new Transform);
+	gameObject->isPartOfUI = isUI;
 	gameObjectMap[name] = gameObject;
 	gameObjectVector.push_back(gameObject);
 	return gameObject;

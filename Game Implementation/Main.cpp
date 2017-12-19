@@ -45,7 +45,6 @@ void scene2LoadData()
 	//guiElementWithText->setScreenLocation(glm::vec2(-0.5f, 0.95f));
 	//guiElementWithText->addGuiComponent(textGui);
 
-
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Camera");
@@ -54,14 +53,13 @@ void scene2LoadData()
 	tempGameObject->addComponent(camera);
 	tempGameObject->addComponent(new PlayerMagicController);
 
-
 	//Text object
 
 	Text* textGui = new Text();
 	textGui->init("Test Resources\\arial.ttf");
 	textGui->text = "This got loaded up in this scene";
 
-	tempGameObject = GameObject::createGameObject("textelement");
+	tempGameObject = GameObject::createGameObject("textelement", true);
 	tempGameObject->setLayerOrder(1500);
 	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-380, 450));
 	tempGameObject->addComponent(textGui);
@@ -151,12 +149,12 @@ void scene2LoadData()
 
 void scene1LoadData()
 {
-	GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
+	/*GuiElement* guiEle = GuiElement::createGuiElement("gui_1");
 	Sprite* guiSprite = new Sprite;
 	guiSprite->init(1.0f, 0.15f);
 	guiSprite->setTextureID(TextureManager::getTextureFromReference("translu"));
 	guiEle->addGuiComponent(guiSprite);
-	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.925f));
+	guiEle->setScreenLocation(glm::vec2(-0.5f, 0.925f));*/
 
 	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;
@@ -165,6 +163,15 @@ void scene1LoadData()
 	sprite->init(4.0f, 4.0f);
 	sprite->setTextureID(logoTexValue);
 	tempGameObject->addComponent(sprite);
+
+	//UI
+	tempGameObject = GameObject::createGameObject("gui_1", true);
+	tempGameObject->setLayerOrder(1800);
+	sprite = new Sprite;
+	sprite->init(1.0f, 0.15f);
+	sprite->setTextureID(TextureManager::getTextureFromReference("translu"));
+	tempGameObject->addComponent(sprite);
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-0.5f, 0.925f));
 
 	tempGameObject = GameObject::createGameObject("Camera");
 	Camera* camera = new Camera;

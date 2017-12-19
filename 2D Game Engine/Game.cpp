@@ -271,35 +271,44 @@ void Game::update()
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 #endif // IMGUI_USE
+
+		std::vector<GameObject *> uiGameobjs;
+
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
 		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &access->camera->getOrthoMatrix()[0][0]);
 		glUniform1i(textureGameObjectLocation, 0);
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
-			Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
-			BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
-			if (boxcolBody != nullptr)
+			if (access->gameObjects[i]->isPartOfUI)
 			{
-				transformRef->setPosition(glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y));
-				transformRef->setRotation(boxcolBody->getAngle());
+				uiGameobjs.push_back(access->gameObjects[i]);
 			}
-			std::vector<Component*> componentsAttachedToObject =
-				GameObject::getGameObjectWithName(access->gameObjects[i]->getName())->getAttachedComponents();
-			for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
-				(*componentsAttachedToObject[i]).update();
-			if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
+			else
 			{
-				glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
-				Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
-				if (spriteToDraw != nullptr)
-					spriteToDraw->draw();
+				Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
+				BoxCollider* boxcolBody = access->gameObjects[i]->getComponent<BoxCollider>();
+				if (boxcolBody != nullptr)
+				{
+					transformRef->setPosition(glm::vec2(boxcolBody->getPosition().x, boxcolBody->getPosition().y));
+					transformRef->setRotation(boxcolBody->getAngle());
+				}
+				std::vector<Component*> componentsAttachedToObject =
+					GameObject::getGameObjectWithName(access->gameObjects[i]->getName())->getAttachedComponents();
+				for (unsigned int i = 0; i < componentsAttachedToObject.size(); i++)
+					(*componentsAttachedToObject[i]).update();
+				if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
+				{
+					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
+					Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
+					if (spriteToDraw != nullptr)
+						spriteToDraw->draw();
+				}
 			}
 		}
 
 		//TODO:
 		//Shader manager stuff
-		//Remove ui elements on scene change as well
 		//Fix issues with ,.;"' symbols in fonts
 		//Add Font manager as well
 		//Implement scene graph
@@ -321,7 +330,7 @@ void Game::update()
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 
-		std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
+		/*std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
 		unsigned int size = elements.size();
 		for (unsigned int i = 0; i < size; i++)
 		{
@@ -335,16 +344,20 @@ void Game::update()
 			shaderUiElementBase.unuse();
 			for (unsigned int i = 0; i < componentSize; i++)
 				guiComponents[i]->update();
-		}
+		}*/
 
-		GameObject* txtObj = GameObject::getGameObjectWithComponent<Text>();
-		if (txtObj != nullptr)
+		unsigned int size = uiGameobjs.size();
+		for (unsigned int i = 0; i < size; i++)
 		{
-			glm::mat4 matrix = txtObj->getComponent<Transform>()->getMatrix();
+			shaderUiElementBase.use();
+			glm::mat4 matrix = uiGameobjs[i]->getComponent<Transform>()->getMatrix();
 			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
-			const std::vector<Component *>guiComponents = txtObj->getAttachedComponents();
+			const std::vector<Component *>guiComponents = uiGameobjs[i]->getAttachedComponents();
 			unsigned int componentSize = guiComponents.size();
-			for (int i = 0; i < componentSize; i++)
+			if (uiGameobjs[i]->getComponent<Sprite>() != nullptr)
+				uiGameobjs[i]->getComponent<Sprite>()->draw();
+			shaderUiElementBase.unuse();
+			for (unsigned int i = 0; i < componentSize; i++)
 				guiComponents[i]->update();
 		}
 
