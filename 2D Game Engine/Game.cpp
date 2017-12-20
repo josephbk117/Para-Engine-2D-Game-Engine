@@ -28,7 +28,6 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include <GLFW\glfw3.h>
-#include "GuiElement.h"
 #include "Text.h"
 
 bool Game::frameBufferSizeUpated;
@@ -98,7 +97,7 @@ std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
 
 //_____LOCAL DATA_____
-GuiElement screenPostProcessingElement;
+Sprite screenPostProcessingElement;
 unsigned int fbo;
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title)
 {
@@ -150,11 +149,9 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, cons
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	screenPostProcessingElement.setScreenLocation(glm::vec2(0, 0));
-	Sprite* spritePostProcess = new Sprite;
-	spritePostProcess->init(2, 2);
-	spritePostProcess->setTextureID(textureColorbuffer);
-	screenPostProcessingElement.addGuiComponent(spritePostProcess);
+
+	screenPostProcessingElement.init(2, 2);
+	screenPostProcessingElement.setTextureID(textureColorbuffer);
 	activeSceneInitFunc = NULL;
 	glEnable(GL_CULL_FACE);
 }
@@ -314,6 +311,7 @@ void Game::update()
 		//Implement scene graph
 		//make gui element less dependant on gameobject or merge them together
 		//---can implicitly make them gui elements if attached to canvas object etc
+		//can add gui elements (game objects) to another vector and then render them separatly
 
 		shaderGameObjectsBase.unuse();
 
@@ -323,7 +321,7 @@ void Game::update()
 
 		postProcessor.use();
 		glUniform1f(postProcesBrightnessLocation, (-1.0f + sin(Game::getTimeSinceStartUp())) / 2.0f);
-		screenPostProcessingElement.getGuiComponent<Sprite>()->draw();
+		screenPostProcessingElement.draw();
 		postProcessor.unuse();
 
 		glBindTexture(GL_TEXTURE_2D, 0);

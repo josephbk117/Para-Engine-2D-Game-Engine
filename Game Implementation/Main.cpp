@@ -4,7 +4,6 @@
 #include <AudioManager.h>
 #include <TextureLoader.h>
 #include <Sprite.h>
-#include <GuiElement.h>
 #include <Text.h>
 #include "PlayerMagicController.h"
 #include "MagicObjectScaler.h"
