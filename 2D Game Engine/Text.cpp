@@ -10,7 +10,7 @@ void Text::init(const std::string & fontFilePath)
 	fread(ttf_buffer, 1, 600000, fopen(fontFilePath.c_str(), "rb"));
 	stbtt_BakeFontBitmap(ttf_buffer, 0, 32.0, temp_bitmap, 512, 512, 32, 96, cdata); // no guarantee this fits!
 																					 // can free ttf_buffer at this point
-	delete ttf_buffer;
+	delete[] ttf_buffer;
 	glGenTextures(1, &ftex);
 	glBindTexture(GL_TEXTURE_2D, ftex);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512, 512, 0, GL_ALPHA, GL_UNSIGNED_BYTE, temp_bitmap);

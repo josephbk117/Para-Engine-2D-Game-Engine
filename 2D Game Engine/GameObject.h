@@ -12,9 +12,9 @@ public:
 	GameObject();
 	GameObject(const std::string& name);
 	void setName(const std::string & name) { isDirty = true; this->name = name; }
-	const std::string& getName()const { return name; }
-	void setLayerOrder(int order) { isDirty = true; this->layerOrder = order; }
-	const int& getLayerOrder()const { return layerOrder; }
+	const std::string& getName()const noexcept { return name; }
+	void setLayerOrder(int order) noexcept { isDirty = true; this->layerOrder = order; }
+	const int& getLayerOrder()const noexcept { return layerOrder; }
 	template<class T>
 	T* const getComponent(void)const;
 	void addComponent(Component *comp);
@@ -28,7 +28,7 @@ public:
 	template<class T>
 	static GameObject* getGameObjectWithComponent(void);
 	static GameObject* createGameObject(const std::string& name, bool isUI = false);
-	static const std::vector<GameObject*>& getAllGameObjects()
+	static const std::vector<GameObject*>& getAllGameObjects() noexcept
 	{
 		return gameObjectVector;
 	}
