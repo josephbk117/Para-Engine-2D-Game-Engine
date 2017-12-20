@@ -16,10 +16,10 @@ public:
 	void setLayerOrder(int order) noexcept { isDirty = true; this->layerOrder = order; }
 	const int& getLayerOrder()const noexcept { return layerOrder; }
 	template<class T>
-	T* const getComponent(void)const;
+	T* const getComponent(void)const noexcept;
 	void addComponent(Component *comp);
 	template<class T>
-	bool hasComponent(void)const;
+	bool hasComponent(void)const noexcept;
 	const std::vector<Component *>& getAttachedComponents() { return components; };
 	static GameObject* getGameObjectWithName(const std::string& name)
 	{
@@ -80,7 +80,7 @@ private:
 };
 
 template<class T>
-T* const GameObject::getComponent(void)const
+T* const GameObject::getComponent(void)const noexcept
 {
 	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
@@ -92,7 +92,7 @@ T* const GameObject::getComponent(void)const
 }
 
 template<class T>
-bool GameObject::hasComponent(void)const
+bool GameObject::hasComponent(void)const noexcept
 {
 	const unsigned int sizeValue = components.size();
 	for (unsigned int i = 0; i < sizeValue; i++)
