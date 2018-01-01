@@ -72,6 +72,9 @@ private:
 	int layerOrder;
 	bool hasStartBeenCalled = false;
 	bool isPartOfUI = false;
+#if _DEBUG
+	std::unordered_map<std::string, int> typeCountMap;
+#endif
 	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
 	static bool isDirty;
