@@ -37,7 +37,7 @@ public:
 	virtual void collisionStarted(GameObject* gameObject)
 	{
 		++collisionCount;
-		boxCol->applyTorque(4.0f);
+		boxCol->applyTorque(3.0f);
 		if (collisionCount >= 40)
 			GameObject::deleteGameObjectWithName(attachedGameObject->getName());
 	}
