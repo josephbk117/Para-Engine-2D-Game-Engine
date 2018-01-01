@@ -2,6 +2,19 @@
 #include "Transform.h"
 #include <GLM\gtc\matrix_transform.hpp>
 
+Transform::Transform(const glm::vec2 & _position, const float & _rotation, const glm::vec2 & _scale) noexcept
+{
+	position = _position;
+	rotation = _rotation;
+	scale = _scale;
+	setModelMatrix();
+}
+
+Transform::Transform() noexcept
+{
+	setModelMatrix();
+}
+
 const glm::mat4& Transform::getMatrix()const
 {
 	return modelMatrix;

@@ -11,18 +11,18 @@ public:
 	~BoxCollider();
 	void init(const glm::vec2 &position, const glm::vec2 &dimension, const PhysicsMaterial& material, const PhysicsBody& bodyType);
 	virtual void start();
-	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial);
-	void setRotationConstraint(bool canObjectRotate)const;
-	void applyTorque(float strength);
-	void applyForce(const glm::vec2& force);
-	void setVelocity(const glm::vec2& velocity);
-	void setAngularVelocity(float velocity);
-	void setPosition(const glm::vec2& position);
-	void setRotation(const float& rotation);
-	const glm::vec2& getDimensions()const;
-	const float getAngle()const;
-	const glm::vec2 getPosition()const;
-	const PhysicsBody getPhysicsType()const;
+	void setPhysicsMaterial(const PhysicsMaterial& physicsMaterial) noexcept;
+	void setRotationConstraint(bool canObjectRotate)const noexcept;
+	void applyTorque(float strength) noexcept;
+	void applyForce(const glm::vec2& force) noexcept;
+	void setVelocity(const glm::vec2& velocity) noexcept;
+	void setAngularVelocity(float velocity) noexcept;
+	void setPosition(const glm::vec2& position) noexcept;
+	void setRotation(const float& rotation) noexcept;
+	const glm::vec2& getDimensions()const noexcept;
+	const float getAngle()const noexcept;
+	const glm::vec2 getPosition()const noexcept;
+	const PhysicsBody getPhysicsType()const noexcept;
 
 private:
 	struct InternalAcess;

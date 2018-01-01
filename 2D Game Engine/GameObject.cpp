@@ -19,6 +19,28 @@ GameObject::GameObject(const std::string & name)
 	this->name = name;
 }
 
+void GameObject::setName(const std::string & name) noexcept
+{
+	isDirty = true; 
+	this->name = name;
+}
+
+const std::string & GameObject::getName() const noexcept
+{
+	return name;
+}
+
+void GameObject::setLayerOrder(int order) noexcept
+{
+	isDirty = true; 
+	this->layerOrder = order;
+}
+
+const int GameObject::getLayerOrder() const noexcept
+{
+	return layerOrder;
+}
+
 void GameObject::addComponent(Component * comp)
 {
 #if _DEBUG
@@ -34,6 +56,14 @@ void GameObject::addComponent(Component * comp)
 	comp->attachedGameObject = this;
 	components.push_back(comp);
 }
+const std::vector<Component*>& GameObject::getAttachedComponents()
+{
+	return components;
+}
+GameObject * GameObject::getGameObjectWithName(const std::string & name)
+{
+	return gameObjectMap[name];
+}
 GameObject * GameObject::createGameObject(const std::string & name, bool isUI)
 {
 #if _DEBUG
@@ -47,6 +77,43 @@ GameObject * GameObject::createGameObject(const std::string & name, bool isUI)
 	gameObjectMap[name] = gameObject;
 	gameObjectVector.push_back(gameObject);
 	return gameObject;
+}
+const std::vector<GameObject*>& GameObject::getAllGameObjects() noexcept
+{
+	return gameObjectVector;
+}
+void GameObject::deleteGameObjectWithName(const std::string & name)
+{
+	if (gameObjectMap.count(name) <= 0)
+		return;
+	bool canAdd = true;
+	const unsigned int objDeletionSize = objectsMarkedForDeletion.size();
+	for (unsigned int i = 0; i < objDeletionSize; i++)
+	{
+		if (gameObjectMap[name] == objectsMarkedForDeletion[i])
+		{
+			canAdd = false;
+			break;
+		}
+	}
+	if (canAdd)
+	{
+		objectsMarkedForDeletion.push_back(gameObjectMap[name]);
+		isDirty = true;
+	}
+}
+void GameObject::removeAllGameObjectsFromMemory()
+{
+	const unsigned int sizeValue = gameObjectVector.size();
+	for (unsigned int i = 0; i < sizeValue; i++)
+		delete gameObjectVector[i];
+	clearGameObjectData();
+}
+void GameObject::clearGameObjectData()
+{
+	gameObjectMap.clear();
+	gameObjectVector.clear();
+	objectsMarkedForDeletion.clear();
 }
 void GameObject::removeAllObjectsMarkedForDeletion()
 {
@@ -78,6 +145,7 @@ void GameObject::removeAllObjectsMarkedForDeletion()
 	}
 	objectsMarkedForDeletion.clear();
 }
+
 GameObject::~GameObject()
 {
 	for (unsigned int i = 0; i < components.size(); i++)

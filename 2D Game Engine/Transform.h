@@ -6,17 +6,8 @@ class Transform : public Component
 {
 public:
 	
-	Transform(const glm::vec2& _position, const float& _rotation, const glm::vec2& _scale) noexcept
-	{
-		position = _position;
-		rotation = _rotation;
-		scale = _scale;
-		setModelMatrix();
-	}
-	Transform() noexcept
-	{
-		setModelMatrix();
-	}
+	Transform(const glm::vec2& _position, const float& _rotation, const glm::vec2& _scale) noexcept;
+	Transform() noexcept;
 	const glm::mat4& getMatrix()const;
 	virtual void start();
 	virtual void update();

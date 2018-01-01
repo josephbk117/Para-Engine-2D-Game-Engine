@@ -11,60 +11,24 @@ class GameObject
 public:
 	GameObject();
 	GameObject(const std::string& name);
-	void setName(const std::string & name) { isDirty = true; this->name = name; }
-	const std::string& getName()const noexcept { return name; }
-	void setLayerOrder(int order) noexcept { isDirty = true; this->layerOrder = order; }
-	const int& getLayerOrder()const noexcept { return layerOrder; }
+	void setName(const std::string & name) noexcept;
+	const std::string& getName()const noexcept;
+	void setLayerOrder(int order) noexcept;
+	const int getLayerOrder()const noexcept;
 	template<class T>
 	T* const getComponent(void)const noexcept;
 	void addComponent(Component *comp);
 	template<class T>
 	bool hasComponent(void)const noexcept;
-	const std::vector<Component *>& getAttachedComponents() { return components; };
-	static GameObject* getGameObjectWithName(const std::string& name)
-	{
-		return gameObjectMap[name];
-	}
+	const std::vector<Component *>& getAttachedComponents();
+	static GameObject* getGameObjectWithName(const std::string& name);
 	template<class T>
 	static GameObject* getGameObjectWithComponent(void);
 	static GameObject* createGameObject(const std::string& name, bool isUI = false);
-	static const std::vector<GameObject*>& getAllGameObjects() noexcept
-	{
-		return gameObjectVector;
-	}
-	static void deleteGameObjectWithName(const std::string & name)
-	{
-		if (gameObjectMap.count(name) <= 0)
-			return;
-		bool canAdd = true;
-		const unsigned int objDeletionSize = objectsMarkedForDeletion.size();
-		for (unsigned int i = 0; i < objDeletionSize; i++)
-		{
-			if (gameObjectMap[name] == objectsMarkedForDeletion[i])
-			{
-				canAdd = false;
-				break;
-			}
-		}
-		if (canAdd)
-		{
-			objectsMarkedForDeletion.push_back(gameObjectMap[name]);
-			isDirty = true;
-		}
-	}
-	static void removeAllGameObjectsFromMemory()
-	{
-		const unsigned int sizeValue = gameObjectVector.size();
-		for (unsigned int i = 0; i < sizeValue; i++)
-			delete gameObjectVector[i];
-		clearGameObjectData();
-	}
-	static void clearGameObjectData()
-	{
-		gameObjectMap.clear();
-		gameObjectVector.clear();
-		objectsMarkedForDeletion.clear();
-	}
+	static const std::vector<GameObject*>& getAllGameObjects() noexcept;
+	static void deleteGameObjectWithName(const std::string & name);
+	static void removeAllGameObjectsFromMemory();
+	static void clearGameObjectData();
 	~GameObject();
 private:
 	std::string name;
@@ -72,14 +36,14 @@ private:
 	int layerOrder;
 	bool hasStartBeenCalled = false;
 	bool isPartOfUI = false;
-#if _DEBUG
-	std::unordered_map<std::string, int> typeCountMap;
-#endif
 	static std::unordered_map<std::string, GameObject*> gameObjectMap;
 	static std::vector<GameObject *> gameObjectVector;
 	static bool isDirty;
 	static std::vector<GameObject *> objectsMarkedForDeletion;
 	static void removeAllObjectsMarkedForDeletion();
+#if _DEBUG
+	std::unordered_map<std::string, int> typeCountMap;
+#endif
 };
 
 template<class T>

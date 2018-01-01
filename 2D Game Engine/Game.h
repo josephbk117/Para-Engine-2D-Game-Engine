@@ -26,15 +26,8 @@ public:
 	static void setPostProcessingShader(ShaderProgram program);
 	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
 	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
-
-	static float getDeltaTime() noexcept
-	{
-		return deltaTime;
-	}
-	static float getTimeSinceStartUp() noexcept
-	{
-		return timeSinceStartUp;
-	}
+	static float getDeltaTime() noexcept;
+	static float getTimeSinceStartUp() noexcept;
 private:
 	static bool frameBufferSizeUpated;
 	static float deltaTime;

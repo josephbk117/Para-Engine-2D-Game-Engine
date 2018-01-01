@@ -451,6 +451,16 @@ void Game::startScene(const std::string & sceneName, bool isStartScene)
 		activeSceneInitFunc = scenes[sceneName];
 }
 
+float Game::getDeltaTime() noexcept
+{
+	return deltaTime;
+}
+
+float Game::getTimeSinceStartUp() noexcept
+{
+	return timeSinceStartUp;
+}
+
 bool Game::isKeyPressed(Key key)
 {
 	if (glfwGetKey(access->window, (int)key) == GLFW_PRESS)

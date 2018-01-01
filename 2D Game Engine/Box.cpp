@@ -50,7 +50,7 @@ void BoxCollider::start()
 	access->body->SetUserData(attachedGameObject);
 }
 
-void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial)
+void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial) noexcept
 {
 	access->fixture->SetDensity(physicsMaterial.density);
 	access->fixture->SetFriction(physicsMaterial.friction);
@@ -59,57 +59,57 @@ void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial)
 	access->body->SetAngularDamping(physicsMaterial.angularDamping);
 }
 
-void BoxCollider::setRotationConstraint(bool canObjectRotate)const
+void BoxCollider::setRotationConstraint(bool canObjectRotate)const noexcept
 {
 	access->body->SetFixedRotation(canObjectRotate);
 }
 
-void BoxCollider::applyTorque(float strength)
+void BoxCollider::applyTorque(float strength) noexcept
 {
 	access->body->ApplyTorque(strength, true);
 }
 
-void BoxCollider::applyForce(const glm::vec2& force)
+void BoxCollider::applyForce(const glm::vec2& force) noexcept
 {
 	access->body->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
 }
 
-void BoxCollider::setVelocity(const glm::vec2& velocity)
+void BoxCollider::setVelocity(const glm::vec2& velocity) noexcept
 {
 	access->body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
 }
 
-void BoxCollider::setAngularVelocity(float velocity)
+void BoxCollider::setAngularVelocity(float velocity) noexcept
 {
 	access->body->SetAngularVelocity(velocity);
 }
 
-void BoxCollider::setPosition(const glm::vec2 & position)
+void BoxCollider::setPosition(const glm::vec2 & position) noexcept
 {
 	access->body->SetTransform(b2Vec2(position.x, position.y), access->body->GetAngle());
 }
 
-void BoxCollider::setRotation(const float & rotation)
+void BoxCollider::setRotation(const float & rotation) noexcept
 {
 	access->body->SetTransform(access->body->GetPosition(), rotation);
 }
 
-const glm::vec2 & BoxCollider::getDimensions()const
+const glm::vec2 & BoxCollider::getDimensions()const noexcept
 {
 	return access->dimension;
 }
 
-const float BoxCollider::getAngle() const
+const float BoxCollider::getAngle() const noexcept
 {
 	return access->body->GetAngle();
 }
 
-const glm::vec2 BoxCollider::getPosition() const
+const glm::vec2 BoxCollider::getPosition() const noexcept
 {
 	return glm::vec2(access->body->GetPosition().x, access->body->GetPosition().y);
 }
 
-const PhysicsBody BoxCollider::getPhysicsType() const
+const PhysicsBody BoxCollider::getPhysicsType() const noexcept
 {
 	switch (access->body->GetType())
 	{
