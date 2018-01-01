@@ -25,7 +25,7 @@ public:
 		{
 			if (timer >= 1.0f)
 			{
-				GameObject* tempGameObject;
+				GameObject* tempGameObject = nullptr;
 				float yVal = 3 + count * 0.7f;
 				for (int inc = 0; inc < 20; inc++)
 				{

@@ -14,7 +14,8 @@ struct PhysicsMaterial
 	float density;
 	float friction;
 	float bounciness;
-	PhysicsMaterial(float angularDamping = 0.0f, float linearDamping = 0.0f, float density = 1.0f, float friction = 0.0f, float bounciness = 0.0f)
+	PhysicsMaterial(float angularDamping = 0.0f, float linearDamping = 0.0f, 
+		float density = 1.0f, float friction = 0.0f, float bounciness = 0.0f) noexcept
 	{
 		this->angularDamping = angularDamping;
 		this->linearDamping = linearDamping;

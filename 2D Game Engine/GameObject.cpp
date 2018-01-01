@@ -21,11 +21,25 @@ GameObject::GameObject(const std::string & name)
 
 void GameObject::addComponent(Component * comp)
 {
+#if _DEBUG
+	if (typeCountMap.find(std::string(typeid(*comp).name())) == typeCountMap.end())
+		typeCountMap[std::string(typeid(*comp).name())] = 0;
+	else
+	{
+		typeCountMap[std::string(typeid(*comp).name())] = typeCountMap[std::string(typeid(*comp).name())] + 1;
+		throw("More than one component one of type was added");
+	}
+#endif
+
 	comp->attachedGameObject = this;
 	components.push_back(comp);
 }
 GameObject * GameObject::createGameObject(const std::string & name, bool isUI)
 {
+#if _DEBUG
+	if (gameObjectMap.find(name) != gameObjectMap.end())
+		throw("Same name already exists");
+#endif
 	isDirty = true;
 	GameObject* gameObject = new GameObject(name);
 	gameObject->addComponent(new Transform);
