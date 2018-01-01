@@ -27,11 +27,11 @@ public:
 	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
 	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
 
-	static float getDeltaTime()
+	static float getDeltaTime() noexcept
 	{
 		return deltaTime;
 	}
-	static float getTimeSinceStartUp()
+	static float getTimeSinceStartUp() noexcept
 	{
 		return timeSinceStartUp;
 	}

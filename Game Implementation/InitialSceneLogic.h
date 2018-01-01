@@ -4,8 +4,7 @@
 class InitialSceneLogic : public Component
 {
 public:
-	InitialSceneLogic() {};
-	~InitialSceneLogic() {};
+
 	virtual void update()
 	{
 		if (Game::getTimeSinceStartUp() > 4.0f)

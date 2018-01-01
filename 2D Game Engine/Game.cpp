@@ -312,6 +312,8 @@ void Game::update()
 		//make gui element less dependant on gameobject or merge them together
 		//---can implicitly make them gui elements if attached to canvas object etc
 		//can add gui elements (game objects) to another vector and then render them separatly
+		//Add error checking to components
+		//Put all implementation details in cpp files
 
 		shaderGameObjectsBase.unuse();
 

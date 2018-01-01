@@ -6,8 +6,7 @@
 class PlayerMagicController : public Component
 {
 public:
-	PlayerMagicController() {};
-	~PlayerMagicController() {};
+
 	virtual void start()
 	{
 		activeTransform = attachedGameObject->getComponent<Transform>();
