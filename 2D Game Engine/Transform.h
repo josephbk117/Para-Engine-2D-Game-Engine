@@ -12,6 +12,7 @@ public:
 	virtual void start();
 	virtual void update();
 	void setPosition(const glm::vec2& position);
+	const glm::mat4 getWorldSpaceTransform();
 	void setX(float xValue);
 	void setY(float yValue);
 	void setRotation(float rotation);
@@ -19,12 +20,17 @@ public:
 	const glm::vec2& getPosition()const;
 	float getRotation()const;
 	const glm::vec2& getScale()const;
+	void setParent(Transform * parentTransform);
+	const Transform* getParent();
+	void addChild(Transform* child);
 	bool operator==(const Transform& transform)const;
 	bool operator!=(const Transform& transform)const;
 private:
 	glm::mat4 modelMatrix = glm::mat4(1.0);
 	glm::vec2 scale = glm::vec2(1.0f, 1.0f);
 	glm::vec2 position = glm::vec2(0.0f, 0.0f);
+	Transform* parent = nullptr;
+	std::vector<Transform *> children;
 	float rotation = 0.0f;
 	bool needsUpdate = true;
 	void setModelMatrix();

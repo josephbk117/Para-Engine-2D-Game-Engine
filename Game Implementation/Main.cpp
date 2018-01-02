@@ -81,6 +81,19 @@ void scene2LoadData()
 	tempGameObject->addComponent(tempSprite);
 	tempGameObject->addComponent(new MagicObjectScaler);
 
+	Transform* followMouseTransform = tempGameObject->getComponent<Transform>();
+
+	tempGameObject = GameObject::createGameObject("ChildOfFollowMouse");
+	tempGameObject->getComponent<Transform>()->setRotation(glm::radians(45.0f));
+	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(1, 0));
+
+	tempGameObject->getComponent<Transform>()->setParent(followMouseTransform);
+	tempGameObject->setLayerOrder(15);
+	tempSprite = new Sprite();
+	tempSprite->init(0.5f, 0.5f);
+	tempSprite->setTextureID(texVal1);
+	tempGameObject->addComponent(tempSprite);
+	
 	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-0.3f, 5.5f));
 	tempSprite = new Sprite();

@@ -35,6 +35,17 @@ void Transform::setPosition(const glm::vec2 & position)
 	needsUpdate = true;
 	this->position = position;
 }
+const glm::mat4 Transform::getWorldSpaceTransform()
+{
+	glm::mat4 worldTransform = modelMatrix;
+	Transform* parentTransform = parent;
+	while (parentTransform != nullptr)
+	{
+		worldTransform = parentTransform->modelMatrix * worldTransform;
+		parentTransform = parentTransform->parent;
+	}
+	return worldTransform;
+}
 void Transform::setX(float xValue)
 {
 	setPosition(glm::vec2(xValue, position.y));
@@ -64,6 +75,19 @@ float Transform::getRotation()const
 const glm::vec2& Transform::getScale()const
 {
 	return scale;
+}
+void Transform::setParent(Transform * parentTransform)
+{
+	parent = parentTransform;
+}
+const Transform * Transform::getParent()
+{
+	return parent;
+}
+void Transform::addChild(Transform * child)
+{
+	child->parent = this;
+	children.push_back(child);
 }
 bool Transform::operator==(const Transform & transform)const
 {

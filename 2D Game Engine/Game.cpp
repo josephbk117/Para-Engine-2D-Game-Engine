@@ -278,9 +278,7 @@ void Game::update()
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
 			if (access->gameObjects[i]->isPartOfUI)
-			{
 				uiGameobjs.push_back(access->gameObjects[i]);
-			}
 			else
 			{
 				Transform *transformRef = access->gameObjects[i]->getComponent<Transform>();
@@ -296,7 +294,8 @@ void Game::update()
 					(*componentsAttachedToObject[i]).update();
 				if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
 				{
-					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, GL_FALSE, &(transformRef->getMatrix()[0][0]));
+					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, 
+						GL_FALSE, &(transformRef->getWorldSpaceTransform()[0][0]));
 					Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
 					if (spriteToDraw != nullptr)
 						spriteToDraw->draw();
@@ -308,12 +307,9 @@ void Game::update()
 		//Shader manager stuff
 		//Fix issues with ,.;"' symbols in fonts
 		//Add Font manager as well
-		//Implement scene graph
 		//make gui element less dependant on gameobject or merge them together
 		//---can implicitly make them gui elements if attached to canvas object etc
 		//can add gui elements (game objects) to another vector and then render them separatly
-		//Add error checking to components
-		//Put all implementation details in cpp files
 
 		shaderGameObjectsBase.unuse();
 
@@ -329,22 +325,6 @@ void Game::update()
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-
-		/*std::vector<GuiElement *> elements = GuiElement::getAllGuiElements();
-		unsigned int size = elements.size();
-		for (unsigned int i = 0; i < size; i++)
-		{
-			shaderUiElementBase.use();
-			glm::mat4 matrix = elements[i]->getMatrix();
-			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
-			const std::vector<Component *>guiComponents = elements[i]->getAttachedComponents();
-			unsigned int componentSize = guiComponents.size();
-			if (elements[i]->getGuiComponent<Sprite>() != nullptr)
-				elements[i]->getGuiComponent<Sprite>()->draw();
-			shaderUiElementBase.unuse();
-			for (unsigned int i = 0; i < componentSize; i++)
-				guiComponents[i]->update();
-		}*/
 
 		unsigned int size = uiGameobjs.size();
 		for (unsigned int i = 0; i < size; i++)
