@@ -29,7 +29,7 @@ public:
 	static float getDeltaTime() noexcept;
 	static float getTimeSinceStartUp() noexcept;
 private:
-	static bool frameBufferSizeUpated;
+	static bool frameBufferSizeUpdated;
 	static float deltaTime;
 	static float timeSinceStartUp;
 	static glm::vec2 mouseCoord;

@@ -30,7 +30,7 @@
 #include <GLFW\glfw3.h>
 #include "Text.h"
 
-bool Game::frameBufferSizeUpated;
+bool Game::frameBufferSizeUpdated;
 float Game::deltaTime;
 float Game::timeSinceStartUp;
 ShaderProgram Game::postProcessor;
@@ -118,10 +118,12 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, cons
 	glfwSetFramebufferSizeCallback(access->window, access->framebuffer_size_callback);
 
 	GLenum err = glewInit();
+#if _DEBUG
 	if (GLEW_OK != err)
 		std::cout << "Error: %s\n" << glewGetErrorString(err);
 	else
 		std::cout << " Glew initialsed" << std::endl;
+#endif
 #ifdef IMGUI_USE
 	IMGUI_INIT(access->window, true);
 #endif // IMGUI_USE
@@ -145,9 +147,12 @@ void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, cons
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowSize.x, windowSize.y); // use a single renderbuffer object for both a depth AND stencil buffer.
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-																								  // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+																								  // now that we actually created the framebuffer and added all attachments 
+	//we want to check if it is actually complete now
+#if _DEBUG
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
+#endif
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	screenPostProcessingElement.init(2, 2);
@@ -179,14 +184,16 @@ void Game::initialize(std::function<void()> initFunc)
 	}
 	if (access->camera == nullptr)
 	{
+#if _DEBUG
 		std::cout << "\nNo Camera Has Been Attached To An Object\nProviding Default Camera\n";
+#endif
 		access->camera = new Camera();
 		int width, height;
 		glfwGetWindowSize(access->window, &width, &height);
 		access->camera->init(glm::vec2(width, height));
 	}
 	std::stable_sort(access->gameObjects.begin(), access->gameObjects.end(), [](GameObject* a, GameObject* b)
-	{return a->getLayerOrder() < b->getLayerOrder(); });
+	{ return a->getLayerOrder() < b->getLayerOrder(); });
 	access->world.get()->SetContactListener(contactListener);
 }
 //ImVec4 clearColour;
@@ -233,13 +240,19 @@ void Game::update()
 		}
 		else
 			access->world->SetContactListener(contactListener);
-		if (frameBufferSizeUpated)
+		if (frameBufferSizeUpdated)
 		{
 			int width, height;
 			glfwGetWindowSize(access->window, &width, &height);
+#if _DEBUG
 			std::cout << "\nUpdated to : " << width << " ," << height;
-			access->camera->setScreenRatio(glm::vec2(width, height));
-			frameBufferSizeUpated = false;
+#endif
+			Transform value = *access->camera->attachedGameObject->getComponent<Transform>();
+			std::cout << "\nCamera position = " << value.getPosition().x << ", " << value.getPosition().y;
+			Transform bgValue = *GameObject::getGameObjectWithName("BG")->getComponent<Transform>();
+			std::cout << "\nBG Position = " << bgValue.getPosition().x << ", " << bgValue.getPosition().y;
+			access->camera->setScreenRatio(glm::vec2(width * ((float)width / (float)height), height));
+			frameBufferSizeUpdated = false;
 		}
 		YSE::System().update();
 		if (GameObject::isDirty)
@@ -265,8 +278,8 @@ void Game::update()
 		}
 #ifdef IMGUI_USE
 		IMGUI_NEWFRAME();
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
+			ImGui::GetIO().Framerate);
 #endif // IMGUI_USE
 
 		std::vector<GameObject *> uiGameobjs;
@@ -294,7 +307,7 @@ void Game::update()
 					(*componentsAttachedToObject[i]).update();
 				if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
 				{
-					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1, 
+					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1,
 						GL_FALSE, &(transformRef->getWorldSpaceTransform()[0][0]));
 					Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
 					if (spriteToDraw != nullptr)
@@ -357,7 +370,7 @@ void Game::update()
 		timeSinceStartUp = sinceStart.count();
 
 		start = access->clockTime.now();
-	}
+		}
 #ifdef IMGUI_USE
 	IMGUI_SHUTDOWN();
 #endif // IMGUI_USE
@@ -366,7 +379,7 @@ void Game::update()
 	delete contactListener;
 	glfwTerminate();
 	return;
-}
+			}
 void Game::setCursor(const std::string & cursorImagePath)
 {
 	glfwSetInputMode(access->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -474,5 +487,5 @@ void Game::InternalAcess::framebuffer_size_callback(GLFWwindow * window, int wid
 {
 	windowSize = glm::vec2(width, height);
 	glViewport(0, 0, width, height);
-	frameBufferSizeUpated = true;
+	frameBufferSizeUpdated = true;
 }
