@@ -78,6 +78,13 @@ const glm::vec2& Transform::getScale()const
 }
 void Transform::setParent(Transform * parentTransform)
 {
+	parentTransform->children.push_back(this);
+	if (parent != nullptr)
+	{
+		auto it = std::find(parent->children.begin(), parent->children.end(), this);
+		if (it != parent->children.end())
+			parent->children.erase(it);
+	}
 	parent = parentTransform;
 }
 const Transform * Transform::getParent()
