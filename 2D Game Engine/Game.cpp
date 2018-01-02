@@ -247,11 +247,7 @@ void Game::update()
 #if _DEBUG
 			std::cout << "\nUpdated to : " << width << " ," << height;
 #endif
-			Transform value = *access->camera->attachedGameObject->getComponent<Transform>();
-			std::cout << "\nCamera position = " << value.getPosition().x << ", " << value.getPosition().y;
-			Transform bgValue = *GameObject::getGameObjectWithName("BG")->getComponent<Transform>();
-			std::cout << "\nBG Position = " << bgValue.getPosition().x << ", " << bgValue.getPosition().y;
-			access->camera->setScreenRatio(glm::vec2(width * ((float)width / (float)height), height));
+			access->camera->setScreenRatio(glm::vec2(width * ((float)width / height), height));
 			frameBufferSizeUpdated = false;
 		}
 		YSE::System().update();
@@ -370,7 +366,7 @@ void Game::update()
 		timeSinceStartUp = sinceStart.count();
 
 		start = access->clockTime.now();
-		}
+	}
 #ifdef IMGUI_USE
 	IMGUI_SHUTDOWN();
 #endif // IMGUI_USE
@@ -379,7 +375,7 @@ void Game::update()
 	delete contactListener;
 	glfwTerminate();
 	return;
-			}
+}
 void Game::setCursor(const std::string & cursorImagePath)
 {
 	glfwSetInputMode(access->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);

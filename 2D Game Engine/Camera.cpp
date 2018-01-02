@@ -75,9 +75,12 @@ bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& sprit
 
 void Camera::setScreenRatio(const vec2& screenDimension)
 {
-	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * (screenDimension.x / screenDimension.y), 
-		((float)screenDimensions.x / 2.0f), -((float)screenDimensions.y / 2.0f), 
-		((float)screenDimensions.y / 2.0f)*(screenDimension.y / screenDimension.x));
+	float aspect = (float)screenDimension.x / (float)screenDimension.y;
+
+	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * aspect, 
+		((float)screenDimensions.x / 2.0f) * aspect, 
+		-((float)screenDimensions.y / 2.0f), 
+		((float)screenDimensions.y / 2.0f));
 	needsUpdate = true;
 }
 
