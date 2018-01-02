@@ -88,7 +88,7 @@ const std::vector<GameObject*>& GameObject::getAllGameObjects() noexcept
 }
 void GameObject::deleteGameObjectWithName(const std::string & name)
 {
-	if (gameObjectMap.count(name) <= 0)
+	if (gameObjectMap.find(name) == gameObjectMap.end())
 		return;
 	bool canAdd = true;
 	const unsigned int objDeletionSize = objectsMarkedForDeletion.size();

@@ -11,6 +11,10 @@ SoundSource* const AudioManager::loadAudioFromFile(const std::string & path, con
 
 SoundSource* const AudioManager::getAudioFromReference(const std::string & referenceString)
 {
+#if _DEBUG
+	if (audioUoMap.find(referenceString) == audioUoMap.end())
+		throw ("No Such Audio Was Loaded");
+#endif
 	return audioUoMap[referenceString];
 }
 

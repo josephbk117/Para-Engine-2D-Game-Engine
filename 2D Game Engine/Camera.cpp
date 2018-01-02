@@ -9,9 +9,9 @@ Camera::Camera()
 	screenDimensions = vec2(500, 500);
 }
 
-Camera::~Camera(){}
+Camera::~Camera() {}
 
-void Camera::init(const vec2& screenDimensions)
+void Camera::init(const vec2& screenDimensions) noexcept
 {
 	this->screenDimensions = screenDimensions;
 	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f), ((float)screenDimensions.x / 2.0f),
@@ -31,12 +31,12 @@ void Camera::setScale(float newScale)
 	scale = newScale;
 }
 
-const float& Camera::getScale()const
+const float& Camera::getScale()const noexcept
 {
 	return scale;
 }
 
-const mat4& Camera::getOrthoMatrix()const
+const mat4& Camera::getOrthoMatrix()const noexcept
 {
 	return viewMatrix;
 }
@@ -54,7 +54,7 @@ void Camera::update()
 	}
 }
 
-bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& spriteDimensions)const
+bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& spriteDimensions)const noexcept
 {
 	vec2 scaledScreenDimensions = vec2((float)screenDimensions.x, (float)screenDimensions.y) / (float)scale;
 
@@ -73,18 +73,18 @@ bool Camera::isObjectInCameraView(const vec2 & spritePosition, const vec2& sprit
 	return false;
 }
 
-void Camera::setScreenRatio(const vec2& screenDimension)
+void Camera::setScreenRatio(const vec2& screenDimension) noexcept
 {
 	float aspect = (float)screenDimension.x / (float)screenDimension.y;
 
-	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * aspect, 
-		((float)screenDimensions.x / 2.0f) * aspect, 
-		-((float)screenDimensions.y / 2.0f), 
+	orthographicMatrix = ortho(-((float)screenDimensions.x / 2.0f) * aspect,
+		((float)screenDimensions.x / 2.0f) * aspect,
+		-((float)screenDimensions.y / 2.0f),
 		((float)screenDimensions.y / 2.0f));
 	needsUpdate = true;
 }
 
-const glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions)
+const glm::vec2 Camera::convertScreenPointToWorldPoint(const glm::vec2 & screenPosition, const glm::vec2& screenDimensions) noexcept
 {
 	mat4 model = translate(mat4(1.0f), glm::vec3(-transform->getPosition().x, transform->getPosition().y, 0.0f));
 	model = rotate(model, -transform->getRotation(), glm::vec3(0, 0, 1.0f));

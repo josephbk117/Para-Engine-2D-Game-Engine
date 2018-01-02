@@ -52,11 +52,13 @@ void BoxCollider::start()
 
 void BoxCollider::setPhysicsMaterial(const PhysicsMaterial & physicsMaterial) noexcept
 {
-	access->fixture->SetDensity(physicsMaterial.density);
-	access->fixture->SetFriction(physicsMaterial.friction);
-	access->fixture->SetRestitution(physicsMaterial.bounciness);
-	access->body->SetLinearDamping(physicsMaterial.linearDamping);
-	access->body->SetAngularDamping(physicsMaterial.angularDamping);
+	b2Fixture* fixture = access->fixture;
+	fixture->SetDensity(physicsMaterial.density);
+	fixture->SetFriction(physicsMaterial.friction);
+	fixture->SetRestitution(physicsMaterial.bounciness);
+	b2Body* body = access->body;
+	body->SetLinearDamping(physicsMaterial.linearDamping);
+	body->SetAngularDamping(physicsMaterial.angularDamping);
 }
 
 void BoxCollider::setRotationConstraint(bool canObjectRotate)const noexcept

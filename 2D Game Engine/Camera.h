@@ -9,15 +9,15 @@ class Camera : public Component
 public:
 	Camera();
 	~Camera();
-	void init(const glm::vec2& screenDimensions);
+	void init(const glm::vec2& screenDimensions)noexcept;
 	virtual void start();
 	virtual void update();
 	void setScale(float newScale);
-	const float& getScale()const;
-	const glm::mat4& getOrthoMatrix()const;
-	bool isObjectInCameraView(const glm::vec2 & position, const glm::vec2& dimensions)const;
-	void setScreenRatio(const glm::vec2& screenDimension);
-	const glm::vec2 convertScreenPointToWorldPoint(const glm::vec2& screenPosition, const glm::vec2& screenDimensions);
+	const float& getScale()const noexcept;
+	const glm::mat4& getOrthoMatrix()const noexcept;
+	bool isObjectInCameraView(const glm::vec2 & position, const glm::vec2& dimensions)const noexcept;
+	void setScreenRatio(const glm::vec2& screenDimension) noexcept;
+	const glm::vec2 convertScreenPointToWorldPoint(const glm::vec2& screenPosition, const glm::vec2& screenDimensions) noexcept;
 private:
 	glm::vec2 screenDimensions;
 	bool needsUpdate;
