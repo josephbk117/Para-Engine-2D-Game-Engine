@@ -8,11 +8,6 @@
 
 void scene1LoadData();
 
-void callFunc(const std::function<void()> &func)
-{
-	func();
-}
-
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite)
 {
 	gameObj->addComponent(sprite);
@@ -22,17 +17,29 @@ void AddCameraToGameObject(GameObject* gameObj, Camera* camera)
 {
 	gameObj->addComponent(camera);
 }
-void printValue()
+
+Sprite* CreateSprite(unsigned int width,unsigned int height)
 {
-	std::cout << "\nLOLZ";
+	Sprite* sp = new Sprite;
+	sp->init(width, height);
+	return sp;
 }
+
+Camera* CreateCamera(float width, float height)
+{
+	Camera* camera = new Camera;
+	camera->init(glm::vec2(width,height));
+	return camera;
+}
+
 int main(int argc, char* argv[])
 {
 	chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
 	chai.add(chaiscript::fun(&AddSpriteToGameObject), "AddSprite");
+	chai.add(chaiscript::fun(&AddCameraToGameObject), "AddCamera");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
-	chai.add(chaiscript::fun(&Game::addScene) ,"AddScene");
+	chai.add(chaiscript::fun(&Game::addScene), "AddScene");
 	chai.add(chaiscript::fun(&Game::startScene), "StartScene");
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
@@ -40,7 +47,6 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
 	chai.add(chaiscript::fun(&GameObject::createGameObject), "CreateGameObject");
 	chai.add(chaiscript::fun(&GameObject::addComponent), "AddComponent");
-	chai.add(chaiscript::fun(&callFunc), "CallFunc");
 
 	//Can get rid of compoents in c++ sense in this case. Can make components in chai itself
 	//Might have to make chaiscript version of some classes
@@ -50,33 +56,34 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&GameObject::getComponent<Transform>), "GetComponentTransform");
 	chai.add(chaiscript::user_type<Sprite>(), "Sprite");
 	chai.add(chaiscript::constructor<Sprite()>(), "Sprite");
+	chai.add(chaiscript::fun(&CreateSprite), "CreateSprite");
 	//chai.add(chaiscript::base_class<Component, Sprite>());
 	chai.add(chaiscript::fun(&Sprite::init), "Init");
 	chai.add(chaiscript::fun(&Sprite::setTextureID), "SetTextureID");
 	chai.add(chaiscript::fun(&Sprite::getTextureID), "GetTextureID");
 	chai.add(chaiscript::user_type<Camera>(), "Camera");
 	chai.add(chaiscript::constructor<Camera()>(), "Camera");
+	chai.add(chaiscript::fun(&CreateCamera), "CreateCamera");
 	chai.add(chaiscript::fun(&Camera::init), "Init");
 	chai.add(chaiscript::fun(&scene1LoadData), "scene1LoadData");
-	
+
 	chai.eval("SetUpEngine(700,700,\"POOP\")");
 	chai.eval(R"!(  
 		def scene1()
 		{
-			CreateGameObject("Onno",false);
-			//var obj := CreateGameObject("OBJ1",false);
-			var sp = Sprite();
-			sp.Init(4.0f,4.0f);
+			var obj = CreateGameObject("Onno",false);
+			var sp = CreateSprite(4.0f,4.0f);
 			sp.SetTextureID(LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false));
-			//AddSpriteToGameObject(obj,sp);
+			AddSprite(obj,sp);
+			var cobj = CreateGameObject("camo",false);
+			var csp = CreateCamera(4.0f,4.0f);
+			AddCamera(cobj,csp);
 		}
-		
 	)!");
 
 	chai.eval("AddScene(scene1,\"scene2\")");
 	chai.eval("StartScene(\"scene2\",true)");
 	chai.eval("CleanUp()");
-	std::cin.get();
 	return 0;
 }
 void scene1LoadData()
