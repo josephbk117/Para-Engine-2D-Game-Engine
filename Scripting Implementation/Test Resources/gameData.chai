@@ -7,7 +7,7 @@ def scene1()
 	sp.SetTextureID(LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false));
 	AddSprite(obj,sp);
 	var cobj = CreateGameObject("camo",false);
-	var csp = CreateCamera(4.0f,4.0f);
+	var csp = CreateCamera(9.0f,4.0f);
 	AddCamera(cobj,csp);
 }
 
