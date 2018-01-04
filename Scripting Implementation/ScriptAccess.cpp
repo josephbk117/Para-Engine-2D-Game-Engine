@@ -66,24 +66,14 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&CreateCamera), "CreateCamera");
 	chai.add(chaiscript::fun(&Camera::init), "Init");
 	chai.add(chaiscript::fun(&scene1LoadData), "scene1LoadData");
+	
+	/*if (argc <= 1)
+		return 0;
+	std::cout << "Arg count = " << argc << " \n value = " << argv[1];
+	std::cin.get();
+	chai.eval_file(std::string(argv[0]));*/
 
-	chai.eval("SetUpEngine(700,700,\"POOP\")");
-	chai.eval(R"!(  
-		def scene1()
-		{
-			var obj = CreateGameObject("Onno",false);
-			var sp = CreateSprite(4.0f,4.0f);
-			sp.SetTextureID(LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false));
-			AddSprite(obj,sp);
-			var cobj = CreateGameObject("camo",false);
-			var csp = CreateCamera(4.0f,4.0f);
-			AddCamera(cobj,csp);
-		}
-	)!");
-
-	chai.eval("AddScene(scene1,\"scene2\")");
-	chai.eval("StartScene(\"scene2\",true)");
-	chai.eval("CleanUp()");
+	chai.eval_file("Test Resources\\gameData.chai");
 	return 0;
 }
 void scene1LoadData()

@@ -1,0 +1,16 @@
+SetUpEngine(700,700,"Scripted Window");
+
+def scene1()
+{
+	var obj = CreateGameObject("Onno",false);
+	var sp = CreateSprite(4.0f,4.0f);
+	sp.SetTextureID(LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false));
+	AddSprite(obj,sp);
+	var cobj = CreateGameObject("camo",false);
+	var csp = CreateCamera(4.0f,4.0f);
+	AddCamera(cobj,csp);
+}
+
+AddScene(scene1,"scene2");
+StartScene("scene2",true);
+CleanUp();
