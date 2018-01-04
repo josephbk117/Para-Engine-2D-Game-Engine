@@ -16,7 +16,7 @@ Sprite::~Sprite()
 		glDeleteVertexArrays(1, &vaoID);
 }
 
-void Sprite::init(const float& width, const float& height)
+void Sprite::init(float width, float height)
 {
 	this->width = width;
 	this->height = height;
@@ -35,7 +35,7 @@ void Sprite::draw()
 	glBindVertexArray(0);
 }
 
-void Sprite::setTextureID(const unsigned int& textureID)
+void Sprite::setTextureID(unsigned int textureID)
 {
 	this->textureID = textureID;
 }
