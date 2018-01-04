@@ -416,11 +416,11 @@ void Game::cleanUp()
 		glfwDestroyCursor(access->cursor);
 }
 
-void Game::setPostProcessingShader(ShaderProgram program)
+void Game::setPostProcessingShader(const ShaderProgram &program)
 {
 }
 
-void Game::addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName)
+void Game::addScene(const std::function<void()> &sceneSetupFunc, const std::string & sceneName)
 {
 	scenes[sceneName] = sceneSetupFunc;
 }

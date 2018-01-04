@@ -8,6 +8,11 @@
 
 void scene1LoadData();
 
+void callFunc(const std::function<void()> &func)
+{
+	func();
+}
+
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite)
 {
 	gameObj->addComponent(sprite);
@@ -17,20 +22,25 @@ void AddCameraToGameObject(GameObject* gameObj, Camera* camera)
 {
 	gameObj->addComponent(camera);
 }
-
+void printValue()
+{
+	std::cout << "\nLOLZ";
+}
 int main(int argc, char* argv[])
 {
 	chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
 	chai.add(chaiscript::fun(&AddSpriteToGameObject), "AddSprite");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
-	chai.add(chaiscript::fun(&Game::addScene), "AddScene");
+	chai.add(chaiscript::fun(&Game::addScene) ,"AddScene");
 	chai.add(chaiscript::fun(&Game::startScene), "StartScene");
+
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
 	chai.add(chaiscript::fun(&GameObject::createGameObject), "CreateGameObject");
 	chai.add(chaiscript::fun(&GameObject::addComponent), "AddComponent");
+	chai.add(chaiscript::fun(&callFunc), "CallFunc");
 
 	//Can get rid of compoents in c++ sense in this case. Can make components in chai itself
 	//Might have to make chaiscript version of some classes
@@ -48,23 +58,25 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::constructor<Camera()>(), "Camera");
 	chai.add(chaiscript::fun(&Camera::init), "Init");
 	chai.add(chaiscript::fun(&scene1LoadData), "scene1LoadData");
-
+	
 	chai.eval("SetUpEngine(700,700,\"POOP\")");
 	chai.eval(R"!(  
 		def scene1()
 		{
-			var obj = CreateGameObject("OBJ1",false);
+			CreateGameObject("Onno",false);
+			//var obj := CreateGameObject("OBJ1",false);
 			var sp = Sprite();
 			sp.Init(4.0f,4.0f);
 			sp.SetTextureID(LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false));
-			AddSpriteToGameObject(sp);
+			//AddSpriteToGameObject(obj,sp);
 		}
-
+		
 	)!");
-	
+
 	chai.eval("AddScene(scene1,\"scene2\")");
 	chai.eval("StartScene(\"scene2\",true)");
-	chai.eval("CleanUp");
+	chai.eval("CleanUp()");
+	std::cin.get();
 	return 0;
 }
 void scene1LoadData()

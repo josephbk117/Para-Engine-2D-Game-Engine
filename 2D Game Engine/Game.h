@@ -23,8 +23,8 @@ public:
 	static const glm::vec2 getWindowSize();
 	static const glm::vec2 * getMouseCoords();
 	static void cleanUp();
-	static void setPostProcessingShader(ShaderProgram program);
-	static void addScene(std::function<void()> sceneSetupFunc, const std::string & sceneName);
+	static void setPostProcessingShader(const ShaderProgram &program);
+	static void addScene(const std::function<void()> &sceneSetupFunc, const std::string & sceneName);
 	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
 	static float getDeltaTime() noexcept;
 	static float getTimeSinceStartUp() noexcept;
