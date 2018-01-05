@@ -42,6 +42,18 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&CreateCamera), "CreateCamera");
 	chai.add(chaiscript::fun(&Camera::init), "Init");
 
+	chai.add(chaiscript::user_type<glm::vec2>(), "Vec2");
+	chai.add(chaiscript::constructor<glm::vec2()>(), "Vec2");
+	chai.add(chaiscript::fun(&glm::vec2::x), "x");
+	chai.add(chaiscript::fun(&glm::vec2::y), "y");
+	chai.add(chaiscript::fun(&Transform::setX), "SetX");
+	chai.add(chaiscript::fun(&Transform::setY), "SetY");
+	chai.add(chaiscript::fun(&Transform::setScale), "SetScale");
+	chai.add(chaiscript::fun(&Transform::getPosition), "GetPosition");
+	chai.add(chaiscript::fun(&Transform::setPosition), "SetPosition");
+	chai.add(chaiscript::fun(&Transform::setParent), "SetParent");
+	chai.add(chaiscript::fun(&Transform::getParent), "GetParent");
+
 	chai.eval_file("Test Resources\\gameData.chai");
 	return 0;
 }
