@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Transform::addChild), "AddChild");
 
 	chai.eval_file("Test Resources\\gameData.chai");
+	chai.eval_file("CleanUp()");
 	return 0;
 }
 
