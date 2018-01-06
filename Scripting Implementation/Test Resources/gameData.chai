@@ -14,4 +14,3 @@ def scene1()
 }
 AddScene(scene1,"scene2");
 StartScene("scene2",true);
-CleanUp();
