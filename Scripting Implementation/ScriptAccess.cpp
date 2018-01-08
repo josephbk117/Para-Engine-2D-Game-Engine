@@ -21,12 +21,17 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
 	chai.add(chaiscript::fun(&Game::addScene), "AddScene");
 	chai.add(chaiscript::fun(&Game::startScene), "StartScene");
+	chai.add(chaiscript::fun(&Game::setCursor), "SetCursorImage");
+	chai.add(chaiscript::fun(&Game::lockCursor), "LockCursor");
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
 	chai.add(chaiscript::fun(&AudioManager::loadAudioFromFile), "LoadAudioFromFile");
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
 	chai.add(chaiscript::fun(&GameObject::createGameObject), "CreateGameObject");
+	chai.add(chaiscript::fun(&GameObject::deleteGameObjectWithName), "DeleteGameObject");
+	chai.add(chaiscript::fun(&GameObject::getLayerOrder), "GetLayerOrder");
+	chai.add(chaiscript::fun(&GameObject::setLayerOrder), "SetLayerOrder");
 	chai.add(chaiscript::fun(&GameObject::addComponent), "AddComponent");
 
 	//Can get rid of compoents in c++ sense in this case. Can make components in chai itself
