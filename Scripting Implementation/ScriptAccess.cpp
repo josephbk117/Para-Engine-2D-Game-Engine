@@ -4,6 +4,7 @@
 #include <Game.h>
 #include <GLM\glm.hpp>
 #include <TextureLoader.h>
+#include <AudioManager.h>
 #include <Sprite.h>
 
 Camera* CreateCamera(float width, float height);
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::startScene), "StartScene");
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
+	chai.add(chaiscript::fun(&AudioManager::loadAudioFromFile), "LoadAudioFromFile");
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
 	chai.add(chaiscript::fun(&GameObject::createGameObject), "CreateGameObject");
