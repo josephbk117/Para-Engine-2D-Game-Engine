@@ -7,12 +7,16 @@ public:
 	void play();
 	void stop();
 	void pause();
-	bool isPaused();
-	bool isPlaying();
+	void restart();
+	void toggle();
+	bool isPaused()const;
+	bool isPlaying()const;
 	void setLooping(bool canLoop);
-	bool isLooping();
+	bool isLooping()const;
 	void setVolume(float volume, unsigned int timeInMillis = 0);
-	float getVolume();
+	float getVolume()const;
+	unsigned int getLength()const;
+	float getTime()const;
 	~SoundSource();
 private:
 	struct internalAcess;

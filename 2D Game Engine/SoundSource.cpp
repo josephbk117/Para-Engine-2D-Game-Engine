@@ -1,64 +1,86 @@
 #include "SoundSource.h"
+#include "GLM\common.hpp"
 #include <Yse\yse.hpp>
 
 struct SoundSource::internalAcess
 {
-	YSE::sound* sData = nullptr;
+	YSE::sound* soundData = nullptr;
 };
 
 SoundSource::SoundSource(const std::string& path)
 {
 	access = new internalAcess();
-	access->sData = new YSE::sound();
-	access->sData->create(path.c_str());
+	access->soundData = new YSE::sound();
+	access->soundData->create(path.c_str());
 }
 
 void SoundSource::play()
 {
-	access->sData->play();
+	access->soundData->play();
 }
 
 void SoundSource::stop()
 {
-	access->sData->stop();
+	access->soundData->stop();
 }
 
 void SoundSource::pause()
 {
-	access->sData->pause();
+	access->soundData->pause();
 }
 
-bool SoundSource::isPaused()
+void SoundSource::restart()
 {
-	return access->sData->isPaused();
+	access->soundData->restart();
 }
 
-bool SoundSource::isPlaying()
+void SoundSource::toggle()
 {
-	return access->sData->isPlaying();
+	access->soundData->toggle();
+}
+
+bool SoundSource::isPaused() const
+{
+	return access->soundData->isPaused();
+}
+
+bool SoundSource::isPlaying() const
+{
+	return access->soundData->isPlaying();
 }
 
 void SoundSource::setLooping(bool canLoop)
 {
-	access->sData->setLooping(canLoop);
+	access->soundData->setLooping(canLoop);
 }
 
-bool SoundSource::isLooping()
+bool SoundSource::isLooping() const
 {
-	return access->sData->isLooping();
+	return access->soundData->isLooping();
 }
 
 void SoundSource::setVolume(float volume, unsigned int timeInMillisec)
 {
-	access->sData->setVolume(volume, timeInMillisec);
+	volume = glm::clamp(volume, 0.0f, 1.0f);
+	access->soundData->setVolume(volume, timeInMillisec);
 }
 
-float SoundSource::getVolume()
+float SoundSource::getVolume() const
 {
-	return access->sData->getVolume();
+	return access->soundData->getVolume();
+}
+
+unsigned int SoundSource::getLength() const
+{
+	return access->soundData->getLength();
+}
+
+float SoundSource::getTime() const
+{
+	return access->soundData->getTime();
 }
 
 SoundSource::~SoundSource()
 {
-	delete access->sData;
+	delete access->soundData;
 }
