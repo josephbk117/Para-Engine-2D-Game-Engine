@@ -8,22 +8,57 @@ struct SoundSource::internalAcess
 
 SoundSource::SoundSource(const std::string& path)
 {
-	acess = new internalAcess();
-	acess->sData = new YSE::sound();
-	acess->sData->create(path.c_str());
+	access = new internalAcess();
+	access->sData = new YSE::sound();
+	access->sData->create(path.c_str());
 }
 
 void SoundSource::play()
 {
-	acess->sData->play();
+	access->sData->play();
 }
 
 void SoundSource::stop()
 {
-	acess->sData->stop();
+	access->sData->stop();
+}
+
+void SoundSource::pause()
+{
+	access->sData->pause();
+}
+
+bool SoundSource::isPaused()
+{
+	return access->sData->isPaused();
+}
+
+bool SoundSource::isPlaying()
+{
+	return access->sData->isPlaying();
+}
+
+void SoundSource::setLooping(bool canLoop)
+{
+	access->sData->setLooping(canLoop);
+}
+
+bool SoundSource::isLooping()
+{
+	return access->sData->isLooping();
+}
+
+void SoundSource::setVolume(float volume, unsigned int timeInMillisec)
+{
+	access->sData->setVolume(volume, timeInMillisec);
+}
+
+float SoundSource::getVolume()
+{
+	return access->sData->getVolume();
 }
 
 SoundSource::~SoundSource()
 {
-	delete acess->sData;
+	delete access->sData;
 }
