@@ -12,6 +12,7 @@ class Game
 {
 public:
 	Game() = delete;
+	Game(const Game &) = delete;
 	friend class GameObject;
 	friend class BoxCollider;
 	static void setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title);

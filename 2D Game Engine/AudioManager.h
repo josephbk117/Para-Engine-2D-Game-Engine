@@ -5,6 +5,7 @@ class AudioManager
 {
 public:
 	AudioManager() = delete;
+	AudioManager(const AudioManager&) = delete;
 	static SoundSource* const loadAudioFromFile(const std::string& path, const std::string& referenceString);
 	static SoundSource* const getAudioFromReference(const std::string& referenceString);
 	static void removeLoadedAudioFromMemory();
