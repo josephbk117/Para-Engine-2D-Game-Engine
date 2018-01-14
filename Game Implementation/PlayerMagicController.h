@@ -2,6 +2,7 @@
 #include <Component.h>
 #include <GameObject.h>
 #include <Game.h>
+#include <SoundSource.h>
 #include <imgui.h>
 class PlayerMagicController : public Component
 {
@@ -12,6 +13,9 @@ public:
 		activeTransform = attachedGameObject->getComponent<Transform>();
 		rotOffset = 0.0f;
 		shouldDoCircleMotion = true;
+		sndBgMusic = AudioManager::loadAudioFromFile("Test Resources\\sndtrack2.wav", "bgMusic");
+		sndBgMusic->play();
+		sndBgMusic->setLooping(true);
 	}
 	virtual void update()
 	{
@@ -28,6 +32,13 @@ public:
 		{
 			if (GameObject::getGameObjectWithName("Galoo1") != nullptr)
 				GameObject::deleteGameObjectWithName("Galoo1");
+		}
+		if (Game::isKeyPressed(Key::NUM_3))
+		{
+			if (sndBgMusic->isPlaying())
+				sndBgMusic->pause();
+			else
+				sndBgMusic->play();
 		}
 		if (Game::isKeyPressed(Key::W))
 			activeTransform->setY(activeTransform->getPosition().y + 10.0f * deltaTime);
@@ -47,4 +58,5 @@ private:
 	Transform* activeTransform = nullptr;
 	float rotOffset = 0.0f;
 	bool shouldDoCircleMotion = false;
+	SoundSource* sndBgMusic;
 };

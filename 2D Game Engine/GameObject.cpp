@@ -62,10 +62,6 @@ const std::vector<Component*>& GameObject::getAttachedComponents()
 }
 GameObject * GameObject::getGameObjectWithName(const std::string & name)
 {
-#if _DEBUG
-	if (gameObjectMap.find(name) == gameObjectMap.end())
-		throw ("No Such Game Object Exists");
-#endif
 	return gameObjectMap[name];
 }
 GameObject * GameObject::createGameObject(const std::string & name, bool isUI)

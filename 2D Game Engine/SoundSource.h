@@ -13,7 +13,6 @@ public:
 	bool isLooping();
 	void setVolume(float volume, unsigned int timeInMillis = 0);
 	float getVolume();
-
 	~SoundSource();
 private:
 	struct internalAcess;

@@ -319,6 +319,7 @@ void Game::update()
 		//make gui element less dependant on gameobject or merge them together
 		//---can implicitly make them gui elements if attached to canvas object etc
 		//can add gui elements (game objects) to another vector and then render them separatly
+		//Make sound source as component
 
 		shaderGameObjectsBase.unuse();
 
