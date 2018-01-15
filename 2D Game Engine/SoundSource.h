@@ -15,6 +15,8 @@ public:
 	bool isLooping()const;
 	void setVolume(float volume, unsigned int timeInMillis = 0);
 	float getVolume()const;
+	void setSpeed(float speed);
+	float getSpeed();
 	unsigned int getLength()const;
 	float getTime()const;
 	~SoundSource();

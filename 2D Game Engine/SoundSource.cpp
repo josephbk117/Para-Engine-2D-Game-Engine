@@ -70,6 +70,16 @@ float SoundSource::getVolume() const
 	return access->soundData->getVolume();
 }
 
+void SoundSource::setSpeed(float speed)
+{
+	access->soundData->setSpeed(speed);
+}
+
+float SoundSource::getSpeed()
+{
+	return access->soundData->getSpeed();
+}
+
 unsigned int SoundSource::getLength() const
 {
 	return access->soundData->getLength();
