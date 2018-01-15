@@ -40,7 +40,7 @@ void Sprite::setTextureID(unsigned int textureID)
 	this->textureID = textureID;
 }
 
-unsigned int Sprite::getTextureID() const
+unsigned int Sprite::getTextureID() const noexcept
 {
 	return textureID;
 }
