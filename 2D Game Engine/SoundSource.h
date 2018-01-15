@@ -16,7 +16,7 @@ public:
 	void setVolume(float volume, unsigned int timeInMillis = 0);
 	float getVolume()const;
 	void setSpeed(float speed);
-	float getSpeed();
+	float getSpeed()const;
 	unsigned int getLength()const;
 	float getTime()const;
 	~SoundSource();

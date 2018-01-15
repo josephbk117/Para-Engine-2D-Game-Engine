@@ -75,7 +75,7 @@ void SoundSource::setSpeed(float speed)
 	access->soundData->setSpeed(speed);
 }
 
-float SoundSource::getSpeed()
+float SoundSource::getSpeed()const
 {
 	return access->soundData->getSpeed();
 }
