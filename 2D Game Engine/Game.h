@@ -19,8 +19,8 @@ public:
 	static void setCursor(const std::string & cursorImagePath);
 	static void hideCursor(bool hide);
 	static void lockCursor(bool lock);
-	static bool isKeyPressed(Key key);
-	static bool isKeyReleased(Key key);
+	static bool isKeyPressed(const Key& key);
+	static bool isKeyReleased(const Key& key);
 	static const glm::vec2 getWindowSize();
 	static const glm::vec2 * getMouseCoords();
 	static void cleanUp();

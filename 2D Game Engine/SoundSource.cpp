@@ -93,4 +93,5 @@ float SoundSource::getTime() const
 SoundSource::~SoundSource()
 {
 	delete access->soundData;
+	delete access;
 }

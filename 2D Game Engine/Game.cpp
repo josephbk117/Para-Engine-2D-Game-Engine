@@ -451,13 +451,13 @@ float Game::getTimeSinceStartUp() noexcept
 	return timeSinceStartUp;
 }
 
-bool Game::isKeyPressed(Key key)
+bool Game::isKeyPressed(const Key& key)
 {
 	if (glfwGetKey(access->window, (int)key) == GLFW_PRESS)
 		return true;
 	return false;
 }
-bool Game::isKeyReleased(Key key)
+bool Game::isKeyReleased(const Key& key)
 {
 	if (glfwGetKey(access->window, (int)key) == GLFW_RELEASE)
 		return true;

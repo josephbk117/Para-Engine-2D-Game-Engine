@@ -2,11 +2,11 @@
 #include "Transform.h"
 #include <GLM\gtc\matrix_transform.hpp>
 
-Transform::Transform(const glm::vec2 & _position, const float & _rotation, const glm::vec2 & _scale) noexcept
+Transform::Transform(const glm::vec2 & position, float rotation, const glm::vec2 & scale) noexcept
 {
-	position = _position;
-	rotation = _rotation;
-	scale = _scale;
+	this->position = position;
+	this->rotation = rotation;
+	this->scale = scale;
 	setModelMatrix();
 }
 

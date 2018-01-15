@@ -9,7 +9,7 @@ public:
 	~Sprite();
 	void init(float width, float height);
 	void setTextureID(unsigned int textureID);
-	unsigned int getTextureID()const;
+	unsigned int getTextureID()const noexcept;
 	glm::vec2 getDimensions() const;
 	void setDimension(const glm::vec2& newDimension);
 	void draw();
