@@ -43,7 +43,9 @@ unsigned int TextureManager::loadTextureFromFile(const std::string & path, const
 	}
 	else
 	{
+#if _DEBUG
 		std::cout << "\nTexture failed to load at path: " << path.c_str() << std::endl;
+#endif
 		stbi_image_free(data);
 	}
 	textureIdMap[referenceString] = textureID;
@@ -53,6 +55,12 @@ unsigned int TextureManager::loadTextureFromFile(const std::string & path, const
 unsigned int TextureManager::getTextureFromReference(const std::string& referenceString)
 {
 	return textureIdMap[referenceString];
+}
+
+void TextureManager::unloadTexture(const std::string & referenceName)
+{
+	glDeleteTextures(1, &textureIdMap[referenceName]);
+	textureIdMap.erase(referenceName);
 }
 
 void TextureManager::unloadTexturesFromMemory()
