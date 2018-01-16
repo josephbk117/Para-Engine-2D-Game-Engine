@@ -1,6 +1,6 @@
 # Para Engine
 
-It's an easy to use C++ 2D Game engine. Nothing more then a .lib file. 
+It's an easy to use C++ 2D Game engine. Nothing more than a .lib file. ![Image of Yaktocat](https://preview.ibb.co/cOU9E6/para_Engine_Logo.png)
 
 ## Easy To Use API
 
