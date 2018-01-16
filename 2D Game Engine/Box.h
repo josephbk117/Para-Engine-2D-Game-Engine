@@ -18,7 +18,7 @@ public:
 	void setVelocity(const glm::vec2& velocity) noexcept;
 	void setAngularVelocity(float velocity) noexcept;
 	void setPosition(const glm::vec2& position) noexcept;
-	void setRotation(const float& rotation) noexcept;
+	void setRotation(float rotation) noexcept;
 	const glm::vec2& getDimensions()const noexcept;
 	const float getAngle()const noexcept;
 	const glm::vec2 getPosition()const noexcept;

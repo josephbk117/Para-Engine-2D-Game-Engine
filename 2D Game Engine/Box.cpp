@@ -91,7 +91,7 @@ void BoxCollider::setPosition(const glm::vec2 & position) noexcept
 	access->body->SetTransform(b2Vec2(position.x, position.y), access->body->GetAngle());
 }
 
-void BoxCollider::setRotation(const float & rotation) noexcept
+void BoxCollider::setRotation(float rotation) noexcept
 {
 	access->body->SetTransform(access->body->GetPosition(), rotation);
 }
