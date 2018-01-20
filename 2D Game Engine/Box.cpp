@@ -76,9 +76,19 @@ void BoxCollider::applyForce(const glm::vec2& force) noexcept
 	access->body->ApplyForceToCenter(b2Vec2(force.x, force.y), true);
 }
 
+void BoxCollider::applyForce(float x, float y) noexcept
+{
+	access->body->ApplyForceToCenter(b2Vec2(x, y), true);
+}
+
 void BoxCollider::setVelocity(const glm::vec2& velocity) noexcept
 {
 	access->body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+}
+
+void BoxCollider::setVelocity(float x, float y) noexcept
+{
+	access->body->SetLinearVelocity(b2Vec2(x, y));
 }
 
 void BoxCollider::setAngularVelocity(float velocity) noexcept
@@ -89,6 +99,11 @@ void BoxCollider::setAngularVelocity(float velocity) noexcept
 void BoxCollider::setPosition(const glm::vec2 & position) noexcept
 {
 	access->body->SetTransform(b2Vec2(position.x, position.y), access->body->GetAngle());
+}
+
+void BoxCollider::setPosition(float xCoord, float yCoord) noexcept
+{
+	access->body->SetTransform(b2Vec2(xCoord, yCoord), access->body->GetAngle());
 }
 
 void BoxCollider::setRotation(float rotation) noexcept

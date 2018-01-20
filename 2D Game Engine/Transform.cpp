@@ -35,6 +35,10 @@ void Transform::setPosition(const glm::vec2 & position)
 	needsUpdate = true;
 	this->position = position;
 }
+void Transform::setPosition(float xCoord, float yCoord)
+{
+	position = glm::vec2(xCoord, yCoord);
+}
 const glm::mat4 Transform::getWorldSpaceTransform()
 {
 	glm::mat4 worldTransform = modelMatrix;

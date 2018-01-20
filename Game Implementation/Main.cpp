@@ -33,8 +33,6 @@ int main(int argc, char* argv[])
 	Game::addScene(scene1LoadData, "scene2");
 	Game::startScene("scene2", true);
 
-	//SceneManager::SaveSceneData(GameObject::getAllGameObjects(), "s");
-
 	Game::cleanUp();
 	return 0;
 }

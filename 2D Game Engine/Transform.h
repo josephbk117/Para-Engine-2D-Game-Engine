@@ -12,6 +12,7 @@ public:
 	virtual void start();
 	virtual void update();
 	void setPosition(const glm::vec2& position);
+	void setPosition(float xCoord, float yCoord);
 	const glm::mat4 getWorldSpaceTransform();
 	void setX(float xValue);
 	void setY(float yValue);

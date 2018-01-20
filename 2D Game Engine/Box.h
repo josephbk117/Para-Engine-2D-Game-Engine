@@ -15,9 +15,12 @@ public:
 	void setRotationConstraint(bool canObjectRotate)const noexcept;
 	void applyTorque(float strength) noexcept;
 	void applyForce(const glm::vec2& force) noexcept;
+	void applyForce(float x, float y) noexcept;
 	void setVelocity(const glm::vec2& velocity) noexcept;
+	void setVelocity(float x, float y) noexcept;
 	void setAngularVelocity(float velocity) noexcept;
 	void setPosition(const glm::vec2& position) noexcept;
+	void setPosition(float xCoord, float yCoord) noexcept;
 	void setRotation(float rotation) noexcept;
 	const glm::vec2& getDimensions()const noexcept;
 	const float getAngle()const noexcept;

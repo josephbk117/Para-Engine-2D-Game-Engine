@@ -12,6 +12,7 @@ public:
 	unsigned int getTextureID()const noexcept;
 	glm::vec2 getDimensions() const;
 	void setDimension(const glm::vec2& newDimension);
+	void setDimension(float width, float height);
 	void draw();
 private:
 	float width, height;

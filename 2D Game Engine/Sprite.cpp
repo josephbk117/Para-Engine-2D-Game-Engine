@@ -55,6 +55,11 @@ void Sprite::setDimension(const glm::vec2& newDimension)
 	setUpSpriteDimensions(newDimension.x, newDimension.y);
 }
 
+void Sprite::setDimension(float width, float height)
+{
+	setUpSpriteDimensions(width, height);
+}
+
 void Sprite::setUpSpriteDimensions(float width, float height)
 {
 	float vertexData[24];
