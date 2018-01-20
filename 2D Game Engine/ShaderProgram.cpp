@@ -87,6 +87,11 @@ GLint ShaderProgram::getUniformLocation(const std::string & uniformName)const
 	return glGetUniformLocation(programID, uniformName.c_str());
 }
 
+void ShaderProgram::applyShaderUniformMatrix(int uniformId, const glm::mat4& matrixValue)
+{
+	glUniformMatrix4fv(uniformId, 1, GL_FALSE, &matrixValue[0][0]);
+}
+
 void ShaderProgram::compileShader(const std::string & filePath, unsigned int ID)
 {
 	std::ifstream shaderFile(filePath);

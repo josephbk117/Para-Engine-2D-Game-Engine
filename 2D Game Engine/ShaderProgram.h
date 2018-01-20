@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <GLM\glm.hpp>
 class ShaderProgram
 {
 public:
@@ -11,6 +12,7 @@ public:
 	void use();
 	void unuse();
 	int getUniformLocation(const std::string& uniformName)const;
+	static void applyShaderUniformMatrix(int uniformId, const glm::mat4& matrixValue);
 private:
 	unsigned int programID, vertexShaderID, fragmentShaderID;
 	void compileShader(const std::string& filePath, unsigned int ID);

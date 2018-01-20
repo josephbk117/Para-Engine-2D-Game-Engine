@@ -279,10 +279,9 @@ void Game::update()
 #endif // IMGUI_USE
 
 		std::vector<GameObject *> uiGameobjs;
-
 		shaderGameObjectsBase.use();
 		glm::mat4 matrixTransform;
-		glUniformMatrix4fv(uniformProjectionMatrixGameObjectLocation, 1, GL_FALSE, &access->camera->getOrthoMatrix()[0][0]);
+		ShaderProgram::applyShaderUniformMatrix(uniformProjectionMatrixGameObjectLocation, access->camera->getOrthoMatrix());
 		glUniform1i(textureGameObjectLocation, 0);
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
 		{
@@ -303,8 +302,7 @@ void Game::update()
 					(*componentsAttachedToObject[i]).update();
 				if (access->camera->isObjectInCameraView(transformRef->getPosition(), transformRef->getScale()))
 				{
-					glUniformMatrix4fv(uniformModelMatrixGameObjectLocation, 1,
-						GL_FALSE, &(transformRef->getWorldSpaceTransform()[0][0]));
+					ShaderProgram::applyShaderUniformMatrix(uniformModelMatrixGameObjectLocation, transformRef->getWorldSpaceTransform());
 					Sprite* spriteToDraw = access->gameObjects[i]->getComponent<Sprite>();
 					if (spriteToDraw != nullptr)
 						spriteToDraw->draw();
