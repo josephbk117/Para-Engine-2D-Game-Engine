@@ -38,7 +38,7 @@ glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
 std::unordered_map<std::string, std::function<void()>> Game::scenes;
 std::function<void()> Game::activeSceneInitFunc;
-
+std::function<void()>  Game::scriptedUpdateFunction = NULL;
 struct Game::InternalAcess
 {
 	friend class BoxCollider;
@@ -348,7 +348,8 @@ void Game::update()
 			for (unsigned int i = 0; i < componentSize; i++)
 				guiComponents[i]->update();
 		}
-
+		if(scriptedUpdateFunction != NULL)
+			scriptedUpdateFunction();
 		glDisable(GL_BLEND);
 
 #ifdef IMGUI_USE

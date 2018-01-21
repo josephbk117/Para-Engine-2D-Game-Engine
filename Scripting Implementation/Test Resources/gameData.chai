@@ -1,5 +1,5 @@
 SetUpEngine(700,700,"Scripted Window");
-
+GLOBAL trans;
 def scene1()
 {
 	var obj = CreateGameObject("Onno",false);
@@ -8,9 +8,15 @@ def scene1()
 	AddSprite(obj,sp);
 	var cobj = CreateGameObject("camo",false);
 	var csp = CreateCamera(4.0f,4.0f);
-	var trans = cobj.GetComponentTransform();
+	trans = cobj.GetComponentTransform();
 	var pos = trans.GetPosition();
 	AddCamera(cobj,csp);
 }
+def update1()
+{
+	print("Updating..");
+	trans.SetX(trans.GetPosition().x + 0.01f);
+}
+SetUpdateFunction(update1);
 AddScene(scene1,"scene2");
 StartScene("scene2",true);

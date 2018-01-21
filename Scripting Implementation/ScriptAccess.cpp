@@ -11,12 +11,13 @@ Camera* CreateCamera(float width, float height);
 Sprite* CreateSprite(unsigned int width, unsigned int height);
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera);
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite);
-
+void SetUpdateFunction(std::function<void()> update);
 int main(int argc, char* argv[])
 {
 	chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
 	chai.add(chaiscript::fun(&AddSpriteToGameObject), "AddSprite");
 	chai.add(chaiscript::fun(&AddCameraToGameObject), "AddCamera");
+	chai.add(chaiscript::fun(&SetUpdateFunction), "SetUpdateFunction");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
 	chai.add(chaiscript::fun(&Game::addScene), "AddScene");
@@ -57,6 +58,8 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::constructor<glm::vec2()>(), "Vec2");
 	chai.add(chaiscript::fun(&glm::vec2::x), "x");
 	chai.add(chaiscript::fun(&glm::vec2::y), "y");
+	chai.add(chaiscript::user_type<Transform>(), "Transform");
+	chai.add(chaiscript::constructor<Transform()>(), "Transform");
 	chai.add(chaiscript::fun(&Transform::setX), "SetX");
 	chai.add(chaiscript::fun(&Transform::setY), "SetY");
 	chai.add(chaiscript::fun(&Transform::setScale), "SetScale");
@@ -74,6 +77,11 @@ int main(int argc, char* argv[])
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite)
 {
 	gameObj->addComponent(sprite);
+}
+
+void SetUpdateFunction(std::function<void()> update)
+{
+	Game::scriptedUpdateFunction = update;
 }
 
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera)
