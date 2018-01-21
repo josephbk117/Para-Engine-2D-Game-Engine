@@ -449,6 +449,11 @@ float Game::getTimeSinceStartUp() noexcept
 	return timeSinceStartUp;
 }
 
+void Game::setVsync(int syncRate) noexcept
+{
+	glfwSwapInterval(syncRate);
+}
+
 bool Game::isKeyPressed(const Key& key)
 {
 	if (glfwGetKey(access->window, (int)key) == GLFW_PRESS)

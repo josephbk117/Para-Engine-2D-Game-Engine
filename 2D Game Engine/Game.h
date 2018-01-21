@@ -29,6 +29,7 @@ public:
 	static void startScene(const std::string & sceneNameconst, bool isStartScene = false);
 	static float getDeltaTime() noexcept;
 	static float getTimeSinceStartUp() noexcept;
+	static void setVsync(int syncRate) noexcept;
 private:
 	static bool frameBufferSizeUpdated;
 	static float deltaTime;

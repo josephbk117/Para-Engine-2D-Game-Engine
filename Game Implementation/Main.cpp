@@ -20,6 +20,7 @@ void scene1LoadData();
 int main(int argc, char* argv[])
 {
 	Game::setUpEngine(720, 720, "Para Engine - Game v1.1");
+	Game::setVsync(0);
 	//Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);
 	//game.hideCursor(true);
