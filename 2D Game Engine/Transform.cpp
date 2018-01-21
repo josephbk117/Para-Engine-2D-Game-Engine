@@ -15,6 +15,13 @@ Transform::Transform() noexcept
 	setModelMatrix();
 }
 
+Transform::Transform(const Transform & copy) noexcept
+{
+	this->position = copy.position;
+	this->rotation = copy.rotation;
+	this->scale = copy.scale;
+}
+
 const glm::mat4& Transform::getMatrix()const
 {
 	return modelMatrix;

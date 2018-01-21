@@ -5,6 +5,7 @@
 #include <GLM\glm.hpp>
 #include <TextureLoader.h>
 #include <AudioManager.h>
+#include <InputData.h>
 #include <Sprite.h>
 
 Camera* CreateCamera(float width, float height);
@@ -12,20 +13,36 @@ Sprite* CreateSprite(unsigned int width, unsigned int height);
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera);
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite);
 void SetUpdateFunction(std::function<void()> update);
+bool IsKeyPressed(char key);
+float MathFuncSin(float radian);
+float MathFuncCos(float radian);
+float MathFuncAbs(float value);
+
 int main(int argc, char* argv[])
 {
 	chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
 	chai.add(chaiscript::fun(&AddSpriteToGameObject), "AddSprite");
 	chai.add(chaiscript::fun(&AddCameraToGameObject), "AddCamera");
 	chai.add(chaiscript::fun(&SetUpdateFunction), "SetUpdateFunction");
+	chai.add(chaiscript::fun(&IsKeyPressed), "IsKeyPressed");
+	//Math Functions
+	chai.add(chaiscript::fun(&MathFuncSin), "Sin");
+	chai.add(chaiscript::fun(&MathFuncCos), "Cos");
+	chai.add(chaiscript::fun(&MathFuncAbs), "Abs");
+
+
+	chai.add(chaiscript::fun(&Game::isKeyPressed), "IsKeyPressed");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
 	chai.add(chaiscript::fun(&Game::addScene), "AddScene");
 	chai.add(chaiscript::fun(&Game::startScene), "StartScene");
 	chai.add(chaiscript::fun(&Game::setCursor), "SetCursorImage");
 	chai.add(chaiscript::fun(&Game::lockCursor), "LockCursor");
+	chai.add(chaiscript::fun(&Game::getTimeSinceStartUp), "TimeSinceStartUp");
+	
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
+	chai.add(chaiscript::fun(&TextureManager::getTextureFromReference), "GetTextureFromReference");
 	chai.add(chaiscript::fun(&AudioManager::loadAudioFromFile), "LoadAudioFromFile");
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
@@ -60,6 +77,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&glm::vec2::y), "y");
 	chai.add(chaiscript::user_type<Transform>(), "Transform");
 	chai.add(chaiscript::constructor<Transform()>(), "Transform");
+	chai.add(chaiscript::constructor<Transform(const Transform &)>(), "Transform");
 	chai.add(chaiscript::fun(&Transform::setX), "SetX");
 	chai.add(chaiscript::fun(&Transform::setY), "SetY");
 	chai.add(chaiscript::fun(&Transform::setScale), "SetScale");
@@ -82,6 +100,26 @@ void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite)
 void SetUpdateFunction(std::function<void()> update)
 {
 	Game::scriptedUpdateFunction = update;
+}
+
+bool IsKeyPressed(char key)
+{
+	return Game::isKeyPressed((Key)((int)key));
+}
+
+float MathFuncSin(float radian)
+{
+	return glm::sin(radian);
+}
+
+float MathFuncCos(float radian)
+{
+	return glm::cos(radian);
+}
+
+float MathFuncAbs(float value)
+{
+	return glm::abs(value);
 }
 
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera)

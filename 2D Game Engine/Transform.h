@@ -8,6 +8,7 @@ public:
 	
 	Transform(const glm::vec2& position, float rotation, const glm::vec2& scale) noexcept;
 	Transform() noexcept;
+	Transform(const Transform& copy) noexcept;
 	const glm::mat4& getMatrix()const;
 	virtual void start();
 	virtual void update();
