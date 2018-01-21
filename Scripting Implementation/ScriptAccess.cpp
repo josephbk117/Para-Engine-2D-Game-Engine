@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Sprite::setTextureID), "SetTextureID");
 	chai.add(chaiscript::fun(&Sprite::getTextureID), "GetTextureID");
 	chai.add(chaiscript::fun(&Sprite::getDimensions), "GetDimensions");
-	chai.add(chaiscript::fun(&Sprite::setDimension), "SetDimensions");
+	chai.add(chaiscript::fun<void, Sprite, float, float>(&Sprite::setDimension), "SetDimension");
 
 	chai.add(chaiscript::user_type<Camera>(), "Camera");
 	chai.add(chaiscript::constructor<Camera()>(), "Camera");
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Transform::setY), "SetY");
 	chai.add(chaiscript::fun(&Transform::setScale), "SetScale");
 	chai.add(chaiscript::fun(&Transform::getPosition), "GetPosition");
-	chai.add(chaiscript::fun(&Transform::setPosition), "SetPosition");
+	chai.add(chaiscript::fun<void, Transform, float, float>(&Transform::setPosition), "SetPosition");
 	chai.add(chaiscript::fun(&Transform::setParent), "SetParent");
 	chai.add(chaiscript::fun(&Transform::getParent), "GetParent");
 	chai.add(chaiscript::fun(&Transform::addChild), "AddChild");

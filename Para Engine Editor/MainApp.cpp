@@ -1,8 +1,3 @@
-// ImGui - standalone example application for GLFW + OpenGL 3, using programmable pipeline
-// If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
-// (GLFW is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan graphics context creation, etc.)
-// (GL3W is a helper library to access OpenGL functions since there is no standard header to access modern OpenGL functions easily. Alternatives are GLEW, Glad, etc.)
-
 #include <GL\glew.h>
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
@@ -10,14 +5,15 @@
 #include <iostream>
 #include "HierarchyPanel.h"
 #include "PropertyPanel.h"
-
+#include <Game.h>
+#include <TextureLoader.h>
 int main(int, char**)
 {
 	if (!glfwInit())
 		return 1;
 	GLFWwindow* window = glfwCreateWindow(1040, 640, "Para Engine v0.01-alpha", NULL, NULL);
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // Enable vsync
+	glfwSwapInterval(1);
 	glfwInit();
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -31,7 +27,7 @@ int main(int, char**)
 	// Setup style
 	//ImGui::StyleColorsClassic();
 	ImGui::StyleColorsDark();
-
+	TextureManager::loadTextureFromFile("sdsd", "sdsd", false);
 	// Load Fonts
 	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
 	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple. 
