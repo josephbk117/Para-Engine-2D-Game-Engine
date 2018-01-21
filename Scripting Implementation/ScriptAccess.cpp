@@ -17,6 +17,8 @@ bool IsKeyPressed(char key);
 float MathFuncSin(float radian);
 float MathFuncCos(float radian);
 float MathFuncAbs(float value);
+float MathFuncPow(float value, float power);
+float MathFuncSqrt(float value);
 
 int main(int argc, char* argv[])
 {
@@ -29,7 +31,8 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&MathFuncSin), "Sin");
 	chai.add(chaiscript::fun(&MathFuncCos), "Cos");
 	chai.add(chaiscript::fun(&MathFuncAbs), "Abs");
-
+	chai.add(chaiscript::fun(&MathFuncPow), "Pow");
+	chai.add(chaiscript::fun(&MathFuncSqrt), "Sqrt");
 
 	chai.add(chaiscript::fun(&Game::isKeyPressed), "IsKeyPressed");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
@@ -39,7 +42,8 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::setCursor), "SetCursorImage");
 	chai.add(chaiscript::fun(&Game::lockCursor), "LockCursor");
 	chai.add(chaiscript::fun(&Game::getTimeSinceStartUp), "TimeSinceStartUp");
-	
+	chai.add(chaiscript::fun(&Game::getDeltaTime), "DeltaTime");
+	chai.add(chaiscript::fun(&Game::setVsync), "SetVsync");
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
 	chai.add(chaiscript::fun(&TextureManager::getTextureFromReference), "GetTextureFromReference");
@@ -51,9 +55,6 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&GameObject::getLayerOrder), "GetLayerOrder");
 	chai.add(chaiscript::fun(&GameObject::setLayerOrder), "SetLayerOrder");
 	chai.add(chaiscript::fun(&GameObject::addComponent), "AddComponent");
-
-	//Can get rid of compoents in c++ sense in this case. Can make components in chai itself
-	//Might have to make chaiscript version of some classes
 
 	chai.add(chaiscript::fun(&GameObject::getComponent<Transform>), "GetComponentTransform");
 	chai.add(chaiscript::user_type<Sprite>(), "Sprite");
@@ -120,6 +121,16 @@ float MathFuncCos(float radian)
 float MathFuncAbs(float value)
 {
 	return glm::abs(value);
+}
+
+float MathFuncPow(float value, float power)
+{
+	return glm::pow(value, power);
+}
+
+float MathFuncSqrt(float value)
+{
+	return glm::sqrt(value);
 }
 
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera)

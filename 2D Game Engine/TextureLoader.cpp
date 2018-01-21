@@ -1,4 +1,5 @@
 #include "TextureLoader.h"
+#include "stb_image.h"
 #include <GL\glew.h>
 #include <iostream>
 
