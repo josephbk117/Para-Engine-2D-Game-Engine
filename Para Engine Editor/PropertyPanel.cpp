@@ -1,8 +1,12 @@
 #include "PropertyPanel.h"
 #include "imgui.h"
+#include <TextureLoader.h>
+#include <iostream>
 PropertyPanel PropertyPanel::instance;
 PropertyPanel::PropertyPanel()
 {
+	//TextureManager::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg","test",false);
+	std::cout << "Loaded  6y";
 }
 
 void PropertyPanel::display(int screenWidth, int screenHeight)

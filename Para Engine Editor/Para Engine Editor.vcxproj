@@ -138,6 +138,11 @@
     <ClInclude Include="stb_textedit.h" />
     <ClInclude Include="stb_truetype.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\2D Game Engine\2D Game Engine.vcxproj">
+      <Project>{36edb50a-82e6-4f2e-8187-5a826b70d315}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

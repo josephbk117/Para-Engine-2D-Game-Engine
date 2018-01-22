@@ -27,7 +27,6 @@ int main(int, char**)
 	// Setup style
 	//ImGui::StyleColorsClassic();
 	ImGui::StyleColorsDark();
-	TextureManager::loadTextureFromFile("sdsd", "sdsd", false);
 	// Load Fonts
 	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
 	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple. 
@@ -79,6 +78,16 @@ int main(int, char**)
 				ImGui::Separator();
 				ImGui::MenuItem("Search");
 				ImGui::MenuItem("Reload");
+				if (ImGui::BeginMenu("Preferences"))
+				{
+					if (ImGui::BeginMenu("Theme"))
+					{
+						if (ImGui::MenuItem("Dark")) { ImGui::StyleColorsDark(); }
+						if (ImGui::MenuItem("Light")) { ImGui::StyleColorsLight(); }
+						ImGui::EndMenu();
+					}
+					ImGui::EndMenu();
+				}
 				if (ImGui::BeginMenu("Game Object"))
 				{
 					if (ImGui::MenuItem("Create New"))
@@ -121,7 +130,7 @@ int main(int, char**)
 		}
 		HierarchyPanel::instance.display(display_w, display_h);
 		PropertyPanel::instance.display(display_w, display_h);
-		
+
 		HierarchyPanel::instance.handleInputData();
 		// Rendering
 
