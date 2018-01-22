@@ -13,9 +13,9 @@ public:
 	{
 		timer = 0.0f;
 		count = 0;
-		texId[0] = TextureManager::getTextureFromReference("texThree");
-		texId[1] = TextureManager::getTextureFromReference("texTwo");
-		texId[2] = TextureManager::getTextureFromReference("texOne");
+		texId[0] = TextureManager::getTextureIdFromReference("texThree");
+		texId[1] = TextureManager::getTextureIdFromReference("texTwo");
+		texId[2] = TextureManager::getTextureIdFromReference("texOne");
 		sndRef = AudioManager::getAudioFromReference("snd_1");
 	}
 	virtual void update()

@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::setVsync), "SetVsync");
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
-	chai.add(chaiscript::fun(&TextureManager::getTextureFromReference), "GetTextureFromReference");
+	chai.add(chaiscript::fun(&TextureManager::getTextureIdFromReference), "GetTextureFromReference");
 	chai.add(chaiscript::fun(&AudioManager::loadAudioFromFile), "LoadAudioFromFile");
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");

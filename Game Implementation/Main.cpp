@@ -167,7 +167,7 @@ void scene1LoadData()
 	tempGameObject->setLayerOrder(1800);
 	sprite = new Sprite;
 	sprite->init(1.0f, 0.15f);
-	sprite->setTextureID(TextureManager::getTextureFromReference("translu"));
+	sprite->setTextureID(TextureManager::getTextureIdFromReference("translu"));
 	tempGameObject->addComponent(sprite);
 	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-0.5f, 0.925f));
 

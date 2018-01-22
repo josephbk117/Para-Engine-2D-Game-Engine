@@ -5,8 +5,6 @@
 PropertyPanel PropertyPanel::instance;
 PropertyPanel::PropertyPanel()
 {
-	//TextureManager::loadTextureFromFile("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg","test",false);
-	std::cout << "Loaded  6y";
 }
 
 void PropertyPanel::display(int screenWidth, int screenHeight)
@@ -25,9 +23,15 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	ImTextureID my_tex_id = io.Fonts->TexID;
-	float my_tex_w = (float)io.Fonts->TexWidth;
-	float my_tex_h = (float)io.Fonts->TexHeight;
+	ImTextureID my_tex_id = (void *)textures[0].textureId; //io.Fonts->TexID;
+	float my_tex_w, my_tex_h;
+	float ratio;
+	if (textures[0].width > textures[0].height)
+		ratio = 120.0f / textures[0].width;
+	else
+		float ratio = 120.0f / textures[0].height;
+	my_tex_w = ratio * textures[0].width;
+	my_tex_h = ratio * textures[0].height;
 
 	ImGui::Text("%.0fx%.0f", my_tex_w, my_tex_h);
 	ImVec2 pos = ImGui::GetCursorScreenPos();
@@ -50,6 +54,11 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	ImGui::End();
 	ImGui::PopStyleVar();
 	ImGui::PopStyleVar();
+}
+
+void PropertyPanel::addTexture(const Texture & texture)
+{
+	textures.push_back(texture);
 }
 
 PropertyPanel::~PropertyPanel()

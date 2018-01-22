@@ -90,7 +90,7 @@ unsigned int TextureManager::loadTextureFromFile(const std::string & path, const
 	return textureID;
 }
 
-unsigned int TextureManager::getTextureFromReference(const std::string& referenceString)
+unsigned int TextureManager::getTextureIdFromReference(const std::string& referenceString)
 {
 	return textureIdMap[referenceString];
 }

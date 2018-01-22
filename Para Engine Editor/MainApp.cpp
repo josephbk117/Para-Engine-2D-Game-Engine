@@ -7,6 +7,7 @@
 #include "PropertyPanel.h"
 #include <Game.h>
 #include <TextureLoader.h>
+#include <Texture.h>
 int main(int, char**)
 {
 	if (!glfwInit())
@@ -42,7 +43,8 @@ int main(int, char**)
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-
+	Texture texture = TextureManager::getImageDataAsTexture("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
+	PropertyPanel::instance.addTexture(texture);
 	// Main loop
 	while (!glfwWindowShouldClose(window))
 	{
