@@ -1,6 +1,8 @@
 #include "PropertyPanel.h"
 #include "imgui.h"
 #include <TextureLoader.h>
+#include <Transform.h>
+#include <Sprite.h>
 #include <iostream>
 PropertyPanel PropertyPanel::instance;
 PropertyPanel::PropertyPanel()
@@ -9,6 +11,11 @@ PropertyPanel::PropertyPanel()
 
 void PropertyPanel::display(int screenWidth, int screenHeight)
 {
+	if (hierarchyPanel == nullptr)
+	{
+		hierarchyPanel = &HierarchyPanel::instance;
+		return;
+	}
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
 	ImGuiWindowFlags window_flags = 0;
@@ -21,7 +28,22 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	ImGui::SetNextWindowSize(ImVec2(screenWidth - 320, 180), ImGuiSetCond_Always);
 	ImGui::Begin("Property Panel", p_open, window_flags);
 
-	ImGuiIO& io = ImGui::GetIO();
+	GameObject* obj = hierarchyPanel->getActiveGameObj();
+	if (obj != nullptr)
+	{
+		std::string text = "Name : " + obj->getName();
+		ImGui::Text(text.c_str());
+		ImGui::Text("Transform");
+		text = "Position : " + std::to_string(obj->getComponent<Transform>()->getPosition().x) + ", ";
+		text += std::to_string(obj->getComponent<Transform>()->getPosition().y);
+		ImGui::Text(text.c_str());
+		if(obj->hasComponent<Sprite>())
+			ImGui::Text("Has Sprite");
+	}
+
+
+	
+	/*ImGuiIO& io = ImGui::GetIO();
 
 	ImTextureID my_tex_id = (void *)textures[0].textureId; //io.Fonts->TexID;
 	float my_tex_w, my_tex_h;
@@ -35,6 +57,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	my_tex_h = ratio * textures[0].height;
 
 	ImGui::Text("%dx%d", textures[0].width, textures[0].height);
+
 	ImVec2 pos = ImGui::GetCursorScreenPos();
 	ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(1, 1), ImVec2(0, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 	if (ImGui::IsItemHovered())
@@ -50,7 +73,8 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		ImGui::Image(my_tex_id, ImVec2(128, 128), uv1, uv0, ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 		ImGui::EndTooltip();
 	}
-
+	ImGui::SameLine(180.0f);*/
+	
 
 	ImGui::End();
 	ImGui::PopStyleVar();

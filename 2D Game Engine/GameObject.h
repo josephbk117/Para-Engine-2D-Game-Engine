@@ -27,6 +27,7 @@ public:
 	static GameObject* createGameObject(const std::string& name, bool isUI = false);
 	static const std::vector<GameObject*>& getAllGameObjects() noexcept;
 	static void deleteGameObjectWithName(const std::string & name);
+	static void deleteGameObjectWithNameImmediate(const std::string& name);
 	static void removeAllGameObjectsFromMemory();
 	static void clearGameObjectData();
 	~GameObject();

@@ -1,19 +1,18 @@
 #include "HierarchyPanel.h"
 #include "imgui.h"
 #include <iostream>
+#include <Transform.h>
+
 HierarchyPanel HierarchyPanel::instance;
 HierarchyPanel::HierarchyPanel()
 {
 }
-void HierarchyPanel::addGameObject(const std::string gameObject)
-{
-	gameObjectHierarchy.push_back(gameObject);
-}
 
 void HierarchyPanel::removeGameObjectAtIndex(unsigned int index)
 {
-	gameObjectHierarchy.erase(gameObjectHierarchy.begin() + index);
-	activeElement = -1;
+	std::string name = GameObject::getAllGameObjects()[index]->getName();
+	GameObject::deleteGameObjectWithNameImmediate(name);
+	activeElementIndex = -1;
 }
 
 void HierarchyPanel::display(int screenWidth, int screenHeight)
@@ -32,14 +31,15 @@ void HierarchyPanel::display(int screenWidth, int screenHeight)
 	ImGui::Begin("Hierarchy", p_open, window_flags);
 	ImGui::Text("Hierarchy Of Objects");
 
-	for (int i = 0; i < gameObjectHierarchy.size(); i++)
+	std::vector<GameObject *> localObjs = GameObject::getAllGameObjects();
+	for (int i = 0; i < localObjs.size(); i++)
 	{
 		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-		if (i == activeElement)
+		if (i == activeElementIndex)
 			node_flags |= ImGuiTreeNodeFlags_Selected;
-		bool node_open = ImGui::TreeNodeEx(gameObjectHierarchy[i].c_str(), node_flags);
+		bool node_open = ImGui::TreeNodeEx(localObjs[i]->getName().c_str(), node_flags);
 		if (ImGui::IsItemClicked())
-			activeElement = i;
+			activeElementIndex = i;
 		if (node_open)
 		{
 			ImGui::Text("Child Stuff");
@@ -51,11 +51,18 @@ void HierarchyPanel::display(int screenWidth, int screenHeight)
 	ImGui::PopStyleVar();
 }
 
+GameObject* HierarchyPanel::getActiveGameObj()
+{
+	if (activeElementIndex == -1)
+		return nullptr;
+	return GameObject::getAllGameObjects()[activeElementIndex];
+}
+
 void HierarchyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElement != -1)
-		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElement);
+	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElementIndex != -1)
+		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
 }
 
 

@@ -6,8 +6,12 @@
 #include "HierarchyPanel.h"
 #include "PropertyPanel.h"
 #include <Game.h>
+#include <GameObject.h>
+#include <Sprite.h>
 #include <TextureLoader.h>
 #include <Texture.h>
+#include <filesystem>
+
 int main(int, char**)
 {
 	if (!glfwInit())
@@ -25,6 +29,19 @@ int main(int, char**)
 	// Setup ImGui binding
 	ImGui_ImplGlfwGL3_Init(window, true);
 
+	try 
+	{
+		unsigned size = std::experimental::filesystem::file_size("F:\\Readme.txt");
+		std::cout << "\nSize is " << size;
+	}
+	catch (std::experimental::filesystem::filesystem_error& e) 
+	{
+		std::cout << e.what() << '\n';
+	}
+
+	std::string path = "F:\\";
+	for (auto & p : std::experimental::filesystem::directory_iterator(path))
+		std::cout << p << std::endl;
 	// Setup style
 	//ImGui::StyleColorsClassic();
 	ImGui::StyleColorsDark();
@@ -94,7 +111,15 @@ int main(int, char**)
 				{
 					if (ImGui::MenuItem("Create New"))
 						showPopUp = true;
-					ImGui::MenuItem("Add Component");
+					if (ImGui::BeginMenu("Add Component", HierarchyPanel::instance.getActiveGameObj() != nullptr))
+					{
+						if (ImGui::MenuItem("Sprite"))
+							HierarchyPanel::instance.getActiveGameObj()->addComponent(new Sprite());
+						ImGui::MenuItem("Camera");
+						ImGui::MenuItem("Box Collider");
+						ImGui::MenuItem("Text");
+						ImGui::EndMenu();
+					}
 					if (ImGui::BeginMenu("Add Standard Shader"))
 					{
 						ImGui::MenuItem("Basic Sprite");
@@ -120,7 +145,7 @@ int main(int, char**)
 				ImGui::InputText("New Object", bufpass, 40, NULL);
 				if (ImGui::Button("Add Object"))
 				{
-					HierarchyPanel::instance.addGameObject(bufpass);
+					GameObject::createGameObject(std::string(bufpass));
 					bufpass[0] = '\0';
 					ImGui::CloseCurrentPopup();
 				}

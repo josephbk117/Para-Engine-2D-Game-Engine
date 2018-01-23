@@ -21,7 +21,7 @@ GameObject::GameObject(const std::string & name)
 
 void GameObject::setName(const std::string & name) noexcept
 {
-	isDirty = true; 
+	isDirty = true;
 	this->name = name;
 }
 
@@ -32,7 +32,7 @@ const std::string & GameObject::getName() const noexcept
 
 void GameObject::setLayerOrder(int order) noexcept
 {
-	isDirty = true; 
+	isDirty = true;
 	this->layerOrder = order;
 }
 
@@ -102,6 +102,24 @@ void GameObject::deleteGameObjectWithName(const std::string & name)
 		isDirty = true;
 	}
 }
+void GameObject::deleteGameObjectWithNameImmediate(const std::string & name)
+{
+	unsigned int size = gameObjectVector.size();
+	int pos = -1;
+	for (unsigned int i = 0; i < size; i++)
+	{
+		if (gameObjectVector[i] == gameObjectMap[name])
+		{
+			pos = i;
+			break;
+		}
+	}
+	if (pos == -1)
+		return;
+	gameObjectVector.erase(gameObjectVector.begin() + pos);
+	delete gameObjectMap[name];
+	gameObjectMap.erase(name);
+}
 void GameObject::removeAllGameObjectsFromMemory()
 {
 	const unsigned int sizeValue = gameObjectVector.size();
@@ -119,10 +137,10 @@ void GameObject::removeAllObjectsMarkedForDeletion()
 {
 	if (objectsMarkedForDeletion.size() <= 0)
 		return;
-	unsigned int deletionSize = objectsMarkedForDeletion.size();
+	const unsigned int deletionSize = objectsMarkedForDeletion.size();
 	for (unsigned int i = 0; i < deletionSize; i++)
 	{
-		unsigned int gameVecObjSize = gameObjectVector.size();
+		const unsigned int gameVecObjSize = gameObjectVector.size();
 		for (unsigned int j = 0; i < gameVecObjSize; j++)
 		{
 			if (objectsMarkedForDeletion[i] != nullptr)

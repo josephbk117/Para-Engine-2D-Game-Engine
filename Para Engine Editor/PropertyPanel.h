@@ -1,6 +1,7 @@
 #pragma once
 #include <Texture.h>
 #include <vector>
+#include "HierarchyPanel.h"
 class PropertyPanel
 {
 public:
@@ -12,5 +13,6 @@ public:
 	~PropertyPanel();
 private:
 	std::vector<Texture> textures;
+	HierarchyPanel* hierarchyPanel = nullptr;
 };
 
