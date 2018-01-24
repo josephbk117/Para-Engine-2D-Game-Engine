@@ -7,6 +7,8 @@ ResourceManager::ResourceManager()
 }
 ResourceManager::~ResourceManager()
 {
+	for (int i = 0; i < textureResource.size(); i++)
+		delete std::get<1>(textureResource[i]).data;
 }
 
 void ResourceManager::addResource(ResourceType resourceType, const std::string & filePath)

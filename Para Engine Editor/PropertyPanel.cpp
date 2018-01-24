@@ -32,24 +32,29 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	GameObject* obj = hierarchyPanel->getActiveGameObj();
 	if (obj != nullptr)
 	{
+		ImGui::BeginGroup();
 		std::string text = "Name : " + obj->getName();
 		ImGui::Text(text.c_str());
 		ImGui::Text("Transform");
 		text = "Position : " + std::to_string(obj->getComponent<Transform>()->getPosition().x) + ", ";
 		text += std::to_string(obj->getComponent<Transform>()->getPosition().y);
 		ImGui::Text(text.c_str());
-		ImGui::Text("Has Sprite");
+		ImGui::EndGroup();
+		ImGui::SameLine();
 		std::string filePath;
+		ImGui::BeginGroup();
 		if (obj->hasComponent<Sprite>())
 		{
+			ImGui::Text("Sprite");
 			filePath = "File Path : ";
 			for (int i = 0; i < ResourceManager::instance.getTextureVector()->size(); i++)
-			{
-				filePath += std::get<0>(ResourceManager::instance.getTextureVector()->at(i)) + " size : ";
-				filePath += std::to_string(std::get<1>(ResourceManager::instance.getTextureVector()->at(i)).fileSize/1000.0f) + " KB";
-			}
+				filePath = std::get<0>(ResourceManager::instance.getTextureVector()->at(i));
+			ImGui::TextWrapped(filePath.c_str());
+			std::string fileSize = "File Size : " + 
+				std::to_string(std::get<1>(ResourceManager::instance.getTextureVector()->at(0)).fileSize / 1000.0f) + " KB";
+			ImGui::Text(fileSize.c_str());
 		}
-		ImGui::Text(filePath.c_str());
+		ImGui::EndGroup();
 	}
 
 	/*ImGuiIO& io = ImGui::GetIO();

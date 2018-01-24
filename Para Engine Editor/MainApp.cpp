@@ -11,7 +11,7 @@
 #include <TextureLoader.h>
 #include <Texture.h>
 #include "ResourceManager.h"
-#include <filesystem>
+#include "FileExplorer.h"
 
 int main(int, char**)
 {
@@ -30,19 +30,6 @@ int main(int, char**)
 	// Setup ImGui binding
 	ImGui_ImplGlfwGL3_Init(window, true);
 
-	try 
-	{
-		unsigned size = std::experimental::filesystem::file_size("F:\\Readme.txt");
-		std::cout << "\nSize is " << size;
-	}
-	catch (std::experimental::filesystem::filesystem_error& e) 
-	{
-		std::cout << e.what() << '\n';
-	}
-
-	std::string path = "F:\\";
-	for (auto & p : std::experimental::filesystem::directory_iterator(path))
-		std::cout << p << std::endl;
 	// Setup style
 	//ImGui::StyleColorsClassic();
 	ImGui::StyleColorsDark();
@@ -88,7 +75,9 @@ int main(int, char**)
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Open Project", "CTRL+O")) { std::cout << "open project called\n"; }
+				if (ImGui::MenuItem("Open Project", "CTRL+O")) {
+					std::cout << "open project called\n"; FileExplorer::instance.shouldDisplay = true;
+				}
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
 			}
@@ -159,7 +148,7 @@ int main(int, char**)
 		}
 		HierarchyPanel::instance.display(display_w, display_h);
 		PropertyPanel::instance.display(display_w, display_h);
-
+		FileExplorer::instance.display();
 		HierarchyPanel::instance.handleInputData();
 		// Rendering
 

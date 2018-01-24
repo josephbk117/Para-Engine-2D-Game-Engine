@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileExplorer.cpp" />
     <ClCompile Include="HierarchyPanel.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileExplorer.h" />
     <ClInclude Include="HierarchyPanel.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_glfw_gl3.h" />
