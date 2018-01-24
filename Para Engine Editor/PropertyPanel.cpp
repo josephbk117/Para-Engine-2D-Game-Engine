@@ -1,5 +1,6 @@
 #include "PropertyPanel.h"
 #include "imgui.h"
+#include "ResourceManager.h"
 #include <TextureLoader.h>
 #include <Transform.h>
 #include <Sprite.h>
@@ -25,7 +26,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	window_flags |= ImGuiWindowFlags_NoCollapse;
 	bool *p_open = NULL;
 	ImGui::SetNextWindowPos(ImVec2(0, screenHeight - 180), ImGuiSetCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(screenWidth - 320, 180), ImGuiSetCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(screenWidth - hierarchyPanel->xLimiter, 180), ImGuiSetCond_Always);
 	ImGui::Begin("Property Panel", p_open, window_flags);
 
 	GameObject* obj = hierarchyPanel->getActiveGameObj();
@@ -37,12 +38,20 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		text = "Position : " + std::to_string(obj->getComponent<Transform>()->getPosition().x) + ", ";
 		text += std::to_string(obj->getComponent<Transform>()->getPosition().y);
 		ImGui::Text(text.c_str());
-		if(obj->hasComponent<Sprite>())
-			ImGui::Text("Has Sprite");
+		ImGui::Text("Has Sprite");
+		std::string filePath;
+		if (obj->hasComponent<Sprite>())
+		{
+			filePath = "File Path : ";
+			for (int i = 0; i < ResourceManager::instance.getTextureVector()->size(); i++)
+			{
+				filePath += std::get<0>(ResourceManager::instance.getTextureVector()->at(i)) + " size : ";
+				filePath += std::to_string(std::get<1>(ResourceManager::instance.getTextureVector()->at(i)).fileSize/1000.0f) + " KB";
+			}
+		}
+		ImGui::Text(filePath.c_str());
 	}
 
-
-	
 	/*ImGuiIO& io = ImGui::GetIO();
 
 	ImTextureID my_tex_id = (void *)textures[0].textureId; //io.Fonts->TexID;
@@ -74,7 +83,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		ImGui::EndTooltip();
 	}
 	ImGui::SameLine(180.0f);*/
-	
+
 
 	ImGui::End();
 	ImGui::PopStyleVar();

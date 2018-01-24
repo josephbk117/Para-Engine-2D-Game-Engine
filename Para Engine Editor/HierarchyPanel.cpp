@@ -26,8 +26,8 @@ void HierarchyPanel::display(int screenWidth, int screenHeight)
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
 	bool *p_open = NULL;
-	ImGui::SetNextWindowPos(ImVec2(screenWidth - 320, 0), ImGuiSetCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(320, screenHeight), ImGuiSetCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(screenWidth - xLimiter, 0), ImGuiSetCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(xLimiter, screenHeight), ImGuiSetCond_Always);
 	ImGui::Begin("Hierarchy", p_open, window_flags);
 	ImGui::Text("Hierarchy Of Objects");
 

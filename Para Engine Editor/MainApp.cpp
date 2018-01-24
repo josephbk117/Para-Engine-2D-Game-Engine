@@ -10,6 +10,7 @@
 #include <Sprite.h>
 #include <TextureLoader.h>
 #include <Texture.h>
+#include "ResourceManager.h"
 #include <filesystem>
 
 int main(int, char**)
@@ -60,8 +61,9 @@ int main(int, char**)
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	Texture texture = TextureManager::getImageDataAsTexture("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
-	PropertyPanel::instance.addTexture(texture);
+	//Texture texture = TextureManager::getImageDataAsTexture("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
+	//PropertyPanel::instance.addTexture(texture);
+	ResourceManager::instance.addResource(ResourceType::TEXTURE, "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
 	// Main loop
 	while (!glfwWindowShouldClose(window))
 	{

@@ -6,6 +6,7 @@ class HierarchyPanel
 {
 public:
 	static HierarchyPanel instance;
+	int xLimiter = 280;
 	HierarchyPanel();
 	HierarchyPanel(const HierarchyPanel&) = delete;
 	void removeGameObjectAtIndex(unsigned int index);
