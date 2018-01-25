@@ -20,7 +20,7 @@ int main(int, char**)
 {
 	if (!glfwInit())
 		return 1;
-	GLFWwindow* window = glfwCreateWindow(1040, 640, "Para Engine v0.01-alpha", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1040, 640, "Para Engine v0.04-alpha", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	glfwInit();
@@ -141,7 +141,28 @@ int main(int, char**)
 				ImGui::InputText("New Object", bufpass, 40, NULL);
 				if (ImGui::Button("Add Object"))
 				{
-					GameObject::createGameObject(std::string(bufpass));
+					std::string objName(bufpass);
+					while (true)
+					{
+						bool success = true;
+						try { GameObject::createGameObject(objName); }
+						catch (...)
+						{
+							if (isdigit(objName[objName.length() - 1]))
+							{
+								int count = 0;
+								while (isdigit(objName[objName.length() - count - 1]))
+									count++;
+								int incrementValue = atoi(objName.substr(objName.length() - count, count).c_str());
+								objName = objName.substr(0, objName.length() - count) + std::to_string(++incrementValue);
+							}
+							else
+								objName += "0";
+							success = false;
+						}
+						if (success)
+							break;
+					}
 					bufpass[0] = '\0';
 					ImGui::CloseCurrentPopup();
 				}
