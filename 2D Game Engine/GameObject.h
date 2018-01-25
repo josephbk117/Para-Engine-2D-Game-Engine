@@ -8,6 +8,7 @@ class GameObject;
 class GameObject
 {
 	friend class Game;
+	friend class EditorSceneViewManager;
 public:
 	GameObject();
 	GameObject(const std::string& name);

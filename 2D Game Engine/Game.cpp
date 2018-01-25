@@ -280,7 +280,6 @@ void Game::update()
 
 		std::vector<GameObject *> uiGameobjs;
 		shaderGameObjectsBase.use();
-		glm::mat4 matrixTransform;
 		ShaderProgram::applyShaderUniformMatrix(uniformProjectionMatrixGameObjectLocation, access->camera->getOrthoMatrix());
 		glUniform1i(textureGameObjectLocation, 0);
 		for (unsigned int i = 0; i < access->gameObjects.size(); i++)
@@ -339,7 +338,7 @@ void Game::update()
 		{
 			shaderUiElementBase.use();
 			glm::mat4 matrix = uiGameobjs[i]->getComponent<Transform>()->getMatrix();
-			glUniformMatrix4fv(uniformModelMatrixUiLocation, 1, GL_FALSE, &(matrix[0][0]));
+			shaderUiElementBase.applyShaderUniformMatrix(uniformModelMatrixUiLocation, matrix);
 			const std::vector<Component *>guiComponents = uiGameobjs[i]->getAttachedComponents();
 			unsigned int componentSize = guiComponents.size();
 			if (uiGameobjs[i]->getComponent<Sprite>() != nullptr)

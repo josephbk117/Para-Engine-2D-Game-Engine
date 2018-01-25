@@ -17,6 +17,8 @@ void HierarchyPanel::removeGameObjectAtIndex(unsigned int index)
 
 void HierarchyPanel::display(int screenWidth, int screenHeight)
 {
+	localScreenWidth = screenWidth;
+	localScreenHeight = screenHeight;
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
 	ImGuiWindowFlags window_flags = 0;
@@ -26,8 +28,8 @@ void HierarchyPanel::display(int screenWidth, int screenHeight)
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
 	bool *p_open = NULL;
-	ImGui::SetNextWindowPos(ImVec2(screenWidth - xLimiter, 0), ImGuiSetCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(xLimiter, screenHeight), ImGuiSetCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(localScreenWidth - xLimiter, 0), ImGuiSetCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(xLimiter, localScreenHeight), ImGuiSetCond_Always);
 	ImGui::Begin("Hierarchy", p_open, window_flags);
 	ImGui::Text("Hierarchy Of Objects");
 
@@ -63,8 +65,20 @@ void HierarchyPanel::handleInputData()
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElementIndex != -1)
 		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
+	if (io.MouseClicked[0] && !isDragging)
+	{
+		if (io.MouseClickedPos[0].x > (localScreenWidth - xLimiter) - 15 && io.MouseClickedPos[0].x < (localScreenWidth - xLimiter) + 15)
+			isDragging = true;
+	}
+	else if (isDragging)
+	{
+		if (io.MouseClicked[0])
+			isDragging = false;
+	}
+	if (isDragging)
+		xLimiter = localScreenWidth - io.MousePos.x;
+	xLimiter = glm::clamp(xLimiter, localScreenWidth / 6, localScreenWidth / 3);
 }
-
 
 HierarchyPanel::~HierarchyPanel()
 {

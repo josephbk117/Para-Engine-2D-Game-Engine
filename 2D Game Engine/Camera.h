@@ -10,6 +10,7 @@ public:
 	Camera();
 	~Camera();
 	void init(const glm::vec2& screenDimensions)noexcept;
+	void init(float dimensionX, float dimensionY) noexcept;
 	virtual void start();
 	virtual void update();
 	void setScale(float newScale);

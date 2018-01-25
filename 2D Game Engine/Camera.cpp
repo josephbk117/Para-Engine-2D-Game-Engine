@@ -18,6 +18,13 @@ void Camera::init(const vec2& screenDimensions) noexcept
 		-((float)screenDimensions.y / 2.0f), ((float)screenDimensions.y / 2.0f));
 }
 
+void Camera::init(float dimensionX, float dimensionY) noexcept
+{
+	this->screenDimensions = glm::vec2(dimensionX, dimensionY);
+	orthographicMatrix = ortho(-((float)dimensionX / 2.0f), ((float)dimensionX / 2.0f),
+		-((float)dimensionY / 2.0f), ((float)dimensionY / 2.0f));
+}
+
 void Camera::start()
 {
 	transform = attachedGameObject->getComponent<Transform>();

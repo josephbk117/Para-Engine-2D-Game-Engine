@@ -12,6 +12,8 @@ PropertyPanel::PropertyPanel()
 
 void PropertyPanel::display(int screenWidth, int screenHeight)
 {
+	localScreenWidth = screenWidth;
+	localScreenHeight = screenHeight;
 	if (hierarchyPanel == nullptr)
 	{
 		hierarchyPanel = &HierarchyPanel::instance;
@@ -25,8 +27,8 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
 	bool *p_open = NULL;
-	ImGui::SetNextWindowPos(ImVec2(0, screenHeight - 180), ImGuiSetCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(screenWidth - hierarchyPanel->xLimiter, 180), ImGuiSetCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(0, screenHeight - yLimiter), ImGuiSetCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(screenWidth - hierarchyPanel->xLimiter, yLimiter), ImGuiSetCond_Always);
 	ImGui::Begin("Property Panel", p_open, window_flags);
 
 	GameObject* obj = hierarchyPanel->getActiveGameObj();
@@ -50,7 +52,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			for (int i = 0; i < ResourceManager::instance.getTextureVector()->size(); i++)
 				filePath = std::get<0>(ResourceManager::instance.getTextureVector()->at(i));
 			ImGui::TextWrapped(filePath.c_str());
-			std::string fileSize = "File Size : " + 
+			std::string fileSize = "File Size : " +
 				std::to_string(std::get<1>(ResourceManager::instance.getTextureVector()->at(0)).fileSize / 1000.0f) + " KB";
 			ImGui::Text(fileSize.c_str());
 		}
@@ -98,6 +100,23 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 void PropertyPanel::addTexture(const Texture & texture)
 {
 	textures.push_back(texture);
+}
+
+void PropertyPanel::handleInputData()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.MouseClicked[0] && !isDragging)
+	{
+		if (io.MouseClickedPos[0].y > (localScreenHeight - yLimiter) - 15 && io.MouseClickedPos[0].y < (localScreenHeight - yLimiter) + 15)
+			isDragging = true;
+	}
+	else if (isDragging && io.MouseClicked[0])
+	{
+		isDragging = false;
+	}
+	if (isDragging)
+		yLimiter = localScreenHeight - io.MousePos.y;
+	yLimiter = glm::clamp(yLimiter, localScreenHeight / 6, localScreenHeight / 3);
 }
 
 PropertyPanel::~PropertyPanel()

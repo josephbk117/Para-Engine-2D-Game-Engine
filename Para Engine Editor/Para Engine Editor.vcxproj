@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EditorSceneViewManager.cpp" />
     <ClCompile Include="FileExplorer.cpp" />
     <ClCompile Include="HierarchyPanel.cpp" />
     <ClCompile Include="imgui.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EditorSceneViewManager.h" />
     <ClInclude Include="FileExplorer.h" />
     <ClInclude Include="HierarchyPanel.h" />
     <ClInclude Include="imgui.h" />

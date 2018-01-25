@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include <vector>
 #include <filesystem>
+#include <iostream>
 FileExplorer FileExplorer::instance;
 FileExplorer::FileExplorer()
 {
@@ -28,14 +29,17 @@ void FileExplorer::display()
 	ImGui::SetNextWindowSize(ImVec2(470, 380));
 	if (ImGui::BeginPopupModal("File Explorer", NULL, window_flags))
 	{
-		for (std::string strPath : paths)
+		if (paths.size() > 0)
 		{
-			ImGui::TextWrapped(strPath.c_str());
-			if(ImGui::IsItemClicked(0))
+			for (std::string strPath : paths)
 			{
-				path = strPath;
-				paths.clear();
-				isDirty = true;
+				ImGui::TextWrapped(strPath.c_str());
+				if (ImGui::IsItemClicked(0))
+				{
+					path = strPath;
+					paths.clear();
+					isDirty = true;
+				}
 			}
 		}
 		if (ImGui::Button("Close"))

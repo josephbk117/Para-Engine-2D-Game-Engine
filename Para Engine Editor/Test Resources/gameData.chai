@@ -1,0 +1,50 @@
+SetUpEngine(700,700,"Scripted Window");
+LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false)
+class ObjType1
+{
+  var gameObj;
+  def ObjType1(var nameData)
+	{
+		this.gameObj = CreateGameObject(nameData,false);
+		var spriteTemp = CreateSprite(4.0f,4.0f);
+		spriteTemp.SetTextureID(GetTextureFromReference("logo"));
+		AddSprite(this.gameObj,spriteTemp);
+	}
+  def update()
+	{
+		var transform = this.gameObj.GetComponentTransform();
+		var k = TimeSinceStartUp();
+		transform.SetX(Sin(k) * 0.65f);
+		transform.SetY(Cos(k));
+	}
+};
+
+def scene1()
+{
+	GLOBAL obj = ObjType1("Slimy Bob");
+
+	var cobj = CreateGameObject("camo",false);
+	var csp = CreateCamera(4.0f,4.0f);
+	GLOBAL trans = cobj.GetComponentTransform();
+	var pos = trans.GetPosition();
+	AddCamera(cobj,csp);
+}
+def update1()
+{
+	if(IsKeyPressed('W')){
+		trans.SetY(trans.GetPosition().y + 0.01f);
+	}
+	if(IsKeyPressed('S')){
+		trans.SetY(trans.GetPosition().y - 0.01f);
+	}
+	if(IsKeyPressed('A')){
+		trans.SetX(trans.GetPosition().x - 0.01f);
+	}
+	if(IsKeyPressed('D')){
+		trans.SetX(trans.GetPosition().x + 0.01f);
+	}
+	obj.update();
+}
+SetUpdateFunction(update1);
+AddScene(scene1,"scene2");
+StartScene("scene2",true);

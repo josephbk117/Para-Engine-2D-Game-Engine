@@ -29,9 +29,9 @@ int main(int, char**)
 
 	// Setup ImGui binding
 	ImGui_ImplGlfwGL3_Init(window, true);
-
 	// Setup style
 	//ImGui::StyleColorsClassic();
+	ImGui::GetIO().FontGlobalScale = 0.7f;
 	ImGui::StyleColorsDark();
 	// Load Fonts
 	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
@@ -41,7 +41,7 @@ int main(int, char**)
 	// - Read 'extra_fonts/README.txt' for more instructions and details.
 	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	ImGuiIO& io = ImGui::GetIO();
-	ImFont* font = io.Fonts->AddFontFromFileTTF("F:\\Visual Studio 2017\\Projects\\Para Engine Editor\\Debug\\arial.ttf", 14.0f);
+	ImFont* font = io.Fonts->AddFontFromFileTTF("F:\\Visual Studio 2017\\Projects\\Para Engine Editor\\Debug\\arial.ttf", 24.0f);
 	IM_ASSERT(font != NULL);
 
 	bool show_demo_window = true;
@@ -51,7 +51,7 @@ int main(int, char**)
 	//Texture texture = TextureManager::getImageDataAsTexture("F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
 	//PropertyPanel::instance.addTexture(texture);
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "F:\\Visual Studio 2017\\Projects\\2D Game Engine\\Debug\\Test Resources\\lili.jpg");
-	// Main loop
+
 	while (!glfwWindowShouldClose(window))
 	{
 		int display_w, display_h;
@@ -60,9 +60,10 @@ int main(int, char**)
 		// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
 		// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
 		// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+		
+		
 		glfwPollEvents();
 		ImGui_ImplGlfwGL3_NewFrame();
-
 		// 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow().
 		if (show_demo_window)
 		{
@@ -129,7 +130,7 @@ int main(int, char**)
 			window_flags |= ImGuiWindowFlags_NoMove;
 			window_flags |= ImGuiWindowFlags_NoResize;
 			window_flags |= ImGuiWindowFlags_NoCollapse;
-			ImGui::SetNextWindowSize(ImVec2(300, 80));
+			ImGui::SetNextWindowSize(ImVec2(320, 90));
 			if (ImGui::BeginPopupModal("Add An Object", NULL, window_flags))
 			{
 				static char bufpass[40] = "";
@@ -150,6 +151,7 @@ int main(int, char**)
 		PropertyPanel::instance.display(display_w, display_h);
 		FileExplorer::instance.display();
 		HierarchyPanel::instance.handleInputData();
+		PropertyPanel::instance.handleInputData();
 		// Rendering
 
 		glViewport(0, 0, display_w, display_h);

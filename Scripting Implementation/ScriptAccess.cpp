@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::user_type<Camera>(), "Camera");
 	chai.add(chaiscript::constructor<Camera()>(), "Camera");
 	chai.add(chaiscript::fun(&CreateCamera), "CreateCamera");
-	chai.add(chaiscript::fun(&Camera::init), "Init");
+	chai.add(chaiscript::fun<void, Camera, float, float>(&Camera::init), "Init");
 	chai.add(chaiscript::fun(&Camera::setScale), "SetScale");
 
 	chai.add(chaiscript::user_type<glm::vec2>(), "Vec2");

@@ -6,9 +6,9 @@ class HierarchyPanel
 {
 public:
 	static HierarchyPanel instance;
-	int xLimiter = 280;
 	HierarchyPanel();
 	HierarchyPanel(const HierarchyPanel&) = delete;
+	int xLimiter = 280;
 	void removeGameObjectAtIndex(unsigned int index);
 	void display(int screenWidth, int screenHeight);
 	GameObject* getActiveGameObj();
@@ -16,5 +16,7 @@ public:
 	~HierarchyPanel();
 private:
 	int activeElementIndex = -1;
+	int localScreenWidth, localScreenHeight;
+	bool isDragging = false;
 };
 
