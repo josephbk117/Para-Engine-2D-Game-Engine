@@ -46,8 +46,8 @@ int main(int, char**)
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "bg", false);
-	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\lili.jpg");
+	//TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "bg", false);
+	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\lili.jpg", "bg");
 
 	while (!glfwWindowShouldClose(window))
 	{
