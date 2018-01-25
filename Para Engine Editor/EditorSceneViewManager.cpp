@@ -14,10 +14,6 @@ EditorSceneViewManager::~EditorSceneViewManager() {}
 void EditorSceneViewManager::updateSceneView()
 {
 	static bool doneOnce = false;
-	static ShaderProgram shaderGameObjectsBase;
-	static GLint textureGameObjectLocation;
-	static GLint uniformProjectionMatrixGameObjectLocation;
-	static GLint uniformModelMatrixGameObjectLocation;
 	if (!doneOnce)
 	{
 		shaderGameObjectsBase.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");

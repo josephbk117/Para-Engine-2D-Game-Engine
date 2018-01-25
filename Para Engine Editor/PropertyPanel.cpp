@@ -20,7 +20,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		return;
 	}
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 0.75f);
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_NoScrollbar;
 	window_flags |= ImGuiWindowFlags_NoMove;
@@ -49,11 +49,11 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		{
 			ImGui::Text("Sprite");
 			filePath = "File Path : ";
-			for (int i = 0; i < ResourceManager::instance.getTextureVector()->size(); i++)
-				filePath = std::get<0>(ResourceManager::instance.getTextureVector()->at(i));
+			for (int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
+				filePath = std::get<0>(ResourceManager::instance.getImageVector()->at(i));
 			ImGui::TextWrapped(filePath.c_str());
 			std::string fileSize = "File Size : " +
-				std::to_string(std::get<1>(ResourceManager::instance.getTextureVector()->at(0)).fileSize / 1000.0f) + " KB";
+				std::to_string(std::get<1>(ResourceManager::instance.getImageVector()->at(0)).fileSize / 1000.0f) + " KB";
 			ImGui::Text(fileSize.c_str());
 		}
 		ImGui::EndGroup();

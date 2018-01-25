@@ -20,18 +20,15 @@ void HierarchyPanel::display(int screenWidth, int screenHeight)
 	localScreenWidth = screenWidth;
 	localScreenHeight = screenHeight;
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 0.75f);
 	ImGuiWindowFlags window_flags = 0;
-	window_flags |= ImGuiWindowFlags_NoTitleBar;
-	window_flags |= ImGuiWindowFlags_MenuBar;
 	window_flags |= ImGuiWindowFlags_NoMove;
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
 	bool *p_open = NULL;
-	ImGui::SetNextWindowPos(ImVec2(localScreenWidth - xLimiter, 0), ImGuiSetCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(xLimiter, localScreenHeight), ImGuiSetCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(localScreenWidth - xLimiter, 23), ImGuiSetCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(xLimiter, localScreenHeight - 23), ImGuiSetCond_Always);
 	ImGui::Begin("Hierarchy", p_open, window_flags);
-	ImGui::Text("Hierarchy Of Objects");
 
 	std::vector<GameObject *> localObjs = GameObject::getAllGameObjects();
 	for (int i = 0; i < localObjs.size(); i++)

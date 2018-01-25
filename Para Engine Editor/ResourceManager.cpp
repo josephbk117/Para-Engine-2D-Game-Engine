@@ -7,8 +7,8 @@ ResourceManager::ResourceManager()
 }
 ResourceManager::~ResourceManager()
 {
-	for (int i = 0; i < textureResource.size(); i++)
-		delete std::get<1>(textureResource[i]).data;
+	for (int i = 0; i < imageResource.size(); i++)
+		delete std::get<1>(imageResource[i]).data;
 }
 
 void ResourceManager::addResource(ResourceType resourceType, const std::string & filePath)
@@ -18,14 +18,14 @@ void ResourceManager::addResource(ResourceType resourceType, const std::string &
 		unsigned int fileSize = 0;
 		try { fileSize = std::experimental::filesystem::file_size(filePath); }
 		catch (std::experimental::filesystem::filesystem_error& e) {}
-		ResourceFileData<Texture> textureData;
-		textureData.data = new Texture(TextureManager::getImageDataAsTexture(filePath));
-		textureData.fileSize = fileSize;
-		textureResource.push_back(std::make_pair(filePath, textureData));
+		ResourceFileData<glm::vec2> imageData;
+		imageData.data = new glm::vec2(TextureManager::getImageDimensions(filePath));
+		imageData.fileSize = fileSize;
+		imageResource.push_back(std::make_pair(filePath, imageData));
 	}
 }
 
-const std::vector<std::pair<std::string, ResourceFileData<Texture>>>* ResourceManager::getTextureVector()
+const std::vector<std::pair<std::string, ResourceFileData<glm::vec2>>>* ResourceManager::getImageVector()
 {
-	return &textureResource;
+	return &imageResource;
 }
