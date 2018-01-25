@@ -48,6 +48,8 @@ int main(int, char**)
 
 	//TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "bg", false);
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\lili.jpg", "bg");
+	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\frasa.png", "box");
+	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\goli.png", "box2");
 
 	while (!glfwWindowShouldClose(window))
 	{

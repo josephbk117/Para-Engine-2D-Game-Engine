@@ -64,7 +64,7 @@ void HierarchyPanel::handleInputData()
 		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
 	if (io.MouseClicked[0] && !isDragging)
 	{
-		if (io.MouseClickedPos[0].x > (localScreenWidth - xLimiter) - 15 && io.MouseClickedPos[0].x < (localScreenWidth - xLimiter) + 15)
+		if (io.MouseClickedPos[0].x > (localScreenWidth - xLimiter) - 8 && io.MouseClickedPos[0].x < (localScreenWidth - xLimiter) + 8)
 			isDragging = true;
 	}
 	else if (isDragging)

@@ -22,7 +22,6 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
 	ImGuiWindowFlags window_flags = 0;
-	window_flags |= ImGuiWindowFlags_NoScrollbar;
 	window_flags |= ImGuiWindowFlags_NoMove;
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
@@ -57,6 +56,15 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			float ratio;
 			const float MAX_SIZE = 100.0f;
 
+			static int current_item = 0;
+			std::string comboImageBox = "";
+			for (unsigned int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
+				comboImageBox += ResourceManager::instance.instance.getImageVector()->at(i).first + '\0';
+			comboImageBox += '\0';
+			ImGui::Combo("Images", &current_item, comboImageBox.c_str());
+
+			obj->getComponent<Sprite>()->setTextureID(*ResourceManager::instance.getImageVector()->at(current_item).second.data2);
+
 			float width, height;
 			for (unsigned int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
 			{
@@ -72,12 +80,13 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			if (width > height)
 				ratio = MAX_SIZE / width;
 			else
-				float ratio = MAX_SIZE / height;
+				ratio = MAX_SIZE / height;
 			my_tex_w = ratio * width;
 			my_tex_h = ratio * height;
 
 			ImVec2 pos = ImGui::GetCursorScreenPos();
 			ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(1, 1), ImVec2(0, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+			ImGui::SameLine();
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::BeginTooltip();
@@ -92,6 +101,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 				ImGui::EndTooltip();
 			}
 			ImGui::Text("%dx%d", (int)width, (int)height);
+			ImGui::SameLine();
 			filePath = "File Path : ";
 			filePath += std::get<0>(ResourceManager::instance.getImageVector()->at(index));
 			ImGui::TextWrapped(filePath.c_str());
@@ -116,7 +126,7 @@ void PropertyPanel::handleInputData()
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.MouseClicked[0] && !isDragging)
 	{
-		if (io.MouseClickedPos[0].y > (localScreenHeight - yLimiter) - 15 && io.MouseClickedPos[0].y < (localScreenHeight - yLimiter) + 15)
+		if (io.MouseClickedPos[0].y > (localScreenHeight - yLimiter) - 8 && io.MouseClickedPos[0].y < (localScreenHeight - yLimiter) + 8)
 			isDragging = true;
 	}
 	else if (isDragging && io.MouseClicked[0])
