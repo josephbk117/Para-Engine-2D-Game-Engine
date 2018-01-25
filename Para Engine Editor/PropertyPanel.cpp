@@ -20,7 +20,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		return;
 	}
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 0.75f);
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.1f);
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_NoScrollbar;
 	window_flags |= ImGuiWindowFlags_NoMove;
