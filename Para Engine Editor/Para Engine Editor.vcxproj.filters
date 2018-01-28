@@ -45,6 +45,9 @@
     <ClCompile Include="EditorSceneViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UserPreferences.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui_impl_glfw_gl3.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EditorSceneViewManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserPreferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

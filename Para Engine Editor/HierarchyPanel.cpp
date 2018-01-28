@@ -60,6 +60,7 @@ GameObject* HierarchyPanel::getActiveGameObj()
 void HierarchyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
+	//io.MouseDrawCursor();
 	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElementIndex != -1)
 		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
 	if (io.MouseClicked[0] && !isDragging)

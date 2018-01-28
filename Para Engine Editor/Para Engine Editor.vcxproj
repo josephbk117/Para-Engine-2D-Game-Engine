@@ -130,6 +130,7 @@
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="PropertyPanel.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="UserPreferences.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorSceneViewManager.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="stb_rect_pack.h" />
     <ClInclude Include="stb_textedit.h" />
     <ClInclude Include="stb_truetype.h" />
+    <ClInclude Include="UserPreferences.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2D Game Engine\2D Game Engine.vcxproj">

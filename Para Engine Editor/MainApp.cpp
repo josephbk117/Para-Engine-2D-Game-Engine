@@ -77,7 +77,7 @@ int main(int, char**)
 			if (ImGui::BeginMenu("File"))
 			{
 				if (ImGui::MenuItem("Open Project", "CTRL+O")) {
-					std::cout << "open project called\n"; FileExplorer::instance.shouldDisplay = true;
+					;
 				}
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
