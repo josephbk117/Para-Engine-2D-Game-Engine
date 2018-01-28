@@ -60,22 +60,29 @@ GameObject* HierarchyPanel::getActiveGameObj()
 void HierarchyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	//io.MouseDrawCursor();
+	io.MouseDrawCursor = false;
 	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElementIndex != -1)
 		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
-	if (io.MouseClicked[0] && !isDragging)
+	if (io.MouseClicked[0])
 	{
-		if (io.MouseClickedPos[0].x > (localScreenWidth - xLimiter) - 8 && io.MouseClickedPos[0].x < (localScreenWidth - xLimiter) + 8)
-			isDragging = true;
-	}
-	else if (isDragging)
-	{
-		if (io.MouseClicked[0])
+		if (!isDragging)
+		{
+			if (io.MouseClickedPos[0].x > (localScreenWidth - xLimiter) - 8 && io.MouseClickedPos[0].x < (localScreenWidth - xLimiter) + 8)
+				isDragging = true;
+		}
+		else
+		{
 			isDragging = false;
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+		}
 	}
 	if (isDragging)
+	{
+		io.MouseDrawCursor = true;
+		ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeEW);
 		xLimiter = localScreenWidth - io.MousePos.x;
-	xLimiter = glm::clamp(xLimiter, localScreenWidth / 6, localScreenWidth / 3);
+		xLimiter = glm::clamp(xLimiter, localScreenWidth / 6, localScreenWidth / 3);
+	}
 }
 
 HierarchyPanel::~HierarchyPanel()

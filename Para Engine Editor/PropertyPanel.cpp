@@ -124,18 +124,27 @@ void PropertyPanel::addTexture(const Texture & texture)
 void PropertyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	if (io.MouseClicked[0] && !isDragging)
+	io.MouseDrawCursor = false;
+	if (io.MouseClicked[0])
 	{
-		if (io.MouseClickedPos[0].y > (localScreenHeight - yLimiter) - 8 && io.MouseClickedPos[0].y < (localScreenHeight - yLimiter) + 8)
-			isDragging = true;
-	}
-	else if (isDragging && io.MouseClicked[0])
-	{
-		isDragging = false;
+		if (!isDragging)
+		{
+			if (io.MouseClickedPos[0].y > (localScreenHeight - yLimiter) - 8 && io.MouseClickedPos[0].y < (localScreenHeight - yLimiter) + 8)
+				isDragging = true;
+		}
+		else
+		{
+			isDragging = false;
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+		}
 	}
 	if (isDragging)
+	{
+		io.MouseDrawCursor = true;
+		ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNS);
 		yLimiter = localScreenHeight - io.MousePos.y;
-	yLimiter = glm::clamp(yLimiter, localScreenHeight / 6, localScreenHeight / 3);
+		yLimiter = glm::clamp(yLimiter, localScreenHeight / 6, localScreenHeight / 3);
+	}
 }
 
 PropertyPanel::~PropertyPanel()
