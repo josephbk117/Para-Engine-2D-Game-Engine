@@ -166,6 +166,14 @@ int main(int, char**)
 		FileExplorer::instance.display();
 		HierarchyPanel::instance.handleInputData();
 		PropertyPanel::instance.handleInputData();
+
+		float ratio;
+		if (display_w > display_h)
+			ratio = display_w / display_w;
+		else
+			ratio = display_w / display_h;
+
+		EditorSceneViewManager::instance.editorCamera.setScreenRatio(glm::vec2(display_w*ratio, display_h*ratio));
 		EditorSceneViewManager::instance.handleInput();
 		// Rendering
 

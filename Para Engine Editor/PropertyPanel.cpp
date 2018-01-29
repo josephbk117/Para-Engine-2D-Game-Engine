@@ -40,7 +40,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		float xScale = 0.0f, yScale = 0.0f;
 		xScale = obj->getComponent<Transform>()->getScale().x;
 		yScale = obj->getComponent<Transform>()->getScale().y;
-		float rotation = obj->getComponent<Transform>()->getRotation();
+		float rotation = glm::degrees(obj->getComponent<Transform>()->getRotation());
 
 		std::string text = "Name : " + obj->getName();
 		ImGui::Text(text.c_str());
@@ -60,7 +60,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			obj->getComponent<Transform>()->setScale(glm::vec2(obj->getComponent<Transform>()->getScale().x, yScale));
 		ImGui::Text("Rotation :");
 		if (ImGui::DragFloat("##Rotation", &rotation, 0.1f, -9999999.0f, 9999999.0f, "Deg: %.3f"))
-			obj->getComponent<Transform>()->setRotation(rotation * 0.0174533f);
+			obj->getComponent<Transform>()->setRotation(glm::radians(rotation));
 
 		ImGui::PopItemWidth();
 		ImGui::EndGroup();
