@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EditorCamera.cpp" />
     <ClCompile Include="EditorSceneViewManager.cpp" />
     <ClCompile Include="FileExplorer.cpp" />
     <ClCompile Include="HierarchyPanel.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="UserPreferences.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EditorCamera.h" />
     <ClInclude Include="EditorSceneViewManager.h" />
     <ClInclude Include="FileExplorer.h" />
     <ClInclude Include="HierarchyPanel.h" />

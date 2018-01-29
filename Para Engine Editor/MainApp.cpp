@@ -166,6 +166,7 @@ int main(int, char**)
 		FileExplorer::instance.display();
 		HierarchyPanel::instance.handleInputData();
 		PropertyPanel::instance.handleInputData();
+		EditorSceneViewManager::instance.handleInput();
 		// Rendering
 
 		glViewport(0, 0, display_w, display_h);

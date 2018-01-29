@@ -1,5 +1,6 @@
 #include "EditorSceneViewManager.h"
 #include "ResourceManager.h"
+#include "imgui.h"
 #include <ShaderProgram.h>
 #include <Sprite.h>
 #include <Box.h>
@@ -14,6 +15,7 @@ EditorSceneViewManager::~EditorSceneViewManager() {}
 void EditorSceneViewManager::updateSceneView()
 {
 	static bool doneOnce = false;
+	Camera* editorCamera = nullptr;
 	if (!doneOnce)
 	{
 		shaderGameObjectsBase.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
@@ -24,8 +26,10 @@ void EditorSceneViewManager::updateSceneView()
 		uniformProjectionMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("projection");
 		uniformModelMatrixGameObjectLocation = shaderGameObjectsBase.getUniformLocation("model");
 		doneOnce = true;
-	}
 
+	}
+	editorCameraObject.getComponent<Transform>()->update();
+	editorCamera->update();
 	if (GameObject::isDirty)
 	{
 		GameObject::isDirty = false;
@@ -50,7 +54,7 @@ void EditorSceneViewManager::updateSceneView()
 
 	std::vector<GameObject *> uiGameobjs;
 	shaderGameObjectsBase.use();
-	ShaderProgram::applyShaderUniformMatrix(uniformProjectionMatrixGameObjectLocation, camera.getOrthoMatrix());
+	ShaderProgram::applyShaderUniformMatrix(uniformProjectionMatrixGameObjectLocation, editorCamera->getOrthoMatrix());
 	glUniform1i(textureGameObjectLocation, 0);
 	for (unsigned int i = 0; i < gameObjects.size(); i++)
 	{
@@ -74,5 +78,14 @@ void EditorSceneViewManager::updateSceneView()
 			if (spriteToDraw != nullptr)
 				spriteToDraw->draw();
 		}
+	}
+}
+
+void EditorSceneViewManager::handleInput()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.MouseDoubleClicked[0])
+	{
+		editorCameraObject.getComponent<Camera>()->setScale(editorCameraObject.getComponent<Camera>()->getScale() + 0.5f);
 	}
 }

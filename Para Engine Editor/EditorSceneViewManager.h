@@ -3,6 +3,7 @@
 #include <Camera.h>
 #include <ShaderProgram.h>
 #include <GL\glew.h>
+#include <GameObject.h>
 class EditorSceneViewManager
 {
 public:
@@ -10,9 +11,10 @@ public:
 	EditorSceneViewManager();
 	~EditorSceneViewManager();
 	void updateSceneView();
+	void handleInput();
 private:
 	std::vector<GameObject *> gameObjects;
-	Camera camera;
+	
 	ShaderProgram shaderGameObjectsBase;
 	GLint textureGameObjectLocation;
 	GLint uniformProjectionMatrixGameObjectLocation;
