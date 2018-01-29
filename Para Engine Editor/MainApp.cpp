@@ -64,25 +64,24 @@ int main(int, char**)
 
 		glfwPollEvents();
 		ImGui_ImplGlfwGL3_NewFrame();
-		// 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow().
 		if (show_demo_window)
 		{
-			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
+			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
 			ImGui::ShowDemoWindow(&show_demo_window);
 		}
 		//______________________
 		bool showPopUp = false;
 		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::BeginMenu("File"))
+			if (ImGui::BeginMenu("FILE"))
 			{
 				if (ImGui::MenuItem("Open Project", "CTRL+O")) {
-					;
+					FileExplorer::instance.shouldDisplay = true;
 				}
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("Edit"))
+			if (ImGui::BeginMenu("EDIT"))
 			{
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
 				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item

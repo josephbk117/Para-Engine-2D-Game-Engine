@@ -37,9 +37,17 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		std::string text = "Name : " + obj->getName();
 		ImGui::Text(text.c_str());
 		ImGui::Text("Transform");
-		text = "Position : " + std::to_string(obj->getComponent<Transform>()->getPosition().x) + ", ";
-		text += std::to_string(obj->getComponent<Transform>()->getPosition().y);
-		ImGui::Text(text.c_str());
+		ImGui::Text("Position :");
+		float xPos = 0.0f, yPos = 0.0f;
+		xPos = obj->getComponent<Transform>()->getPosition().x;
+		yPos = obj->getComponent<Transform>()->getPosition().y;
+		ImGui::PushItemWidth(120.0f);
+		if (ImGui::DragFloat("X", &xPos, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
+			obj->getComponent<Transform>()->setX(xPos);
+		ImGui::SameLine();
+		if (ImGui::DragFloat("Y", &yPos, 0.001f, -9999999.0f, 9999999.0f, "Y: %.3f"))
+			obj->getComponent<Transform>()->setY(yPos);
+		ImGui::PopItemWidth();
 		ImGui::EndGroup();
 		ImGui::SameLine();
 
@@ -61,7 +69,9 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			for (unsigned int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
 				comboImageBox += ResourceManager::instance.instance.getImageVector()->at(i).first + '\0';
 			comboImageBox += '\0';
+			ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.45f);
 			ImGui::Combo("Images", &current_item, comboImageBox.c_str());
+			ImGui::PopItemWidth();
 
 			obj->getComponent<Sprite>()->setTextureID(*ResourceManager::instance.getImageVector()->at(current_item).second.data2);
 
