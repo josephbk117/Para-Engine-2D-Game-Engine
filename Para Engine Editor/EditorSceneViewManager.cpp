@@ -84,6 +84,7 @@ void EditorSceneViewManager::handleInput()
 {
 	ImGuiIO& io = ImGui::GetIO();
 	float xV = 0, yV = 0;
+	float sV = editorCamera.getScale();
 	if (io.KeyAlt)
 	{
 		if (io.KeysDown[(int)Key::W])
@@ -94,6 +95,12 @@ void EditorSceneViewManager::handleInput()
 			xV -= 0.01f;
 		if (io.KeysDown[(int)Key::D])
 			xV = 0.01f;
+		if (io.KeysDown[(int)Key::UP_ARROW])
+			sV += 0.01f;
+		if (io.KeysDown[(int)Key::DOWN_ARROW])
+			sV -= 0.01f;
+		sV = glm::clamp(sV, 0.25f, 6.0f);
 	}
 	editorCamera.setPosition(editorCamera.getPosition().x + xV, editorCamera.getPosition().y + yV);
+	editorCamera.setScale(sV);
 }
