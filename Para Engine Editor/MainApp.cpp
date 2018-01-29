@@ -31,13 +31,6 @@ int main(int, char**)
 		std::cout << " Glew initialsed" << std::endl;
 	ImGui_ImplGlfwGL3_Init(window, true);
 	StyleColorsParaEngineDefault();
-	// Load Fonts
-	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
-	// - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple. 
-	// - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-	// - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-	// - Read 'extra_fonts/README.txt' for more instructions and details.
-	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	ImGuiIO& io = ImGui::GetIO();
 	ImFont* font = io.Fonts->AddFontFromFileTTF("Test Resources\\arial.ttf", 16.0f);
 	IM_ASSERT(font != NULL);
@@ -46,7 +39,6 @@ int main(int, char**)
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	//TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "bg", false);
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\lili.jpg", "bg");
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\frasa.png", "box");
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\goli.png", "box2");
@@ -56,10 +48,6 @@ int main(int, char**)
 		glClear(GL_COLOR_BUFFER_BIT);
 		int display_w, display_h;
 		glfwGetFramebufferSize(window, &display_w, &display_h);
-		// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-		// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-		// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-		// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
 		EditorSceneViewManager::instance.updateSceneView();
 
 		glfwPollEvents();
@@ -84,7 +72,7 @@ int main(int, char**)
 			if (ImGui::BeginMenu("EDIT"))
 			{
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}
 				ImGui::Separator();
 				ImGui::MenuItem("Search");
 				ImGui::MenuItem("Reload");
@@ -198,8 +186,6 @@ void StyleColorsParaEngineDefault(ImGuiStyle* dst)
 
 	colors[ImGuiCol_Text] = ImVec4(0.88f, 0.88f, 0.88f, 1.00f);
 	colors[ImGuiCol_TextDisabled] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
-	//colors[ImGuiCol_TextHovered]          = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
-	//colors[ImGuiCol_TextActive]           = ImVec4(1.00f, 1.00f, 0.00f, 1.00f);
 	colors[ImGuiCol_WindowBg] = ImVec4(0.24f, 0.08f, 0.20f, 1.00f);
 	colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 	colors[ImGuiCol_PopupBg] = ImVec4(0.20f, 0.0f, 0.10f, 1.00f);

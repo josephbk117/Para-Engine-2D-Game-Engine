@@ -34,19 +34,34 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	if (obj != nullptr)
 	{
 		ImGui::BeginGroup();
+		float xPos = 0.0f, yPos = 0.0f;
+		xPos = obj->getComponent<Transform>()->getPosition().x;
+		yPos = obj->getComponent<Transform>()->getPosition().y;
+		float xScale = 0.0f, yScale = 0.0f;
+		xScale = obj->getComponent<Transform>()->getScale().x;
+		yScale = obj->getComponent<Transform>()->getScale().y;
+		float rotation = obj->getComponent<Transform>()->getRotation();
+
 		std::string text = "Name : " + obj->getName();
 		ImGui::Text(text.c_str());
 		ImGui::Text("Transform");
 		ImGui::Text("Position :");
-		float xPos = 0.0f, yPos = 0.0f;
-		xPos = obj->getComponent<Transform>()->getPosition().x;
-		yPos = obj->getComponent<Transform>()->getPosition().y;
-		ImGui::PushItemWidth(120.0f);
-		if (ImGui::DragFloat("X", &xPos, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
+		ImGui::PushItemWidth(100.0f);
+		if (ImGui::DragFloat("##Position X", &xPos, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
 			obj->getComponent<Transform>()->setX(xPos);
 		ImGui::SameLine();
-		if (ImGui::DragFloat("Y", &yPos, 0.001f, -9999999.0f, 9999999.0f, "Y: %.3f"))
+		if (ImGui::DragFloat("##Position Y", &yPos, 0.001f, -9999999.0f, 9999999.0f, "Y: %.3f"))
 			obj->getComponent<Transform>()->setY(yPos);
+		ImGui::Text("Scale :");
+		if (ImGui::DragFloat("##Scale X", &xScale, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
+			obj->getComponent<Transform>()->setScale(glm::vec2(xScale, obj->getComponent<Transform>()->getScale().y));
+		ImGui::SameLine();
+		if (ImGui::DragFloat("##Scale Y", &yScale, 0.001f, -9999999.0f, 9999999.0f, "Y: %.3f"))
+			obj->getComponent<Transform>()->setScale(glm::vec2(obj->getComponent<Transform>()->getScale().x, yScale));
+		ImGui::Text("Rotation :");
+		if (ImGui::DragFloat("##Rotation", &rotation, 0.1f, -9999999.0f, 9999999.0f, "Deg: %.3f"))
+			obj->getComponent<Transform>()->setRotation(rotation * 0.0174533f);
+
 		ImGui::PopItemWidth();
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -64,16 +79,16 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			float ratio;
 			const float MAX_SIZE = 100.0f;
 
-			static int current_item = 0;
+			int currentImageIndex = -1;
 			std::string comboImageBox = "";
 			for (unsigned int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
 				comboImageBox += ResourceManager::instance.instance.getImageVector()->at(i).first + '\0';
 			comboImageBox += '\0';
 			ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.45f);
-			ImGui::Combo("Images", &current_item, comboImageBox.c_str());
+			ImGui::Combo("Images", &currentImageIndex, comboImageBox.c_str());
 			ImGui::PopItemWidth();
-
-			obj->getComponent<Sprite>()->setTextureID(*ResourceManager::instance.getImageVector()->at(current_item).second.data2);
+			if (currentImageIndex != -1)
+				obj->getComponent<Sprite>()->setTextureID(*ResourceManager::instance.getImageVector()->at(currentImageIndex).second.data2);
 
 			float width, height;
 			for (unsigned int i = 0; i < ResourceManager::instance.getImageVector()->size(); i++)
@@ -116,7 +131,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			filePath += std::get<0>(ResourceManager::instance.getImageVector()->at(index));
 			ImGui::TextWrapped(filePath.c_str());
 			std::string fileSize = "File Size : " +
-				std::to_string(std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1000.0f) + " KB";
+				std::to_string(std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f) + " KB";
 			ImGui::Text(fileSize.c_str());
 		}
 		ImGui::EndGroup();
