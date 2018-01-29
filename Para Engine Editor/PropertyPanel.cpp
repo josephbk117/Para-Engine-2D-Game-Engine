@@ -124,7 +124,6 @@ void PropertyPanel::addTexture(const Texture & texture)
 void PropertyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDrawCursor = false;
 	if (io.MouseClicked[0])
 	{
 		if (!isDragging)

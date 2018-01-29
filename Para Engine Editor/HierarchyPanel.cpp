@@ -60,7 +60,6 @@ GameObject* HierarchyPanel::getActiveGameObj()
 void HierarchyPanel::handleInputData()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDrawCursor = false;
 	if (io.KeysDown[io.KeyMap[ImGuiKey_Delete]] && HierarchyPanel::instance.activeElementIndex != -1)
 		HierarchyPanel::instance.removeGameObjectAtIndex(HierarchyPanel::instance.activeElementIndex);
 	if (io.MouseClicked[0])
@@ -81,7 +80,7 @@ void HierarchyPanel::handleInputData()
 		io.MouseDrawCursor = true;
 		ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeEW);
 		xLimiter = localScreenWidth - io.MousePos.x;
-		xLimiter = glm::clamp(xLimiter, localScreenWidth / 6, localScreenWidth / 3);
+		xLimiter = glm::clamp(xLimiter, localScreenWidth / 6, localScreenWidth / 4);
 	}
 }
 

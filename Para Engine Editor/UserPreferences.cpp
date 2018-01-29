@@ -4,7 +4,6 @@ UserPreferences::UserPreferences()
 {
 }
 
-
 UserPreferences::~UserPreferences()
 {
 }
