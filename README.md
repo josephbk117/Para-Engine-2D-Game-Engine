@@ -14,6 +14,6 @@ In fact the API is heavily inspired by the Unit3D API. Similar functions and cla
 - [x] Custom Shaders & Image Effects
 - [x] Simple Unity Like API
 - [x] Fast & Small Binary Size
-- [ ] Scripting Support
+- [x] Scripting Support
 - [ ] Toolset For Assests
 - [ ] Visual Editor
