@@ -96,9 +96,9 @@ void EditorSceneViewManager::handleInput()
 		if (io.KeysDown[(int)Key::D])
 			xV = 0.01f;
 		if (io.KeysDown[(int)Key::UP_ARROW])
-			sV += 0.01f;
+			sV *= 1.05f;
 		if (io.KeysDown[(int)Key::DOWN_ARROW])
-			sV -= 0.01f;
+			sV /= 1.05f;
 		sV = glm::clamp(sV, 0.25f, 6.0f);
 	}
 	editorCamera.setPosition(editorCamera.getPosition().x + xV, editorCamera.getPosition().y + yV);

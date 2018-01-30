@@ -14,11 +14,9 @@ void FileExplorer::display()
 		return;
 	if (isDirty)
 	{
+		paths.clear();
 		for (auto & p : std::experimental::filesystem::directory_iterator(path))
-		{
-			auto pathC = p.path();
-			paths.push_back(pathC.generic_string());
-		}
+			paths.push_back(p.path().generic_string());
 		isDirty = false;
 	}
 	ImGui::OpenPopup("File Explorer");
@@ -29,7 +27,21 @@ void FileExplorer::display()
 	ImGui::SetNextWindowSize(ImVec2(470, 380));
 	if (ImGui::BeginPopupModal("File Explorer", NULL, window_flags))
 	{
-		if (paths.size() > 0)
+		if (ImGui::Button("BACK"))
+		{
+
+			int locationOfLastSlash = path.find_last_of('//');
+			int locationOfFirstSlash = path.find_first_of('//');
+			
+			if (locationOfFirstSlash <= locationOfLastSlash && path.length() > 3)
+			{
+				path = path.substr(0, locationOfLastSlash);
+				if (path.length() < 3)
+					path += '//';
+				isDirty = true;
+			}
+		}
+		if (!std::experimental::filesystem::is_empty(path))
 		{
 			for (std::string strPath : paths)
 			{
@@ -37,12 +49,17 @@ void FileExplorer::display()
 				if (ImGui::IsItemClicked(0))
 				{
 					path = strPath;
-					paths.clear();
 					isDirty = true;
 				}
 			}
 		}
-		if (ImGui::Button("Close"))
+		else
+		{
+			std::cout << "\nIs empty " << path;
+
+		}
+
+		if (ImGui::Button("CLOSE"))
 		{
 			shouldDisplay = false;
 			ImGui::CloseCurrentPopup();
