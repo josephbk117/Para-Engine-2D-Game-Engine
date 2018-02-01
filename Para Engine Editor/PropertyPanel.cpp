@@ -33,7 +33,11 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	GameObject* obj = hierarchyPanel->getActiveGameObj();
 	if (obj != nullptr)
 	{
-		ImGui::BeginGroup();
+		std::string text = "NAME : " + obj->getName();
+		ImGui::Text(text.c_str());
+
+		ImGui::Columns(obj->getAllGameObjects().size() + 1, "Components");
+		ImGui::SetColumnWidth(0, (ImGui::GetColumnWidth(0) < 130) ? 130 : ImGui::GetColumnWidth(0));
 		float xPos = 0.0f, yPos = 0.0f;
 		xPos = obj->getComponent<Transform>()->getPosition().x;
 		yPos = obj->getComponent<Transform>()->getPosition().y;
@@ -41,12 +45,9 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		xScale = obj->getComponent<Transform>()->getScale().x;
 		yScale = obj->getComponent<Transform>()->getScale().y;
 		float rotation = glm::degrees(obj->getComponent<Transform>()->getRotation());
-
-		std::string text = "Name : " + obj->getName();
-		ImGui::Text(text.c_str());
-		ImGui::Text("Transform");
+		ImGui::Text("TRANSFORM");
 		ImGui::Text("Position :");
-		ImGui::PushItemWidth(100.0f);
+		ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.45f);
 		if (ImGui::DragFloat("##Position X", &xPos, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
 			obj->getComponent<Transform>()->setX(xPos);
 		ImGui::SameLine();
@@ -63,17 +64,14 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			obj->getComponent<Transform>()->setRotation(glm::radians(rotation));
 
 		ImGui::PopItemWidth();
-		ImGui::EndGroup();
-		ImGui::SameLine();
-
-		ImGui::BeginGroup();
-
+		ImGui::NextColumn();
+		ImGui::SetColumnWidth(1, (ImGui::GetColumnWidth(1) < 130) ? 130 : ImGui::GetColumnWidth(1));
 		std::string filePath;
 		unsigned int index = -1;
 		if (obj->hasComponent<Sprite>())
 		{
 			ImGuiIO& io = ImGui::GetIO();
-			ImGui::Text("Sprite");
+			ImGui::Text("SPRITE");
 			ImTextureID my_tex_id = (void *)obj->getComponent<Sprite>()->getTextureID();
 			float my_tex_w, my_tex_h;
 			float ratio;
@@ -134,7 +132,6 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 				std::to_string(std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f) + " KB";
 			ImGui::Text(fileSize.c_str());
 		}
-		ImGui::EndGroup();
 	}
 	ImGui::End();
 	ImGui::PopStyleVar();
