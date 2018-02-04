@@ -35,8 +35,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	{
 		std::string text = "NAME : " + obj->getName();
 		ImGui::Text(text.c_str());
-
-		ImGui::Columns(obj->getAllGameObjects().size() + 1, "Components");
+		ImGui::Columns(obj->getAttachedComponents().size() + 1, "Components");
 		ImGui::SetColumnWidth(0, (ImGui::GetColumnWidth(0) < 130) ? 130 : ImGui::GetColumnWidth(0));
 		float xPos = 0.0f, yPos = 0.0f;
 		xPos = obj->getComponent<Transform>()->getPosition().x;
@@ -64,12 +63,15 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			obj->getComponent<Transform>()->setRotation(glm::radians(rotation));
 
 		ImGui::PopItemWidth();
-		ImGui::NextColumn();
-		ImGui::SetColumnWidth(1, (ImGui::GetColumnWidth(1) < 130) ? 130 : ImGui::GetColumnWidth(1));
-		std::string filePath;
-		unsigned int index = -1;
+
 		if (obj->hasComponent<Sprite>())
 		{
+			ImGui::SetColumnWidth(1, (ImGui::GetColumnWidth(1) < 130) ? 130 : ImGui::GetColumnWidth(1));
+			ImGui::NextColumn();
+			
+			std::string filePath;
+			unsigned int index = -1;
+
 			ImGuiIO& io = ImGui::GetIO();
 			ImGui::Text("SPRITE");
 			ImTextureID my_tex_id = (void *)obj->getComponent<Sprite>()->getTextureID();

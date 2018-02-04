@@ -165,6 +165,7 @@
     <ClInclude Include="imgui_impl_glfw_gl3.h" />
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="InputData.h" />
+    <ClInclude Include="ParaEngineError.h" />
     <ClInclude Include="PhysicsData.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderProgram.h" />

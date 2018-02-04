@@ -75,6 +75,7 @@ void Transform::setScale(const glm::vec2& scale)
 	needsUpdate = true;
 	this->scale = scale;
 }
+
 const glm::vec2 & Transform::getPosition()const
 {
 	return position;

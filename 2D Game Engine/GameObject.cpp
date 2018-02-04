@@ -3,6 +3,10 @@
 #include "Box.h"
 #include <iostream>
 
+#if _DEBUG
+#include "ParaEngineError.h"
+#endif
+
 std::unordered_map<std::string, GameObject*> GameObject::gameObjectMap;
 std::vector<GameObject *> GameObject::gameObjectVector;
 std::vector<GameObject *> GameObject::objectsMarkedForDeletion;
@@ -49,7 +53,7 @@ void GameObject::addComponent(Component * comp)
 	else
 	{
 		typeCountMap[std::string(typeid(*comp).name())] = typeCountMap[std::string(typeid(*comp).name())] + 1;
-		throw("More than one component one of type was added");
+		throw(ParaEngineError(ParaErrorType::COMPONENT_ALREADY_PRESENT, "Component Already Present"));
 	}
 #endif
 
@@ -68,7 +72,7 @@ GameObject * GameObject::createGameObject(const std::string & name, bool isUI)
 {
 #if _DEBUG
 	if (gameObjectMap.find(name) != gameObjectMap.end())
-		throw("Same name already exists");
+		throw(ParaEngineError(ParaErrorType::OBJECT_NAME_ALREADY_PRESENT, "Object Name Already Present"));
 #endif
 	isDirty = true;
 	GameObject* gameObject = new GameObject(name);

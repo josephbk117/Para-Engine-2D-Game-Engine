@@ -13,6 +13,7 @@
 #include "ResourceManager.h"
 #include "FileExplorer.h"
 #include "EditorSceneViewManager.h"
+#include "ParaEngineError.h"
 
 void StyleColorsParaEngineDefault(ImGuiStyle* dst = (ImGuiStyle*)0);
 
@@ -98,7 +99,18 @@ int main(int, char**)
 							Sprite* sp = new Sprite();
 							sp->init(1.0f, 1.0f);
 							sp->setTextureID(TextureManager::getTextureIdFromReference("bg"));
-							HierarchyPanel::instance.getActiveGameObj()->addComponent(sp);
+							try
+							{
+								HierarchyPanel::instance.getActiveGameObj()->addComponent(sp);
+							}
+							catch (ParaEngineError paraError)
+							{
+								if (paraError.getErrorType() == ParaErrorType::COMPONENT_ALREADY_PRESENT)
+								{
+									delete sp;
+									std::cout << "\nDeleted Sprite";
+								}
+							}
 						}
 						ImGui::MenuItem("Camera");
 						ImGui::MenuItem("Box Collider");
@@ -135,19 +147,22 @@ int main(int, char**)
 					{
 						bool success = true;
 						try { GameObject::createGameObject(objName); }
-						catch (...)
+						catch (ParaEngineError paraError)
 						{
-							if (isdigit(objName[objName.length() - 1]))
+							if (paraError.getErrorType() == ParaErrorType::OBJECT_NAME_ALREADY_PRESENT)
 							{
-								int count = 0;
-								while (isdigit(objName[objName.length() - count - 1]))
-									count++;
-								int incrementValue = atoi(objName.substr(objName.length() - count, count).c_str());
-								objName = objName.substr(0, objName.length() - count) + std::to_string(++incrementValue);
+								if (isdigit(objName[objName.length() - 1]))
+								{
+									int count = 0;
+									while (isdigit(objName[objName.length() - count - 1]))
+										count++;
+									int incrementValue = atoi(objName.substr(objName.length() - count, count).c_str());
+									objName = objName.substr(0, objName.length() - count) + std::to_string(++incrementValue);
+								}
+								else
+									objName += "0";
+								success = false;
 							}
-							else
-								objName += "0";
-							success = false;
 						}
 						if (success)
 							break;
