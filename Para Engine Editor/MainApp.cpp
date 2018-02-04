@@ -22,7 +22,7 @@ int main(int, char**)
 	if (!glfwInit())
 		return 1;
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	GLFWwindow* window = glfwCreateWindow((mode->width / 1.3f), (mode->height / 1.2f), "Para Engine v0.06-alpha", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow((mode->width / 1.3f), (mode->height / 1.2f), "Para Engine v1.1-alpha", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	glfwInit();

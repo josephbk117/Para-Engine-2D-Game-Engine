@@ -75,7 +75,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			ImGuiIO& io = ImGui::GetIO();
 			ImGui::Text("SPRITE");
 			ImTextureID my_tex_id = (void *)obj->getComponent<Sprite>()->getTextureID();
-			float my_tex_w, my_tex_h;
+			float texWidth, texHeight;
 			float ratio;
 			const float MAX_SIZE = 100.0f;
 
@@ -106,23 +106,25 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 				ratio = MAX_SIZE / width;
 			else
 				ratio = MAX_SIZE / height;
-			my_tex_w = ratio * width;
-			my_tex_h = ratio * height;
+			texWidth = ratio * width;
+			texHeight = ratio * height;
 
 			ImVec2 pos = ImGui::GetCursorScreenPos();
-			ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), ImVec2(1, 1), ImVec2(0, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+			ImGui::Image(my_tex_id, ImVec2(texWidth, texHeight), ImVec2(1, 1), ImVec2(0, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 			ImGui::SameLine();
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::BeginTooltip();
-				float focus_sz = 32.0f;
-				float focus_x = io.MousePos.x - pos.x - focus_sz * 0.5f; if (focus_x < 0.0f) focus_x = 0.0f; else if (focus_x > my_tex_w - focus_sz) focus_x = my_tex_w - focus_sz;
-				float focus_y = io.MousePos.y - pos.y - focus_sz * 0.5f; if (focus_y < 0.0f) focus_y = 0.0f; else if (focus_y > my_tex_h - focus_sz) focus_y = my_tex_h - focus_sz;
+				float focusSize = 32.0f;
+				float focus_x = io.MousePos.x - pos.x - focusSize * 0.5f; if (focus_x < 0.0f) focus_x = 0.0f; else if (focus_x > texWidth - focusSize) focus_x = texWidth - focusSize;
+				float focus_y = io.MousePos.y - pos.y - focusSize * 0.5f; if (focus_y < 0.0f) focus_y = 0.0f; else if (focus_y > texHeight - focusSize) focus_y = texHeight - focusSize;
 				ImGui::Text("Min: (%.2f, %.2f)", focus_x / ratio, focus_y / ratio);
-				ImGui::Text("Max: (%.2f, %.2f)", (focus_x + focus_sz) / ratio, (focus_y + focus_sz) / ratio);
-				ImVec2 uv0 = ImVec2((focus_x) / my_tex_w, (focus_y) / my_tex_h);
-				ImVec2 uv1 = ImVec2((focus_x + focus_sz) / my_tex_w, (focus_y + focus_sz) / my_tex_h);
-				ImGui::Image(my_tex_id, ImVec2(128, 128), uv1, uv0, ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+				ImGui::Text("Max: (%.2f, %.2f)", (focus_x + focusSize) / ratio, (focus_y + focusSize) / ratio);
+				ImVec2 uv0 = ImVec2(-(focus_x) / texWidth, ((focus_y) / texHeight));
+				ImVec2 uv1 = ImVec2(-(focus_x + focusSize) / texWidth, ((focus_y + focusSize) / texHeight));
+				uv0.y = 1.0f - uv0.y;
+				uv1.y = 1.0f - uv1.y;
+				ImGui::Image(my_tex_id, ImVec2(128, 128), uv0, uv1, ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 				ImGui::EndTooltip();
 			}
 			ImGui::Text("%dx%d", (int)width, (int)height);
