@@ -21,7 +21,8 @@ int main(int, char**)
 {
 	if (!glfwInit())
 		return 1;
-	GLFWwindow* window = glfwCreateWindow(1040, 640, "Para Engine v0.04-alpha", NULL, NULL);
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	GLFWwindow* window = glfwCreateWindow((mode->width / 1.3f), (mode->height / 1.2f), "Para Engine v0.06-alpha", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	glfwInit();
@@ -58,7 +59,7 @@ int main(int, char**)
 			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
 			ImGui::ShowDemoWindow(&show_demo_window);
 		}
-		//______________________
+		static bool isWindowed = true;
 		bool showPopUp = false;
 		if (ImGui::BeginMainMenuBar())
 		{
@@ -70,8 +71,22 @@ int main(int, char**)
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
 			}
+
 			if (ImGui::BeginMenu("EDIT"))
 			{
+				if (ImGui::MenuItem("Windowed", nullptr, nullptr, !isWindowed))
+				{
+					glfwSetWindowMonitor(window, NULL, 100, 100, (mode->width / 1.3f), (mode->height / 1.2f), 60);
+					isWindowed = true;
+				}
+
+				if (ImGui::MenuItem("Fullscreen", nullptr, nullptr, isWindowed))
+				{
+					glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, 60);
+					isWindowed = false;
+				}
+
+				ImGui::Separator();
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
 				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}
 				ImGui::Separator();
@@ -190,7 +205,6 @@ int main(int, char**)
 
 		EditorSceneViewManager::instance.editorCamera.setScreenRatio(glm::vec2(display_w*ratio, display_h*ratio));
 		EditorSceneViewManager::instance.handleInput();
-		// Rendering
 
 		glViewport(0, 0, display_w, display_h);
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
