@@ -24,7 +24,7 @@ void FileExplorer::display()
 	window_flags |= ImGuiWindowFlags_NoMove;
 	window_flags |= ImGuiWindowFlags_NoResize;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
-	ImGui::SetNextWindowSize(ImVec2(470, 380));
+	ImGui::SetNextWindowSize(ImVec2(470, 390));
 	if (ImGui::BeginPopupModal("File Explorer", NULL, window_flags))
 	{
 		if (ImGui::Button("BACK"))
@@ -43,6 +43,7 @@ void FileExplorer::display()
 		}
 		if (!std::experimental::filesystem::is_empty(path))
 		{
+			ImGui::BeginChild("directory_files", ImVec2(ImGui::GetWindowContentRegionWidth(), 300), true, ImGuiWindowFlags_HorizontalScrollbar);
 			for (std::string strPath : paths)
 			{
 				ImGui::TextWrapped(strPath.c_str());
@@ -52,11 +53,11 @@ void FileExplorer::display()
 					isDirty = true;
 				}
 			}
+			ImGui::EndChild();
 		}
 		else
 		{
 			std::cout << "\nIs empty " << path;
-
 		}
 
 		if (ImGui::Button("CLOSE"))
