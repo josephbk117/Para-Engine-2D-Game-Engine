@@ -29,7 +29,6 @@ void FileExplorer::display()
 	{
 		if (ImGui::Button("BACK"))
 		{
-
 			int locationOfLastSlash = path.find_last_of('//');
 			int locationOfFirstSlash = path.find_first_of('//');
 			

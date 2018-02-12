@@ -68,7 +68,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		{
 			ImGui::SetColumnWidth(1, (ImGui::GetColumnWidth(1) < 130) ? 130 : ImGui::GetColumnWidth(1));
 			ImGui::NextColumn();
-			
+
 			std::string filePath;
 			unsigned int index = -1;
 
@@ -132,8 +132,9 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			filePath = "File Path : ";
 			filePath += std::get<0>(ResourceManager::instance.getImageVector()->at(index));
 			ImGui::TextWrapped(filePath.c_str());
-			std::string fileSize = "File Size : " +
-				std::to_string(std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f) + " KB";
+			float inKB = std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f;
+			float inMB = inKB / 1024.0f;
+			std::string fileSize = "File Size : " + std::to_string(inKB) + " KB (" + std::to_string(inMB) + "MB )";
 			ImGui::Text(fileSize.c_str());
 		}
 	}
