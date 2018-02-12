@@ -134,8 +134,8 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			ImGui::TextWrapped(filePath.c_str());
 			float inKB = std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f;
 			float inMB = inKB / 1024.0f;
-			std::string fileSize = "File Size : " + std::to_string(inKB) + " KB (" + std::to_string(inMB) + "MB )";
-			ImGui::Text(fileSize.c_str());
+			//std::string fileSize = "File Size : " + std::to_string(inKB) + " KB (" + std::to_string(inMB) + "MB )";
+			ImGui::Text("File size : %.2f KB ( %0.3f MB)",inKB,inMB);
 		}
 	}
 	ImGui::End();
