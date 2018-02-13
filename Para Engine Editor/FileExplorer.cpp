@@ -31,7 +31,7 @@ void FileExplorer::display()
 		{
 			int locationOfLastSlash = path.find_last_of('//');
 			int locationOfFirstSlash = path.find_first_of('//');
-			
+
 			if (locationOfFirstSlash <= locationOfLastSlash && path.length() > 3)
 			{
 				path = path.substr(0, locationOfLastSlash);
@@ -58,7 +58,13 @@ void FileExplorer::display()
 		{
 			std::cout << "\nIs empty " << path;
 		}
-
+		if (ImGui::Button("SELECT"))
+		{
+			*outputPath = path;
+			shouldDisplay = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
 		if (ImGui::Button("CLOSE"))
 		{
 			shouldDisplay = false;
@@ -66,6 +72,12 @@ void FileExplorer::display()
 		}
 		ImGui::EndPopup();
 	}
+}
+
+void FileExplorer::displayDialog(std::string* pathOutput)
+{
+	shouldDisplay = true;
+	outputPath = pathOutput;
 }
 
 FileExplorer::~FileExplorer()

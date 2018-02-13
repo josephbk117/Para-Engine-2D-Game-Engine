@@ -45,6 +45,8 @@ int main(int, char**)
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\frasa.png", "box");
 	ResourceManager::instance.addResource(ResourceType::TEXTURE, "Test Resources\\goli.png", "box2");
 
+	std::string newResourceString;
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -65,8 +67,11 @@ int main(int, char**)
 		{
 			if (ImGui::BeginMenu("FILE"))
 			{
-				if (ImGui::MenuItem("Open Project", "CTRL+O")) {
-					FileExplorer::instance.shouldDisplay = true;
+				if (ImGui::MenuItem("Open Project", "CTRL+O"))
+				{
+
+					FileExplorer::instance.displayDialog(&newResourceString);
+					
 				}
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
@@ -205,6 +210,12 @@ int main(int, char**)
 
 		EditorSceneViewManager::instance.editorCamera.setScreenRatio(glm::vec2(display_w*ratio, display_h*ratio));
 		EditorSceneViewManager::instance.handleInput();
+
+		if (newResourceString.length() > 0)
+		{
+			ResourceManager::instance.addResource(ResourceType::TEXTURE, newResourceString, "uuibg");
+			newResourceString.clear();
+		}
 
 		glViewport(0, 0, display_w, display_h);
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
