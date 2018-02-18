@@ -35,6 +35,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	{
 		std::string text = "NAME : " + obj->getName();
 		ImGui::Text(text.c_str());
+		ImGui::Separator();
 		ImGui::Columns(obj->getAttachedComponents().size() + 1, "Components");
 		ImGui::SetColumnWidth(0, (ImGui::GetColumnWidth(0) < 130) ? 130 : ImGui::GetColumnWidth(0));
 		float xPos = 0.0f, yPos = 0.0f;

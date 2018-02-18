@@ -40,7 +40,6 @@ void FileExplorer::display()
 				isDirty = true;
 			}
 		}
-
 		static ImGuiTextFilter filter;
 		filter.Draw();
 		if (!std::experimental::filesystem::is_empty(path))
@@ -48,13 +47,44 @@ void FileExplorer::display()
 			ImGui::BeginChild("directory_files", ImVec2(ImGui::GetWindowContentRegionWidth(), 300), true, ImGuiWindowFlags_HorizontalScrollbar);
 			for (std::string strPath : paths)
 			{
+				std::vector<std::string> filterEnd;
+				if (fileFilter != FileType::NONE)
+				{
+					switch (fileFilter)
+					{
+					case FileType::IMAGE:
+						filterEnd.push_back(".png"); filterEnd.push_back(".jpg");
+						break;
+					case FileType::TEXT:
+						filterEnd.push_back(".txt");
+						break;
+					case FileType::AUDIO:
+						filterEnd.push_back(".wav"); filterEnd.push_back(".ogg");
+						break;
+					default:
+						break;
+					}
+				}
+
 				if (filter.PassFilter(strPath.c_str()))
 				{
-					ImGui::TextWrapped(strPath.c_str());
-					if (ImGui::IsItemClicked(0))
+					bool canShow = true;
+					for (unsigned int i = 0; i < filterEnd.size(); i++)
 					{
-						path = strPath;
-						isDirty = true;
+						if (!strPath.find(filterEnd.at(i)))
+						{
+							canShow = false;
+							break;
+						}
+					}
+					if (canShow)
+					{
+						ImGui::TextWrapped(strPath.c_str());
+						if (ImGui::IsItemClicked(0))
+						{
+							path = strPath;
+							isDirty = true;
+						}
 					}
 				}
 			}
@@ -80,10 +110,10 @@ void FileExplorer::display()
 	}
 }
 
-void FileExplorer::displayDialog(std::string* pathOutput, std::string* filter)
+void FileExplorer::displayDialog(std::string* pathOutput, FileType filter)
 {
 	shouldDisplay = true;
-	this->filter = filter;
+	this->fileFilter = filter;
 	outputPath = pathOutput;
 }
 

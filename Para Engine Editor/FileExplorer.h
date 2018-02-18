@@ -1,5 +1,11 @@
 #pragma once
 #include <vector>
+
+enum class FileType
+{
+	IMAGE, TEXT, CHAISCRIPT, AUDIO, NONE
+};
+
 class FileExplorer
 {
 public:
@@ -8,11 +14,11 @@ public:
 	std::string path = "C:\\";
 	FileExplorer();
 	void display();
-	void displayDialog(std::string* pathOutput, std::string* filter = nullptr);
+	void displayDialog(std::string* pathOutput, FileType filter = FileType::NONE);
 	~FileExplorer();
 private:
 	bool shouldDisplay = false;
 	std::vector<std::string> paths;
 	std::string* outputPath = nullptr;
-	std::string* filter = nullptr;
+	FileType fileFilter = FileType::NONE;
 };

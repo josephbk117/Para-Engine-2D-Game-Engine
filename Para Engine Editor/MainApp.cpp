@@ -69,9 +69,7 @@ int main(int, char**)
 			{
 				if (ImGui::MenuItem("Open Project", "CTRL+O"))
 				{
-
-					FileExplorer::instance.displayDialog(&newResourceString);
-					
+					FileExplorer::instance.displayDialog(&newResourceString, FileType::NONE);
 				}
 				if (ImGui::MenuItem("Open Scene")) {}
 				ImGui::EndMenu();
