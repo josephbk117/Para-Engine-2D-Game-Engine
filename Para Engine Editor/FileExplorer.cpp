@@ -40,16 +40,22 @@ void FileExplorer::display()
 				isDirty = true;
 			}
 		}
+
+		static ImGuiTextFilter filter;
+		filter.Draw();
 		if (!std::experimental::filesystem::is_empty(path))
 		{
 			ImGui::BeginChild("directory_files", ImVec2(ImGui::GetWindowContentRegionWidth(), 300), true, ImGuiWindowFlags_HorizontalScrollbar);
 			for (std::string strPath : paths)
 			{
-				ImGui::TextWrapped(strPath.c_str());
-				if (ImGui::IsItemClicked(0))
+				if (filter.PassFilter(strPath.c_str()))
 				{
-					path = strPath;
-					isDirty = true;
+					ImGui::TextWrapped(strPath.c_str());
+					if (ImGui::IsItemClicked(0))
+					{
+						path = strPath;
+						isDirty = true;
+					}
 				}
 			}
 			ImGui::EndChild();
@@ -74,9 +80,10 @@ void FileExplorer::display()
 	}
 }
 
-void FileExplorer::displayDialog(std::string* pathOutput)
+void FileExplorer::displayDialog(std::string* pathOutput, std::string* filter)
 {
 	shouldDisplay = true;
+	this->filter = filter;
 	outputPath = pathOutput;
 }
 
