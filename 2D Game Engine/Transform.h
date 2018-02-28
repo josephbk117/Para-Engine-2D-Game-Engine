@@ -19,14 +19,14 @@ public:
 	void setY(float yValue);
 	void setRotation(float rotation);
 	void setScale(const glm::vec2& scale);
-	const glm::vec2& getPosition()const;
-	float getRotation()const;
-	const glm::vec2& getScale()const;
+	const glm::vec2& getPosition()const noexcept;
+	float getRotation()const noexcept;
+	const glm::vec2& getScale()const noexcept;
 	void setParent(Transform * parentTransform);
 	const Transform* getParent();
 	void addChild(Transform* child);
-	bool operator==(const Transform& transform)const;
-	bool operator!=(const Transform& transform)const;
+	bool operator==(const Transform& transform)const noexcept;
+	bool operator!=(const Transform& transform)const noexcept;
 private:
 	glm::mat4 modelMatrix = glm::mat4(1.0);
 	glm::vec2 scale = glm::vec2(1.0f, 1.0f);

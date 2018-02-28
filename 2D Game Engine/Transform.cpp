@@ -76,15 +76,15 @@ void Transform::setScale(const glm::vec2& scale)
 	this->scale = scale;
 }
 
-const glm::vec2 & Transform::getPosition()const
+const glm::vec2 & Transform::getPosition()const noexcept
 {
 	return position;
 }
-float Transform::getRotation()const
+float Transform::getRotation()const noexcept
 {
 	return rotation;
 }
-const glm::vec2& Transform::getScale()const
+const glm::vec2& Transform::getScale()const noexcept
 {
 	return scale;
 }
@@ -108,11 +108,11 @@ void Transform::addChild(Transform * child)
 	child->parent = this;
 	children.push_back(child);
 }
-bool Transform::operator==(const Transform & transform)const
+bool Transform::operator==(const Transform & transform)const noexcept
 {
 	return (position == transform.position && rotation == transform.rotation && scale == transform.scale);
 }
-bool Transform::operator!=(const Transform & transform)const
+bool Transform::operator!=(const Transform & transform)const noexcept
 {
 	return (position != transform.position || rotation != transform.rotation || scale != transform.scale);
 }

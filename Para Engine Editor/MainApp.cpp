@@ -146,6 +146,7 @@ int main(int, char**)
 				}
 				ImGui::EndMenu();
 			}
+
 			ImGui::EndMainMenuBar();
 			if (showPopUp)
 				ImGui::OpenPopup("Add An Object");

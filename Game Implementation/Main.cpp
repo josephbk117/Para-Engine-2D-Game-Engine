@@ -19,6 +19,23 @@ void scene1LoadData();
 
 int main(int argc, char* argv[])
 {
+	int ar[] = { 1,4,2,3,7,8,5 };
+	for (int i = 0; i < 8; i++)
+	{
+		int temp = ar[i];
+		int j = i;
+		while (j > 0 && ar[j] <= ar[j - 1])
+		{
+			j--;
+		}
+		temp = ar[j];
+		ar[j] = ar[j - 1];
+		ar[j - 1] = temp;
+	}
+	for (int v : ar)
+		std:: cout << "\nlol : " << v;
+
+
 	Game::setUpEngine(720, 720, "Para Engine - Game v1.1");
 	Game::setVsync(0);
 	//Game::setCursor("Test Resources\\cursor.png");
@@ -92,7 +109,8 @@ void scene2LoadData()
 	tempSprite->init(0.5f, 0.5f);
 	tempSprite->setTextureID(texVal1);
 	tempGameObject->addComponent(tempSprite);
-	
+
+
 	tempGameObject = GameObject::createGameObject("Babu");
 	tempGameObject->getComponent<Transform>()->setPosition(glm::vec2(-0.3f, 5.5f));
 	tempSprite = new Sprite();

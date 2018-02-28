@@ -34,7 +34,10 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 	if (obj != nullptr)
 	{
 		std::string text = "NAME : " + obj->getName();
+		float regionWidth = ImGui::GetContentRegionAvailWidth() * 0.5f;
+		ImGui::Indent(regionWidth);
 		ImGui::Text(text.c_str());
+		ImGui::Unindent(regionWidth);
 		ImGui::Separator();
 		ImGui::Columns(obj->getAttachedComponents().size() + 1, "Components");
 		ImGui::SetColumnWidth(0, (ImGui::GetColumnWidth(0) < 130) ? 130 : ImGui::GetColumnWidth(0));
@@ -45,7 +48,11 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 		xScale = obj->getComponent<Transform>()->getScale().x;
 		yScale = obj->getComponent<Transform>()->getScale().y;
 		float rotation = glm::degrees(obj->getComponent<Transform>()->getRotation());
+
+		regionWidth = ImGui::GetContentRegionAvailWidth() * 0.375f;
+		ImGui::Indent(regionWidth);
 		ImGui::Text("TRANSFORM");
+		ImGui::Unindent(regionWidth);
 		ImGui::Text("Position :");
 		ImGui::PushItemWidth(ImGui::GetContentRegionAvailWidth() * 0.45f);
 		if (ImGui::DragFloat("##Position X", &xPos, 0.001f, -9999999.0f, 9999999.0f, "X: %.3f"))
@@ -74,7 +81,10 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			unsigned int index = -1;
 
 			ImGuiIO& io = ImGui::GetIO();
+			regionWidth = ImGui::GetContentRegionAvailWidth() * 0.375f;
+			ImGui::Indent(regionWidth);
 			ImGui::Text("SPRITE");
+			ImGui::Unindent(regionWidth);
 			ImTextureID my_tex_id = (void *)obj->getComponent<Sprite>()->getTextureID();
 			float texWidth, texHeight;
 			float ratio;
@@ -136,7 +146,7 @@ void PropertyPanel::display(int screenWidth, int screenHeight)
 			float inKB = std::get<1>(ResourceManager::instance.getImageVector()->at(index)).fileSize / 1024.0f;
 			float inMB = inKB / 1024.0f;
 			//std::string fileSize = "File Size : " + std::to_string(inKB) + " KB (" + std::to_string(inMB) + "MB )";
-			ImGui::Text("File size : %.2f KB ( %0.3f MB)",inKB,inMB);
+			ImGui::Text("File size : %.2f KB ( %0.3f MB)", inKB, inMB);
 		}
 	}
 	ImGui::End();
