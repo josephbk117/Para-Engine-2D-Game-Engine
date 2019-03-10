@@ -4,6 +4,9 @@
 #include <ParaEngine/Game.h>
 #include <ParaEngine/SoundSource.h>
 #include <ParaEngine/imgui.h>
+
+extern const std::string AUDIO_PATH;
+
 class PlayerMagicController : public Component
 {
 public:
@@ -13,7 +16,7 @@ public:
 		activeTransform = attachedGameObject->getComponent<Transform>();
 		rotOffset = 0.0f;
 		shouldDoCircleMotion = true;
-		sndBgMusic = AudioManager::loadAudioFromFile("Test Resources\\sndtrack2.wav", "bgMusic");
+		sndBgMusic = AudioManager::loadAudioFromFile( AUDIO_PATH + "sndtrack2.wav", "bgMusic");
 		sndBgMusic->play();
 		sndBgMusic->setLooping(true);
 	}

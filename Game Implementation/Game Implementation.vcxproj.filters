@@ -36,4 +36,53 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\Fonts\arial.ttf" />
+    <Font Include="Test Resources\Fonts\arialbd.ttf" />
+    <Font Include="Test Resources\Fonts\arialbi.ttf" />
+    <Font Include="Test Resources\Fonts\ariali.ttf" />
+    <Font Include="Test Resources\Fonts\ariblk.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\Audio\PlatformerBGM_06.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Test Resources\Audio\sndtrack2.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Test Resources\Audio\Swoosh.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\Shaders\postProcess.fs" />
+    <None Include="Test Resources\Shaders\postProcess.vs" />
+    <None Include="Test Resources\Shaders\spriteBase.fs" />
+    <None Include="Test Resources\Shaders\spriteBase.vs" />
+    <None Include="Test Resources\Shaders\uiElementBase.fs" />
+    <None Include="Test Resources\Shaders\uiElementBase.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\Images\cartoonyBg.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\frasa.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\goli.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\lili.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\mamma.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\paraEngineLogo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

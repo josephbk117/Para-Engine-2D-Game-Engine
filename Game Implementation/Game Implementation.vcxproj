@@ -81,11 +81,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\includes;$(SolutionDir)2D Game Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes;$(SolutionDir)2D Game Engine</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Box2D.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -139,6 +139,35 @@
     <ClInclude Include="src\ObjectSpawner.h" />
     <ClInclude Include="src\PlayerMagicController.h" />
     <ClInclude Include="src\SuddenJolt.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\Fonts\arial.ttf" />
+    <Font Include="Test Resources\Fonts\arialbd.ttf" />
+    <Font Include="Test Resources\Fonts\arialbi.ttf" />
+    <Font Include="Test Resources\Fonts\ariali.ttf" />
+    <Font Include="Test Resources\Fonts\ariblk.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\Audio\PlatformerBGM_06.wav" />
+    <Media Include="Test Resources\Audio\sndtrack2.wav" />
+    <Media Include="Test Resources\Audio\Swoosh.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\Shaders\postProcess.fs" />
+    <None Include="Test Resources\Shaders\postProcess.vs" />
+    <None Include="Test Resources\Shaders\spriteBase.fs" />
+    <None Include="Test Resources\Shaders\spriteBase.vs" />
+    <None Include="Test Resources\Shaders\uiElementBase.fs" />
+    <None Include="Test Resources\Shaders\uiElementBase.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\Images\cartoonyBg.jpg" />
+    <Image Include="Test Resources\Images\cursor.png" />
+    <Image Include="Test Resources\Images\frasa.png" />
+    <Image Include="Test Resources\Images\goli.png" />
+    <Image Include="Test Resources\Images\lili.jpg" />
+    <Image Include="Test Resources\Images\mamma.png" />
+    <Image Include="Test Resources\Images\paraEngineLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,7 +23,7 @@ void ShaderProgram::compileShaders(const std::string & vertexShaderPath, const s
 	if (vertexShaderID == 0)
 		std::cout << "ERROR : Vertex shader creation";
 	fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-	if (vertexShaderID == 0)
+	if (fragmentShaderID == 0)
 		std::cout << "ERROR : Fragment shader creation";
 	compileShader(vertexShaderPath, vertexShaderID);
 	compileShader(fragmentShaderPath, fragmentShaderID);
@@ -41,9 +41,10 @@ void ShaderProgram::linkShaders()
 	{
 		GLint maxLength = 0;
 		glGetProgramiv(programID, GL_INFO_LOG_LENGTH, (int *)&isLinked);
-		std::vector<char> infoLog(maxLength);
-		std::cout << &(infoLog[0]);
-		glGetProgramInfoLog(programID, maxLength, &maxLength, &infoLog[0]);
+		GLchar infoLog[1024]; //std::vector<char> infoLog(2000);
+		glGetProgramInfoLog(programID, 1024, NULL, &infoLog[0]);
+		std::cout << "\nLink error : --------------\n" << &infoLog[0];
+		std::cout << "\n-------------\n";
 		glDeleteProgram(programID);
 		glDeleteShader(vertexShaderID);
 		glDeleteShader(fragmentShaderID);
@@ -57,6 +58,7 @@ void ShaderProgram::linkShaders()
 	glDetachShader(programID, fragmentShaderID);
 	glDeleteShader(vertexShaderID);
 	glDeleteShader(fragmentShaderID);
+
 }
 
 void ShaderProgram::addAttribute(const std::string & attributeName)
@@ -92,6 +94,26 @@ void ShaderProgram::applyShaderUniformMatrix(int uniformId, const glm::mat4& mat
 	glUniformMatrix4fv(uniformId, 1, GL_FALSE, &matrixValue[0][0]);
 }
 
+void ShaderProgram::applyShaderVector3(int uniformId, const glm::vec3& value)
+{
+	glUniform3f(uniformId, value.x, value.y, value.z);
+}
+
+void ShaderProgram::applyShaderFloat(int uniformId, float value)
+{
+	glUniform1f(uniformId, value);
+}
+
+void ShaderProgram::applyShaderInt(int uniformId, int value)
+{
+	glUniform1i(uniformId, value);
+}
+
+void ShaderProgram::applyShaderBool(int uniformId, bool value)
+{
+	glUniform1i(uniformId, value);
+}
+
 void ShaderProgram::compileShader(const std::string & filePath, unsigned int ID)
 {
 	std::ifstream shaderFile(filePath);
@@ -99,6 +121,7 @@ void ShaderProgram::compileShader(const std::string & filePath, unsigned int ID)
 	{
 		perror(filePath.c_str());
 		std::cout << "ERROR : file : " << filePath << " couldnt be loaded";
+		return;
 	}
 	std::string fileContents = "";
 	std::string line;

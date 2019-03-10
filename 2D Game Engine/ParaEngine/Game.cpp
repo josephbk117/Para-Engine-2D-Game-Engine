@@ -38,7 +38,8 @@ glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
 std::unordered_map<std::string, std::function<void()>> Game::scenes;
 std::function<void()> Game::activeSceneInitFunc;
-std::function<void()>  Game::scriptedUpdateFunction = NULL;
+std::function<void()> Game::scriptedUpdateFunction = NULL;
+
 struct Game::InternalAcess
 {
 	friend class BoxCollider;
@@ -96,7 +97,7 @@ std::vector<GameObject *> Game::InternalAcess::gameObjects;
 std::unique_ptr<b2World> Game::InternalAcess::world;
 Camera* Game::InternalAcess::camera;
 
-//_____LOCAL DATA_____
+//_____LOCAL DATA_____//
 Sprite screenPostProcessingElement;
 unsigned int fbo;
 void Game::setUpEngine(unsigned int screenWidth, unsigned int screenHeight, const std::string& title)
@@ -201,16 +202,16 @@ GLint postProcesBrightnessLocation;
 void Game::update()
 {
 	ShaderProgram shaderGameObjectsBase;
-	shaderGameObjectsBase.compileShaders("Test Resources\\spriteBase.vs", "Test Resources\\spriteBase.fs");
+	shaderGameObjectsBase.compileShaders("Test Resources\\Shaders\\spriteBase.vs", "Test Resources\\Shaders\\spriteBase.fs");
 	shaderGameObjectsBase.addAttribute("vertexPosition");
 	shaderGameObjectsBase.linkShaders();
 
 	ShaderProgram shaderUiElementBase;
-	shaderUiElementBase.compileShaders("Test Resources\\uiElementBase.vs", "Test Resources\\uiElementBase.fs");
+	shaderUiElementBase.compileShaders("Test Resources\\Shaders\\uiElementBase.vs", "Test Resources\\Shaders\\uiElementBase.fs");
 	shaderUiElementBase.addAttribute("vertexPosition");
 	shaderUiElementBase.linkShaders();
 
-	postProcessor.compileShaders("Test Resources\\postProcess.vs", "Test Resources\\postProcess.fs");
+	postProcessor.compileShaders("Test Resources\\Shaders\\postProcess.vs", "Test Resources\\Shaders\\postProcess.fs");
 	postProcessor.linkShaders();
 
 	GLint textureGameObjectLocation = shaderGameObjectsBase.getUniformLocation("textureOne");

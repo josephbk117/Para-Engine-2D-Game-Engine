@@ -10,6 +10,12 @@
 #include "ObjectSpawner.h"
 #include "SuddenJolt.h"
 #include "InitialSceneLogic.h"
+
+extern const std::string IMAGES_PATH = "Test Resources\\Images\\";
+extern const std::string FONTS_PATH = "Test Resources\\Fonts\\";
+extern const std::string SHADERS_PATH = "Test Resources\\Shaders\\";
+extern const std::string AUDIO_PATH = "Test Resources\\Audio\\";
+
 unsigned int texVal1;
 unsigned int texVal2;
 unsigned int texVal3;
@@ -20,7 +26,7 @@ void scene1LoadData();
 int main(int argc, char* argv[])
 {
 	int ar[] = { 1,4,2,3,7,8,5 };
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		int temp = ar[i];
 		int j = i;
@@ -32,20 +38,17 @@ int main(int argc, char* argv[])
 		ar[j] = ar[j - 1];
 		ar[j - 1] = temp;
 	}
-	for (int v : ar)
-		std:: cout << "\nlol : " << v;
-
 
 	Game::setUpEngine(720, 720, "Para Engine - Game v1.1");
 	Game::setVsync(0);
 	//Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);
 	//game.hideCursor(true);
-	texVal1 = TextureManager::loadTextureFromFile("Test Resources\\frasa.png", "texOne", false);
-	texVal2 = TextureManager::loadTextureFromFile("Test Resources\\mamma.png", "texTwo", false);
-	texVal3 = TextureManager::loadTextureFromFile("Test Resources\\lili.jpg", "texThree", false);
-	TextureManager::loadTextureFromFile("Test Resources\\goli.png", "translu", false);
-	AudioManager::loadAudioFromFile("Test Resources\\Swoosh.wav", "snd_1");
+	texVal1 = TextureManager::loadTextureFromFile( IMAGES_PATH + "frasa.png", "texOne", false);
+	texVal2 = TextureManager::loadTextureFromFile( IMAGES_PATH + "mamma.png", "texTwo", false);
+	texVal3 = TextureManager::loadTextureFromFile( IMAGES_PATH + "lili.jpg", "texThree", false);
+	TextureManager::loadTextureFromFile( IMAGES_PATH + "goli.png", "translu", false);
+	AudioManager::loadAudioFromFile( AUDIO_PATH + "Swoosh.wav", "snd_1");
 
 	Game::addScene(scene2LoadData, "scene1");
 	Game::addScene(scene1LoadData, "scene2");
@@ -66,7 +69,7 @@ void scene2LoadData()
 	tempGameObject->addComponent(new PlayerMagicController);
 
 	Text* textGui = new Text();
-	textGui->init("Test Resources\\arial.ttf");
+	textGui->init( FONTS_PATH + "arial.ttf");
 	textGui->text = "This got loaded up in this scene";
 
 	tempGameObject = GameObject::createGameObject("textelement", true);
@@ -173,7 +176,7 @@ void scene2LoadData()
 
 void scene1LoadData()
 {
-	int logoTexValue = TextureManager::loadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false);
+	int logoTexValue = TextureManager::loadTextureFromFile( IMAGES_PATH + "paraEngineLogo.png", "logo", false);
 	GameObject* tempGameObject;
 	tempGameObject = GameObject::createGameObject("Logo");
 	Sprite* sprite = new Sprite;
