@@ -1,7 +1,7 @@
 #pragma once
-#include <Component.h>
-#include <Box.h>
-#include <Game.h>
+#include <ParaEngine/Component.h>
+#include <ParaEngine/Box.h>
+#include <ParaEngine/Game.h>
 #include <iostream>
 
 class SuddenJolt : public Component

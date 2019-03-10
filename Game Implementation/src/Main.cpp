@@ -1,10 +1,10 @@
-#include <Game.h>
+#include <ParaEngine/Game.h>
 #include <GLM\glm.hpp>
-#include <SceneManager.h>
-#include <AudioManager.h>
-#include <TextureLoader.h>
-#include <Sprite.h>
-#include <Text.h>
+#include <ParaEngine/SceneManager.h>
+#include <ParaEngine/AudioManager.h>
+#include <ParaEngine/TextureLoader.h>
+#include <ParaEngine/Sprite.h>
+#include <ParaEngine/Text.h>
 #include "PlayerMagicController.h"
 #include "MagicObjectScaler.h"
 #include "ObjectSpawner.h"
@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
 	Game::cleanUp();
 	return 0;
 }
+
 void scene2LoadData()
 {
 	PhysicsMaterial physicsMaterial1(0.0f, 0.0f, 1.0f, 0.6f, 0.5f);

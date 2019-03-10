@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{EFCBEFF0-2E93-464A-9C6E-2A56AE17ED57}</ProjectGuid>
     <RootNamespace>GameImplementation</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,7 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2D Game Engine\2D Game Engine.vcxproj">
@@ -134,11 +134,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InitialSceneLogic.h" />
-    <ClInclude Include="MagicObjectScaler.h" />
-    <ClInclude Include="ObjectSpawner.h" />
-    <ClInclude Include="PlayerMagicController.h" />
-    <ClInclude Include="SuddenJolt.h" />
+    <ClInclude Include="src\InitialSceneLogic.h" />
+    <ClInclude Include="src\MagicObjectScaler.h" />
+    <ClInclude Include="src\ObjectSpawner.h" />
+    <ClInclude Include="src\PlayerMagicController.h" />
+    <ClInclude Include="src\SuddenJolt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

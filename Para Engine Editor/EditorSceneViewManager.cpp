@@ -1,12 +1,13 @@
+#include <ParaEngine/ShaderProgram.h>
+#include <ParaEngine/Sprite.h>
+#include <ParaEngine/Box.h>
+#include <ParaEngine/Camera.h>
+#include <GL\glew.h>
+#include <iostream>
+
 #include "EditorSceneViewManager.h"
 #include "ResourceManager.h"
 #include "imgui.h"
-#include <ShaderProgram.h>
-#include <Sprite.h>
-#include <Box.h>
-#include <Camera.h>
-#include <GL\glew.h>
-#include <iostream>
 
 EditorSceneViewManager EditorSceneViewManager::instance;
 EditorSceneViewManager::EditorSceneViewManager() {}

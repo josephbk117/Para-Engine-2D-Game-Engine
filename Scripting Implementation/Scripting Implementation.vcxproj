@@ -120,7 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ScriptAccess.cpp" />
+    <ClCompile Include="src\ScriptAccess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2D Game Engine\2D Game Engine.vcxproj">

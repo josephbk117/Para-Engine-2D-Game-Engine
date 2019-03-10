@@ -1,10 +1,10 @@
 #pragma once
-#include <Component.h>
-#include <Game.h>
-#include <AudioManager.h>
+#include <ParaEngine/Component.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/AudioManager.h>
 #include <string>
 #include "SuddenJolt.h"
-#include "SoundSource.h"
+#include <ParaEngine/SoundSource.h>
 
 class ObjectSpawner : public Component
 {

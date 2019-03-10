@@ -1,12 +1,12 @@
 #include <iostream>
 #include <chaiscript\chaiscript.hpp>
 #include <chaiscript\chaiscript_stdlib.hpp>
-#include <Game.h>
+#include <ParaEngine/Game.h>
 #include <GLM\glm.hpp>
-#include <TextureLoader.h>
-#include <AudioManager.h>
-#include <InputData.h>
-#include <Sprite.h>
+#include <ParaEngine/TextureLoader.h>
+#include <ParaEngine/AudioManager.h>
+#include <ParaEngine/InputData.h>
+#include <ParaEngine/Sprite.h>
 
 Camera* CreateCamera(float width, float height);
 Sprite* CreateSprite(unsigned int width, unsigned int height);

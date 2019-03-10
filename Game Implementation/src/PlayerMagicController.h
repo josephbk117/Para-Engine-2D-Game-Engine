@@ -1,9 +1,9 @@
 #pragma once
-#include <Component.h>
-#include <GameObject.h>
-#include <Game.h>
-#include <SoundSource.h>
-#include <imgui.h>
+#include <ParaEngine/Component.h>
+#include <ParaEngine/GameObject.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/SoundSource.h>
+#include <ParaEngine/imgui.h>
 class PlayerMagicController : public Component
 {
 public:

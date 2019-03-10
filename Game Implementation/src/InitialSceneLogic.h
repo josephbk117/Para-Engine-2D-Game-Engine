@@ -1,6 +1,6 @@
 #pragma once
-#include <Game.h>
-#include <Component.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/Component.h>
 class InitialSceneLogic : public Component
 {
 public:

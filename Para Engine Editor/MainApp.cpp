@@ -5,15 +5,15 @@
 #include <iostream>
 #include "HierarchyPanel.h"
 #include "PropertyPanel.h"
-#include <Game.h>
-#include <GameObject.h>
-#include <Sprite.h>
-#include <TextureLoader.h>
-#include <Texture.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/GameObject.h>
+#include <ParaEngine/Sprite.h>
+#include <ParaEngine/TextureLoader.h>
+#include <ParaEngine/Texture.h>
+#include <ParaEngine/ParaEngineError.h>
 #include "ResourceManager.h"
 #include "FileExplorer.h"
 #include "EditorSceneViewManager.h"
-#include "ParaEngineError.h"
 
 void StyleColorsParaEngineDefault(ImGuiStyle* dst = (ImGuiStyle*)0);
 

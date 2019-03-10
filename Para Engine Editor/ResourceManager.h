@@ -1,6 +1,6 @@
 #pragma once
-#include <TextureLoader.h>
-#include <Texture.h>
+#include <ParaEngine/TextureLoader.h>
+#include <ParaEngine/Texture.h>
 #include <vector>
 #include <utility>
 #include <unordered_map>

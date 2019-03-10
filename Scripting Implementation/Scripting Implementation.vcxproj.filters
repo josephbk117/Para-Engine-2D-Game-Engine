@@ -11,7 +11,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ScriptAccess.cpp">
+    <ClCompile Include="src\ScriptAccess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

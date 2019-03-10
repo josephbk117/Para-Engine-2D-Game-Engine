@@ -1,10 +1,11 @@
+#include <ParaEngine/TextureLoader.h>
+#include <ParaEngine/Transform.h>
+#include <ParaEngine/Sprite.h>
+#include <iostream>
+
 #include "PropertyPanel.h"
 #include "imgui.h"
 #include "ResourceManager.h"
-#include <TextureLoader.h>
-#include <Transform.h>
-#include <Sprite.h>
-#include <iostream>
 PropertyPanel PropertyPanel::instance;
 PropertyPanel::PropertyPanel()
 {

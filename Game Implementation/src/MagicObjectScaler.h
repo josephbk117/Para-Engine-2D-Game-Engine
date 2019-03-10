@@ -1,8 +1,8 @@
 #pragma once
-#include <Component.h>
-#include <Transform.h>
-#include <Game.h>
-#include <Camera.h>
+#include <ParaEngine/Component.h>
+#include <ParaEngine/Transform.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/Camera.h>
 class MagicObjectScaler : public Component
 {
 public:

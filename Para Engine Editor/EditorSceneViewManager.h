@@ -1,9 +1,9 @@
 #pragma once
-#include <Game.h>
-#include <Camera.h>
-#include <ShaderProgram.h>
 #include <GL\glew.h>
-#include <GameObject.h>
+#include <ParaEngine/Game.h>
+#include <ParaEngine/Camera.h>
+#include <ParaEngine/ShaderProgram.h>
+#include <ParaEngine/GameObject.h>
 #include "EditorCamera.h"
 class EditorSceneViewManager
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include <Texture.h>
+#include <ParaEngine/Texture.h>
 #include <vector>
 #include "HierarchyPanel.h"
 class PropertyPanel

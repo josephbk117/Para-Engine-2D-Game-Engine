@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <GameObject.h>
+#include <ParaEngine/GameObject.h>
 class HierarchyPanel
 {
 public:
