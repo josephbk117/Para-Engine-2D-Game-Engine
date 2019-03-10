@@ -120,38 +120,67 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EditorCamera.cpp" />
-    <ClCompile Include="EditorSceneViewManager.cpp" />
-    <ClCompile Include="FileExplorer.cpp" />
-    <ClCompile Include="HierarchyPanel.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_demo.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_glfw_gl3.cpp" />
-    <ClCompile Include="MainApp.cpp" />
-    <ClCompile Include="PropertyPanel.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="UserPreferences.cpp" />
+    <ClCompile Include="src\EditorCamera.cpp" />
+    <ClCompile Include="src\EditorSceneViewManager.cpp" />
+    <ClCompile Include="src\FileExplorer.cpp" />
+    <ClCompile Include="src\HierarchyPanel.cpp" />
+    <ClCompile Include="src\imgui.cpp" />
+    <ClCompile Include="src\imgui_demo.cpp" />
+    <ClCompile Include="src\imgui_draw.cpp" />
+    <ClCompile Include="src\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="src\MainApp.cpp" />
+    <ClCompile Include="src\PropertyPanel.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
+    <ClCompile Include="src\UserPreferences.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditorCamera.h" />
-    <ClInclude Include="EditorSceneViewManager.h" />
-    <ClInclude Include="FileExplorer.h" />
-    <ClInclude Include="HierarchyPanel.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_glfw_gl3.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="PropertyPanel.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="stb_rect_pack.h" />
-    <ClInclude Include="stb_textedit.h" />
-    <ClInclude Include="stb_truetype.h" />
-    <ClInclude Include="UserPreferences.h" />
+    <ClInclude Include="src\EditorCamera.h" />
+    <ClInclude Include="src\EditorSceneViewManager.h" />
+    <ClInclude Include="src\FileExplorer.h" />
+    <ClInclude Include="src\HierarchyPanel.h" />
+    <ClInclude Include="src\imconfig.h" />
+    <ClInclude Include="src\imgui.h" />
+    <ClInclude Include="src\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="src\imgui_internal.h" />
+    <ClInclude Include="src\PropertyPanel.h" />
+    <ClInclude Include="src\ResourceManager.h" />
+    <ClInclude Include="src\stb_rect_pack.h" />
+    <ClInclude Include="src\stb_textedit.h" />
+    <ClInclude Include="src\stb_truetype.h" />
+    <ClInclude Include="src\UserPreferences.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\2D Game Engine\2D Game Engine.vcxproj">
       <Project>{36edb50a-82e6-4f2e-8187-5a826b70d315}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\arial.ttf" />
+    <Font Include="Test Resources\arialbd.ttf" />
+    <Font Include="Test Resources\arialbi.ttf" />
+    <Font Include="Test Resources\ariali.ttf" />
+    <Font Include="Test Resources\ariblk.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\cartoonyBg.jpg" />
+    <Image Include="Test Resources\cursor.png" />
+    <Image Include="Test Resources\frasa.png" />
+    <Image Include="Test Resources\goli.png" />
+    <Image Include="Test Resources\lili.jpg" />
+    <Image Include="Test Resources\mamma.png" />
+    <Image Include="Test Resources\paraEngineLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\postProcess.fs" />
+    <None Include="Test Resources\postProcess.vs" />
+    <None Include="Test Resources\spriteBase.fs" />
+    <None Include="Test Resources\spriteBase.vs" />
+    <None Include="Test Resources\uiElementBase.fs" />
+    <None Include="Test Resources\uiElementBase.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\PlatformerBGM_06.wav" />
+    <Media Include="Test Resources\Swoosh.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

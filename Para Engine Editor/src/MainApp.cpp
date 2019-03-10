@@ -1,16 +1,16 @@
-#include <GL\glew.h>
-#include "imgui.h"
-#include "imgui_impl_glfw_gl3.h"
-#include <GLFW\glfw3.h>
 #include <iostream>
-#include "HierarchyPanel.h"
-#include "PropertyPanel.h"
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
 #include <ParaEngine/Game.h>
 #include <ParaEngine/GameObject.h>
 #include <ParaEngine/Sprite.h>
 #include <ParaEngine/TextureLoader.h>
 #include <ParaEngine/Texture.h>
 #include <ParaEngine/ParaEngineError.h>
+#include "imgui.h"
+#include "imgui_impl_glfw_gl3.h"
+#include "HierarchyPanel.h"
+#include "PropertyPanel.h"
 #include "ResourceManager.h"
 #include "FileExplorer.h"
 #include "EditorSceneViewManager.h"
@@ -22,7 +22,7 @@ int main(int, char**)
 	if (!glfwInit())
 		return 1;
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	GLFWwindow* window = glfwCreateWindow((mode->width / 1.3f), (mode->height / 1.2f), "Para Engine v1.1-alpha", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow((mode->width / 1.3f), (mode->height / 1.2f), "Para Engine v1.5-alpha", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	glfwInit();

@@ -30,6 +30,7 @@ def scene1()
 	var pos = trans.GetPosition();
 	AddCamera(cobj,csp);
 }
+
 def update1()
 {
 	if(IsKeyPressed('W')){
@@ -43,6 +44,12 @@ def update1()
 	}
 	if(IsKeyPressed('D')){
 		trans.SetX(trans.GetPosition().x + 0.01f);
+	}
+	if(IsKeyPressed('B')){
+		ConsoleOutput("\n Pressed B Key");
+	}
+	if(IsKeyPressed('N')){
+		ConsoleOutput("\n Pressed N Key");
 	}
 	obj.update();
 }

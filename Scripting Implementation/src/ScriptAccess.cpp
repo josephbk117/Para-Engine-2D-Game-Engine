@@ -10,6 +10,7 @@
 
 Camera* CreateCamera(float width, float height);
 Sprite* CreateSprite(unsigned int width, unsigned int height);
+void ConsoleOutput(const std::string & str);
 void SetClearColour(float r, float g, float b);
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera);
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite);
@@ -24,10 +25,15 @@ float MathFuncSqrt(float value);
 int main(int argc, char* argv[])
 {
 	chaiscript::ChaiScript chai(chaiscript::Std_Lib::library());
+	//Misc
 	chai.add(chaiscript::fun(&AddSpriteToGameObject), "AddSprite");
 	chai.add(chaiscript::fun(&AddCameraToGameObject), "AddCamera");
 	chai.add(chaiscript::fun(&SetUpdateFunction), "SetUpdateFunction");
 	chai.add(chaiscript::fun(&IsKeyPressed), "IsKeyPressed");
+
+	//Debug
+	chai.add(chaiscript::fun(&ConsoleOutput), "ConsoleOutput");
+
 	//Math Functions
 	chai.add(chaiscript::fun(&MathFuncSin), "Sin");
 	chai.add(chaiscript::fun(&MathFuncCos), "Cos");
@@ -35,6 +41,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&MathFuncPow), "Pow");
 	chai.add(chaiscript::fun(&MathFuncSqrt), "Sqrt");
 
+	//Game class static functions
 	chai.add(chaiscript::fun(&Game::isKeyPressed), "IsKeyPressed");
 	chai.add(chaiscript::fun(&Game::setUpEngine), "SetUpEngine");
 	chai.add(chaiscript::fun(&Game::cleanUp), "CleanUp");
@@ -47,10 +54,12 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::setVsync), "SetVsync");
 	chai.add(chaiscript::fun(&SetClearColour), "SetClearColour");
 
-
+	//Resource managers
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
 	chai.add(chaiscript::fun(&TextureManager::getTextureIdFromReference), "GetTextureFromReference");
 	chai.add(chaiscript::fun(&AudioManager::loadAudioFromFile), "LoadAudioFromFile");
+
+	//Game object
 	chai.add(chaiscript::user_type<GameObject>(), "GameObject");
 	chai.add(chaiscript::fun(&GameObject::getName), "GetName");
 	chai.add(chaiscript::fun(&GameObject::createGameObject), "CreateGameObject");
@@ -58,8 +67,9 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&GameObject::getLayerOrder), "GetLayerOrder");
 	chai.add(chaiscript::fun(&GameObject::setLayerOrder), "SetLayerOrder");
 	chai.add(chaiscript::fun(&GameObject::addComponent), "AddComponent");
-
 	chai.add(chaiscript::fun(&GameObject::getComponent<Transform>), "GetComponentTransform");
+
+	//Sprite component
 	chai.add(chaiscript::user_type<Sprite>(), "Sprite");
 	chai.add(chaiscript::constructor<Sprite()>(), "Sprite");
 	chai.add(chaiscript::fun(&CreateSprite), "CreateSprite");
@@ -69,6 +79,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Sprite::getDimensions), "GetDimensions");
 	chai.add(chaiscript::fun<void, Sprite, float, float>(&Sprite::setDimension), "SetDimension");
 
+	//Camera component
 	chai.add(chaiscript::user_type<Camera>(), "Camera");
 	chai.add(chaiscript::constructor<Camera()>(), "Camera");
 	chai.add(chaiscript::fun(&CreateCamera), "CreateCamera");
@@ -86,6 +97,7 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&glm::vec3::y), "y");
 	chai.add(chaiscript::fun(&glm::vec3::z), "z");
 
+	//Transform component
 	chai.add(chaiscript::user_type<Transform>(), "Transform");
 	chai.add(chaiscript::constructor<Transform()>(), "Transform");
 	chai.add(chaiscript::constructor<Transform(const Transform &)>(), "Transform");
@@ -101,6 +113,11 @@ int main(int argc, char* argv[])
 	chai.eval_file("Test Resources\\Chai scripts\\gameData.chai");
 	chai.eval("CleanUp();");
 	return 0;
+}
+
+void ConsoleOutput(const std::string & str)
+{
+	std::cout << str;
 }
 
 void SetClearColour(float r, float g, float b)

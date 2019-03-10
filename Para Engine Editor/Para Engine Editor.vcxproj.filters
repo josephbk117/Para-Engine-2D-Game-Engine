@@ -16,84 +16,167 @@
     <Filter Include="Source Files\ImGui">
       <UniqueIdentifier>{da9333e0-a040-4878-94e6-259dd5b58073}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{a47fbb99-b26e-4ee8-805f-fb60f3958845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{043d0dd3-43a2-48e7-9ca9-a421f5aa0169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio">
+      <UniqueIdentifier>{013c7d41-0282-4eb0-8e22-486ca124c714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{1db5b81a-873b-4392-8894-abc5f19390f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainApp.cpp">
+    <ClCompile Include="src\EditorCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HierarchyPanel.cpp">
+    <ClCompile Include="src\EditorSceneViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PropertyPanel.cpp">
+    <ClCompile Include="src\FileExplorer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
+    <ClCompile Include="src\HierarchyPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileExplorer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorSceneViewManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UserPreferences.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui.cpp">
+    <ClCompile Include="src\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_demo.cpp">
+    <ClCompile Include="src\imgui_demo.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
+    <ClCompile Include="src\imgui_draw.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_impl_glfw_gl3.cpp">
+    <ClCompile Include="src\imgui_impl_glfw_gl3.cpp">
       <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PropertyPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UserPreferences.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="imgui_impl_glfw_gl3.h">
+    <ClInclude Include="src\EditorCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imgui.h">
+    <ClInclude Include="src\EditorSceneViewManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_internal.h">
+    <ClInclude Include="src\FileExplorer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stb_rect_pack.h">
+    <ClInclude Include="src\HierarchyPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stb_textedit.h">
+    <ClInclude Include="src\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stb_truetype.h">
+    <ClInclude Include="src\imgui_impl_glfw_gl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HierarchyPanel.h">
+    <ClInclude Include="src\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyPanel.h">
+    <ClInclude Include="src\PropertyPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
+    <ClInclude Include="src\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileExplorer.h">
+    <ClInclude Include="src\stb_rect_pack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EditorSceneViewManager.h">
+    <ClInclude Include="src\stb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UserPreferences.h">
+    <ClInclude Include="src\stb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EditorCamera.h">
+    <ClInclude Include="src\UserPreferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\arial.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\arialbd.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\arialbi.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\ariali.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\ariblk.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\cartoonyBg.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\cursor.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\frasa.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\goli.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\lili.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\mamma.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\paraEngineLogo.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\postProcess.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\postProcess.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\spriteBase.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\spriteBase.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\uiElementBase.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\uiElementBase.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\PlatformerBGM_06.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="Test Resources\Swoosh.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>
