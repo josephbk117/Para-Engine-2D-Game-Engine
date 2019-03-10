@@ -127,6 +127,35 @@
       <Project>{36edb50a-82e6-4f2e-8187-5a826b70d315}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\Fonts\arial.ttf" />
+    <Font Include="Test Resources\Fonts\arialbd.ttf" />
+    <Font Include="Test Resources\Fonts\arialbi.ttf" />
+    <Font Include="Test Resources\Fonts\ariali.ttf" />
+    <Font Include="Test Resources\Fonts\ariblk.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\Images\cartoonyBg.jpg" />
+    <Image Include="Test Resources\Images\cursor.png" />
+    <Image Include="Test Resources\Images\frasa.png" />
+    <Image Include="Test Resources\Images\goli.png" />
+    <Image Include="Test Resources\Images\lili.jpg" />
+    <Image Include="Test Resources\Images\mamma.png" />
+    <Image Include="Test Resources\Images\paraEngineLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\Chai scripts\gameData.chai" />
+    <None Include="Test Resources\Shaders\postProcess.fs" />
+    <None Include="Test Resources\Shaders\postProcess.vs" />
+    <None Include="Test Resources\Shaders\spriteBase.fs" />
+    <None Include="Test Resources\Shaders\spriteBase.vs" />
+    <None Include="Test Resources\Shaders\uiElementBase.fs" />
+    <None Include="Test Resources\Shaders\uiElementBase.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\Audio\PlatformerBGM_06.wav" />
+    <Media Include="Test Resources\Audio\Swoosh.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

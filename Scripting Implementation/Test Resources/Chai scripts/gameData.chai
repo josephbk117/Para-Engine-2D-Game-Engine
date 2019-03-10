@@ -1,5 +1,5 @@
 SetUpEngine(700,700,"Scripted Window");
-LoadTextureFromFile("Test Resources\\paraEngineLogo.png", "logo", false)
+LoadTextureFromFile("Test Resources\\Images\\paraEngineLogo.png", "logo", false)
 class ObjType1
 {
   var gameObj;
@@ -46,5 +46,5 @@ def update1()
 	obj.update();
 }
 SetUpdateFunction(update1);
-AddScene(scene1,"scene2");
-StartScene("scene2",true);
+AddScene(scene1,"scene1");
+StartScene("scene1",true);

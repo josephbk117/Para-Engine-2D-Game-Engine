@@ -9,10 +9,99 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5e9d105c-29de-45bb-8b4e-ce883e274482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Fonts">
+      <UniqueIdentifier>{fa53f906-a410-429c-b00f-dc002119e24b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Images">
+      <UniqueIdentifier>{0d30e880-39d1-43d6-8118-9baab27a0578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{442fa859-5253-4569-be6c-3c7ed9eed90b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Audio">
+      <UniqueIdentifier>{53a63ab1-6505-4f85-a602-e012856e1460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Chai scripts">
+      <UniqueIdentifier>{89da650b-f5fb-425b-8208-6a3e784bb16a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ScriptAccess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Test Resources\Fonts\arial.ttf">
+      <Filter>Resources\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\arialbd.ttf">
+      <Filter>Resources\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\arialbi.ttf">
+      <Filter>Resources\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\ariali.ttf">
+      <Filter>Resources\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\ariblk.ttf">
+      <Filter>Resources\Fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test Resources\Images\cartoonyBg.jpg">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\cursor.png">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\frasa.png">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\goli.png">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\lili.jpg">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\mamma.png">
+      <Filter>Resources\Images</Filter>
+    </Image>
+    <Image Include="Test Resources\Images\paraEngineLogo.png">
+      <Filter>Resources\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Resources\Shaders\postProcess.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\postProcess.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\spriteBase.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\spriteBase.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\uiElementBase.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\uiElementBase.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Chai scripts\gameData.chai">
+      <Filter>Resources\Chai scripts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Test Resources\Audio\PlatformerBGM_06.wav">
+      <Filter>Resources\Audio</Filter>
+    </Media>
+    <Media Include="Test Resources\Audio\Swoosh.wav">
+      <Filter>Resources\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

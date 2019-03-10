@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{2dca95ea-08dd-46a9-8490-93d2567e02c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{9ba18bab-4bf8-43ed-92c3-9d1e5a20e60b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio">
+      <UniqueIdentifier>{0860599c-8977-4c41-8111-ba7f6030013b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{bff983d6-606a-49d4-965a-50b179e19048}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\InitialSceneLogic.h">
@@ -37,52 +49,74 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Test Resources\Fonts\arial.ttf" />
-    <Font Include="Test Resources\Fonts\arialbd.ttf" />
-    <Font Include="Test Resources\Fonts\arialbi.ttf" />
-    <Font Include="Test Resources\Fonts\ariali.ttf" />
-    <Font Include="Test Resources\Fonts\ariblk.ttf" />
+    <Font Include="Test Resources\Fonts\arial.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\arialbd.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\arialbi.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\ariali.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Test Resources\Fonts\ariblk.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Test Resources\Audio\PlatformerBGM_06.wav">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Audio</Filter>
     </Media>
     <Media Include="Test Resources\Audio\sndtrack2.wav">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Audio</Filter>
     </Media>
     <Media Include="Test Resources\Audio\Swoosh.wav">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Audio</Filter>
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Test Resources\Shaders\postProcess.fs" />
-    <None Include="Test Resources\Shaders\postProcess.vs" />
-    <None Include="Test Resources\Shaders\spriteBase.fs" />
-    <None Include="Test Resources\Shaders\spriteBase.vs" />
-    <None Include="Test Resources\Shaders\uiElementBase.fs" />
-    <None Include="Test Resources\Shaders\uiElementBase.vs" />
+    <None Include="Test Resources\Shaders\postProcess.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\postProcess.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\spriteBase.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\spriteBase.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\uiElementBase.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Test Resources\Shaders\uiElementBase.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Test Resources\Images\cartoonyBg.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\cursor.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\frasa.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\goli.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\lili.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\mamma.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="Test Resources\Images\paraEngineLogo.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>
 </Project>
