@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\ImGui">
+      <UniqueIdentifier>{9fe8d456-269e-47c8-b1a0-44db16bd3f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Stb">
+      <UniqueIdentifier>{eb61640f-ef14-46e9-81fc-3c914218aa56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImGui">
+      <UniqueIdentifier>{2907c37f-0ee1-4e0c-b04b-2151f1016683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Stb">
+      <UniqueIdentifier>{156ec6fd-e667-44ea-8242-fc0acb3e510c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ParaEngine\AudioManager.cpp">
@@ -30,18 +42,6 @@
     <ClCompile Include="ParaEngine\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParaEngine\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParaEngine\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParaEngine\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParaEngine\imgui_impl_glfw_gl3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ParaEngine\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,15 +54,6 @@
     <ClCompile Include="ParaEngine\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParaEngine\stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParaEngine\stb_image_write.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParaEngine\std_truetype.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ParaEngine\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +62,27 @@
     </ClCompile>
     <ClCompile Include="ParaEngine\Transform.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\imgui.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\imgui_demo.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\imgui_draw.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\imgui_impl_glfw_gl3.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\std_truetype.cpp">
+      <Filter>Source Files\Stb</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\stb_image_write.cpp">
+      <Filter>Source Files\Stb</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaEngine\stb_image.cpp">
+      <Filter>Source Files\Stb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,18 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParaEngine\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\imgui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\imgui_impl_glfw_gl3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParaEngine\InputData.h">
@@ -125,21 +125,6 @@
     <ClInclude Include="ParaEngine\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParaEngine\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\stb_image_write.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\stb_rect_pack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\stb_textedit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParaEngine\stb_truetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParaEngine\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -151,6 +136,33 @@
     </ClInclude>
     <ClInclude Include="ParaEngine\Transform.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\imgui.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\imgui_impl_glfw_gl3.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\imgui_internal.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\imconfig.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\stb_image.h">
+      <Filter>Header Files\Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\stb_image_write.h">
+      <Filter>Header Files\Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\stb_rect_pack.h">
+      <Filter>Header Files\Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\stb_textedit.h">
+      <Filter>Header Files\Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaEngine\stb_truetype.h">
+      <Filter>Header Files\Stb</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
