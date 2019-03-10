@@ -36,6 +36,7 @@ float Game::timeSinceStartUp;
 ShaderProgram Game::postProcessor;
 glm::vec2 Game::mouseCoord;
 glm::vec2 Game::windowSize;
+glm::vec3 Game::clearColour = glm::vec3(0.15f, 0.15f, 0.15f);
 std::unordered_map<std::string, std::function<void()>> Game::scenes;
 std::function<void()> Game::activeSceneInitFunc;
 std::function<void()> Game::scriptedUpdateFunction = NULL;
@@ -231,7 +232,7 @@ void Game::update()
 	while (!glfwWindowShouldClose(access->window))
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
+		glClearColor(Game::clearColour.x, Game::clearColour.y, Game::clearColour.z, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (activeSceneInitFunc != NULL)
@@ -466,6 +467,10 @@ bool Game::isKeyReleased(const Key& key)
 	if (glfwGetKey(access->window, (int)key) == GLFW_RELEASE)
 		return true;
 	return false;
+}
+void Game::setClearColour(const glm::vec3 colour)
+{
+	clearColour = colour;
 }
 const glm::vec2 Game::getWindowSize()
 {

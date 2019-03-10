@@ -1,5 +1,6 @@
 SetUpEngine(700,700,"Scripted Window");
 LoadTextureFromFile("Test Resources\\Images\\paraEngineLogo.png", "logo", false)
+SetClearColour(0.5f,0.25f,0.15f);
 class ObjType1
 {
   var gameObj;

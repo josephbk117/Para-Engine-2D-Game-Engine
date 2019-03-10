@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 		ar[j - 1] = temp;
 	}
 
-	Game::setUpEngine(720, 720, "Para Engine - Game v1.1");
+	Game::setUpEngine(720, 720, "Para Engine - Game v1.5");
 	Game::setVsync(0);
 	//Game::setCursor("Test Resources\\cursor.png");
 	//game.lockCursor(true);

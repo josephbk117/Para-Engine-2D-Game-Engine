@@ -10,6 +10,7 @@
 
 Camera* CreateCamera(float width, float height);
 Sprite* CreateSprite(unsigned int width, unsigned int height);
+void SetClearColour(float r, float g, float b);
 void AddCameraToGameObject(GameObject* gameObj, Camera* camera);
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite);
 void SetUpdateFunction(std::function<void()> update);
@@ -44,6 +45,8 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::fun(&Game::getTimeSinceStartUp), "TimeSinceStartUp");
 	chai.add(chaiscript::fun(&Game::getDeltaTime), "DeltaTime");
 	chai.add(chaiscript::fun(&Game::setVsync), "SetVsync");
+	chai.add(chaiscript::fun(&SetClearColour), "SetClearColour");
+
 
 	chai.add(chaiscript::fun(&TextureManager::loadTextureFromFile), "LoadTextureFromFile");
 	chai.add(chaiscript::fun(&TextureManager::getTextureIdFromReference), "GetTextureFromReference");
@@ -76,6 +79,13 @@ int main(int argc, char* argv[])
 	chai.add(chaiscript::constructor<glm::vec2()>(), "Vec2");
 	chai.add(chaiscript::fun(&glm::vec2::x), "x");
 	chai.add(chaiscript::fun(&glm::vec2::y), "y");
+
+	chai.add(chaiscript::user_type<glm::vec3>(), "Vec3");
+	chai.add(chaiscript::constructor<glm::vec3()>(), "Vec3");
+	chai.add(chaiscript::fun(&glm::vec3::x), "x");
+	chai.add(chaiscript::fun(&glm::vec3::y), "y");
+	chai.add(chaiscript::fun(&glm::vec3::z), "z");
+
 	chai.add(chaiscript::user_type<Transform>(), "Transform");
 	chai.add(chaiscript::constructor<Transform()>(), "Transform");
 	chai.add(chaiscript::constructor<Transform(const Transform &)>(), "Transform");
@@ -91,6 +101,11 @@ int main(int argc, char* argv[])
 	chai.eval_file("Test Resources\\Chai scripts\\gameData.chai");
 	chai.eval("CleanUp();");
 	return 0;
+}
+
+void SetClearColour(float r, float g, float b)
+{
+	Game::setClearColour(glm::vec3(r, g, b));
 }
 
 void AddSpriteToGameObject(GameObject* gameObj, Sprite* sprite)
